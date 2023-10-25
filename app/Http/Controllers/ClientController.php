@@ -12,6 +12,7 @@ class ClientController extends Controller
      */
     public function index()
     {
+        //validation or security
         $clients = Client::all();
         return response()->json($clients, 200);
     }
@@ -21,7 +22,23 @@ class ClientController extends Controller
      */
     public function store(Request $request)
     {
-        $client = Client::create($request->all());
+        //validation, security
+        $clientData = $request->only([
+            'name',
+            'Governorate',
+            'city',
+            'email',
+            'password',
+        ]);
+
+        $clientPhones = $request->input('phone');
+        $client = Client::create($clientData);
+
+        foreach ($clientPhones as $phone) {
+            $client->phone()->create([
+                'phone' => $phone
+            ]);
+        }
         return response()->json($client,200);
     }
 
@@ -50,7 +67,11 @@ class ClientController extends Controller
      */
     public function destroy(Client $client)
     {
-        $client->delete();
-        return response()->json("client deleted",200);
+        // validation , security
+        if($client->id){
+            $client->delete();
+            return response()->json("client deleted",200);
+        }
+        return abort(404);
     }
 }

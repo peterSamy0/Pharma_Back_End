@@ -16,4 +16,9 @@ class Client extends Model
         "email",
         "password",
     ];
+
+
+    public function phone(){
+        return $this->hasMany(Client_Phone::class);
+    }
 }
