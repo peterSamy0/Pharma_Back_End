@@ -4,6 +4,7 @@ use App\Http\Controllers\ClientController;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\MedicationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,3 +22,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::apiResource('clients', ClientController::class);
+
+Route ::apiResource('medications' , MedicationController::class);
