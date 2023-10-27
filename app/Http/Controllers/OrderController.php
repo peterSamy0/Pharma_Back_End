@@ -32,10 +32,19 @@ class OrderController extends Controller
             
         ]);
         $newOrder = new Order();
-        $newOrder->client_id = auth::class;
+        $newOrder->client_id = auth()->id();
         $newOrder->pharmacy_id = $orderForm['pharmacy_id'];
-
+        $savedOrder = Order::create($newOrder);
+        // insert ordered medications
+        // data will come from frontend in an assoc. array, 'medication_id' => amount
         $ordMedications = $request->input('ordMedications');
+        foreach($ordMedications as $medicineId => $amount){
+            $savedOrder->orderMedications()->create([
+                'medicine_id' => $medicineId,
+                'amount' => $amount,
+            ]);
+        }
+        return response()->json([$savedOrder,$savedOrder->orderMedications ], 200);
         
     }
     
