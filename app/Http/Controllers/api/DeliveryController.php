@@ -68,13 +68,8 @@ class DeliveryController extends Controller
      * Update the specified resource in storage.
      */
     public function update(UpdateDeliveryController $request, Delivery $delivery)
-    {
-        $validator = Validator::make($request->all());
-        if ($validator->fails()) {
-            return response()->json([
-                'errors' => $validator->errors()
-            ], 422);
-        }
+    {       
+       
         $delivery->update($request->all());
 
         return (new DeliveryResource($delivery))->response()->setStatusCode(200);
