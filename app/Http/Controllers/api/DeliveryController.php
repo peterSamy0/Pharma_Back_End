@@ -8,7 +8,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use App\Http\Resources\DeliveryResource;
-
+use App\Http\Requests\StoreDeliveryController;
+use App\Http\Requests\UpdateDeliveryController;
 
 class DeliveryController extends Controller
 {
@@ -23,23 +24,33 @@ class DeliveryController extends Controller
        }
 
     
-    public function store(Request $request)
+    public function store(StoreDeliveryController $request)
     {
-        //
-
-        $validator = Validator::make($request->all(),[
-            'name'=>"required",
-            "Governorate"=>"required",
-            "city"=>"required",
-            "email"=>"unique:deliveries",
-            "password"=>"required",
-            "national_ID"=>"unique:deliveries|integer",
-            "available"=>"required|integer|in:1,0"
-        ]);
-        if($validator->fails()){
-            return response($validator->errors(), 422);
+        
+        $validator = Validator::make($request->all());
+        if ($validator->fails()) {
+            return response()->json([
+                'errors' => $validator->errors()
+            ], 422);
         }
+
+
+        $del_Phones = $request->input('phone');
+
         $delivery = Delivery::create($request->all());
+
+
+        if(is_array( $del_Phones)){
+        foreach ($del_Phones as $phone) {
+            $delivery->delivery_phone()->create([
+                'phone' => $phone
+            ]);
+        }
+        }else{
+
+        $delivery->delivery_phone()->create([
+                    'phone' => $del_Phones
+        ]);}
         return (new DeliveryResource($delivery))->response()->setStatusCode(200);
     }
 
@@ -48,7 +59,6 @@ class DeliveryController extends Controller
      */
     public function show(Delivery $delivery)
     {
-        //        return (new DeliveryResource($delivery))->response()->setStatusCode(200);
 
         return (new DeliveryResource($delivery))->response()->setStatusCode(200);
     }
@@ -57,34 +67,18 @@ class DeliveryController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Delivery $delivery)
+    public function update(UpdateDeliveryController $request, Delivery $delivery)
     {
-        //
-        $validator = Validator::make($request->all(),[
-            'name'=>"required",
-            "Governorate"=>"required",
-            "city"=>"required",
-            'email' => [
-                'required',
-                Rule::unique('deliveries')->ignore($delivery->email, 'email'),
-            ],
-            "password"=>"required",
-            "national_ID" => [
-                'required',
-                Rule::unique('deliveries')->ignore($delivery->national_ID, 'national_ID'),
-                'integer',
-                'min:14',
-            ],
-            "available"=>"required|integer|in:1,0"
-        ]);
-        if($validator->fails()){
-            return response($validator->errors(), 422);
+        $validator = Validator::make($request->all());
+        if ($validator->fails()) {
+            return response()->json([
+                'errors' => $validator->errors()
+            ], 422);
         }
         $delivery->update($request->all());
 
         return (new DeliveryResource($delivery))->response()->setStatusCode(200);
 
-        // return $delivery;
 
     }
 

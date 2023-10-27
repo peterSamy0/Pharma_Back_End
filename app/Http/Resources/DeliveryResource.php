@@ -25,8 +25,9 @@ class DeliveryResource extends JsonResource
             "password"=>$this->password,
             "national_ID"=>$this->national_ID,
             "available"=>$this->available,
-            "phone"=>new DeliveryPhoneResource($this->Delivery_phone),
-
+            "phones" => $this->delivery_phone->map(function($phone) {
+                return $phone->phone;
+            })->toArray(),
         ];
     }
 }
