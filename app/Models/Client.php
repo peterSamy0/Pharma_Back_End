@@ -22,4 +22,7 @@ class Client extends Model
     public function phone(){
         return $this->hasMany(Client_Phone::class);
     }
+    public function orders(){
+        return $this->hasMany(Order::class);
+    }
 }

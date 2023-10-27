@@ -20,4 +20,7 @@ class Medication extends Model
     function category(){
         return $this->belongsTo(Category::class);
     }
+    public function orderMedications(){
+        return $this->hasMany(OrderMedication::class);
+    }
 }
