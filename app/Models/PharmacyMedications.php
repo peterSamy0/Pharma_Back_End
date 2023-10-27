@@ -1,23 +1,21 @@
 <?php
 
 namespace App\Models;
-
-use App\Models\Category;
-
+use App\Models\Pharmacies;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Medication extends Model
+class PharmacyMedications extends Model
 {
     use HasFactory;
 
     protected $fillable = [ 
         'id',
-        'phone',
         'pharmacy_id',
+        'medication_id',
     ];
 
-    function category(){
-        return $this->belongsTo(Category::class);
+    function pharmacies(){
+        return $this->hasMany(Pharmacies::class);
     }
 }

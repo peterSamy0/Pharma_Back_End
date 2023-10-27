@@ -2,22 +2,20 @@
 
 namespace App\Models;
 
-use App\Models\Category;
-
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Day;
 
-class Medication extends Model
+class PharmacyDaysOff extends Model
 {
     use HasFactory;
-
     protected $fillable = [ 
         'id',
-        'phone',
         'pharmacy_id',
+        'day_id',
     ];
 
-    function category(){
-        return $this->belongsTo(Category::class);
+    function dayoff(){
+        return $this->hasMany(Day::class);
     }
 }
