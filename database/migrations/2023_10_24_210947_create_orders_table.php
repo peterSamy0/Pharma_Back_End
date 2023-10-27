@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('client_id')->constrained()->onDelete('cascade')->onUpdate('cascade')->references('id')->on('clients');
             $table->foreignId('pharmacy_id')->constrained()->onDelete('cascade')->onUpdate('cascade')->references('id')->on('pharmacies');
             $table->foreignId('delivery_id')->constrained()->onDelete('cascade')->onUpdate('cascade')->references('id')->on('deliveries')->nullable();
-            $table->boolean('status');
+            $table->enum('status',['pending','accepted','withDelivery','delivered']);
             $table->timestamps();
         });
     }

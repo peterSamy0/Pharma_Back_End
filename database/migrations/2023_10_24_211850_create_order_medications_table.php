@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('order_id')->constrained()->onDelete('cascade')->onUpdate('cascade')->references('id')->on('orders');
             $table->foreignId('medicine_id')->constrained()->onDelete('cascade')->onUpdate('cascade')->references('id')->on('medications');
+            $table->float("amount");
             $table->timestamps();
         });
     }
