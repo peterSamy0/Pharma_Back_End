@@ -1,18 +1,17 @@
 <?php
 
 namespace Database\Seeders;
-use App\Models\Client_Phone;
-use Illuminate\Database\Seeder;
+use App\Models\PharmacyMedications;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Illuminate\Database\Seeder;
 
-
-class ClientPhonesTableSeeder extends Seeder
+class PharmacyMedicationSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        Client_Phone::factory()->count(20)->create();
+        PharmacyMedications::factory()->count(10)->create();
     }
 }

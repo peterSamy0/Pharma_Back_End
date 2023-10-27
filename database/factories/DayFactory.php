@@ -5,9 +5,9 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Client_Phone>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Day>
  */
-class ClientPhonesFactory extends Factory
+class DayFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -16,8 +16,11 @@ class ClientPhonesFactory extends Factory
      */
     public function definition(): array
     {
-        return [
-            "phone" => $this->faker->phoneNumber,
-        ];
+        
+            return [
+                'days' => $this->faker->dayOfWeek,
+            ];
+            
+        
     }
 }
