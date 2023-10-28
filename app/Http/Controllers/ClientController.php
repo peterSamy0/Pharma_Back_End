@@ -1,9 +1,10 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use Illuminate\Http\Request;
 use App\Models\Client;
+use App\Http\Resources\ClientResource;
+use App\Http\Requests\ClientRequest;
 
 class ClientController extends Controller
 {
@@ -14,32 +15,28 @@ class ClientController extends Controller
     {
         //validation or security
         $clients = Client::all();
-        return response()->json($clients, 200);
+        return ClientResource::collection ($clients, 200);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(ClientRequest $request)
     {
-        //validation, security
-        $clientData = $request->only([
-            'name',
-            'Governorate',
-            'city',
-            'email',
-            'password',
-        ]);
-
+        $validated = $request->validated();
         $clientPhones = $request->input('phone');
-        $client = Client::create($clientData);
+        $client = Client::create($request->all());
 
-        foreach ($clientPhones as $phone) {
-            $client->phone()->create([
-                'phone' => $phone
-            ]);
+        if (is_array($clientPhones)) {
+            foreach ($clientPhones as $phone) {
+                $client->client_phone()->create(['phone' => $phone]);
+            }
+        } else {
+            $client->client_phone()->create(['phone' => $clientPhones]);
         }
-        return response()->json($client,200);
+
+        return (new ClientResource($client))->response()->setStatusCode(200);
+
     }
 
     /**
@@ -48,7 +45,7 @@ class ClientController extends Controller
     public function show(Client $client)
     {
         if($client->id){
-            return response()->json($client, 200);
+            return  new ClientResource($client, 200);
         }
         return abort(404);
     }
@@ -56,10 +53,11 @@ class ClientController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Client $client)
+    public function update(ClientRequest $request, Client $client)
     {
+        $validated = $request->validated();
         $client->update($request->all());
-        return response()->json($client,200);
+        return new  ClientResource ($client,200);
     }
 
     /**
@@ -70,7 +68,7 @@ class ClientController extends Controller
         // validation , security
         if($client->id){
             $client->delete();
-            return response()->json("client deleted",200);
+            return "client deleted";
         }
         return abort(404);
     }

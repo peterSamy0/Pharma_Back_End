@@ -13,8 +13,10 @@ class Medication extends Model
 
     protected $fillable = [ 
         'id',
-        'phone',
-        'pharmacy_id',
+        'name',
+        'price',
+        'image',
+        'category_id',
     ];
 
     function category(){

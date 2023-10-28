@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\PharmacyDaysOff>
  */
-class PharmacyDaysOffFactory extends Factory
+class PharmacyDayOffFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -17,7 +17,7 @@ class PharmacyDaysOffFactory extends Factory
     public function definition(): array
     {
         return [
-            'pharmacy_id' => \App\Models\Pharmacies::inRandomOrder()->first('id'),
+            'pharmacy_id' => \App\Models\Pharmacy::inRandomOrder()->first('id'),
             'day_id' => \App\Models\Day::inRandomOrder()->first('id'),
         ];
     }

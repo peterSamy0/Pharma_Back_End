@@ -1,7 +1,7 @@
 <?php
 
 namespace Database\Seeders;
-use App\Models\Client_Phone;
+use App\Models\ClientPhone;
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
@@ -13,6 +13,6 @@ class ClientPhonesTableSeeder extends Seeder
      */
     public function run(): void
     {
-        Client_Phone::factory()->count(20)->create();
+        ClientPhone::factory()->count(20)->create();
     }
 }
