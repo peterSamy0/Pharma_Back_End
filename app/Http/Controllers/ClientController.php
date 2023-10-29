@@ -13,7 +13,7 @@ class ClientController extends Controller
     public function index()
     {
         //validation or security
-        $clients = Client::all();
+        $clients = Client::with('phone')->get();
         return response()->json($clients, 200);
     }
 

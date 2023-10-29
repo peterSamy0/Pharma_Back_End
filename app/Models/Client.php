@@ -10,7 +10,6 @@ class Client extends Model
     use HasFactory;
 
     protected $fillable = [
-       
         "name" ,
         "Governorate",
         "city",
@@ -20,7 +19,7 @@ class Client extends Model
 
 
     public function phone(){
-        return $this->hasMany(Client_Phone::class);
+        return $this->hasMany(ClientPhone::class);
     }
     public function orders(){
         return $this->hasMany(Order::class);
