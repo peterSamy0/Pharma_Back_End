@@ -18,6 +18,7 @@ return new class extends Migration
             $table->foreignId('delivery_id')->constrained()->onDelete('cascade')->onUpdate('cascade')->references('id')->on('deliveries')->nullable();
             $table->enum('status',['pending','accepted','withDelivery','delivered'])->default("pending");
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

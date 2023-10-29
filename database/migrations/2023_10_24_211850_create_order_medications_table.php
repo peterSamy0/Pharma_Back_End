@@ -17,6 +17,7 @@ return new class extends Migration
             $table->foreignId('medicine_id')->constrained()->onDelete('cascade')->onUpdate('cascade')->references('id')->on('medications');
             $table->float("amount");
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
