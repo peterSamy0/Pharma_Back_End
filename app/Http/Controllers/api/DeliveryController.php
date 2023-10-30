@@ -26,14 +26,7 @@ class DeliveryController extends Controller
     
     public function store(StoreDeliveryController $request)
     {
-        
-        $validator = Validator::make($request->all());
-        if ($validator->fails()) {
-            return response()->json([
-                'errors' => $validator->errors()
-            ], 422);
-        }
-
+    
 
         $del_Phones = $request->input('phone');
 
