@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Models;
-
+use App\Models\ClientPhone;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -14,7 +14,7 @@ class Client extends Model
         "Governorate",
         "city",
         "email",
-        "password",
+        "password"
     ];
 
 
@@ -25,3 +25,4 @@ class Client extends Model
         return $this->hasMany(Order::class);
     }
 }
+

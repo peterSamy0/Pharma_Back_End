@@ -1,13 +1,15 @@
 <?php
 
 namespace App\Models;
-use App\Models\PharmacyMedications;
+use App\Models\PharmacyMedication;
 use App\Models\PharmacyPhone;
+use App\Models\PharmacyDayOff;
+
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Pharmacies extends Model
+class Pharmacy extends Model
 {
     use HasFactory;
 
@@ -27,10 +29,14 @@ class Pharmacies extends Model
     ];
 
     function medications(){
-        return $this->hasMany(PharmacyMedications::class);
+        return $this->hasMany(PharmacyMedication::class);
     }
 
     function phone(){
         return $this->hasMany(PharmacyPhone::class);
+    }
+
+    function days (){
+        return $this->hasMany(PharmacyDayOff::class);
     }
 }

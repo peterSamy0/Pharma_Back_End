@@ -4,16 +4,17 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use App\Models\PharmacyDaysOff;
+use App\Models\Delivery;
 
-
-class PharmacyDaysOffSeeder extends Seeder
+class DeliverySeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        PharmacyDaysOff::factory()->count(1)->create();
+        //
+        Delivery::factory()->count(5)->create();
+
     }
 }

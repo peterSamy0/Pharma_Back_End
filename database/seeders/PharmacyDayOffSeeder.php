@@ -1,17 +1,19 @@
 <?php
 
 namespace Database\Seeders;
-use App\Models\PharmacyMedication;
+
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use App\Models\PharmacyDayOff;
 
-class PharmacyMedicationSeeder extends Seeder
+
+class PharmacyDayOffSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        PharmacyMedication::factory()->count(10)->create();
+        PharmacyDayOff::factory()->count(10)->create();
     }
 }

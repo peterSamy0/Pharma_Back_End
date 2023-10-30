@@ -19,7 +19,7 @@ class PharmacyPhoneFactory extends Factory
         return [
             
              "phone" => $this->faker->randomNumber(9),
-            'pharmacy_id' => \App\Models\Pharmacies::inRandomOrder()->first('id'),
+            'pharmacy_id' => \App\Models\Pharmacy::inRandomOrder()->first('id'),
         ];
     }
 }

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreclientRequest;
 use Illuminate\Http\Request;
 use App\Models\Client;
+use App\Http\Resources\ClientResource;
+use App\Http\Requests\ClientRequest;
 
 class ClientController extends Controller
 {
@@ -14,6 +16,7 @@ class ClientController extends Controller
     public function index()
     {
         //validation or security
+
         $clients = Client::with('phone')->get();
         $clientsWithPhones = $clients->map(function ($client) {
             $client['phones'] = $client->phone->pluck('phone')->toArray();
@@ -21,33 +24,27 @@ class ClientController extends Controller
             return $client;
         });
         
-        return response()->json($clientsWithPhones, 200);    }
-
+        return response()->json($clientsWithPhones, 200);    
+    }
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreclientRequest $request )
+    public function store(ClientRequest $request)
     {
-        //validation, security
         $validated = $request->validated();
-
-        $clientData = $request->only([
-            'name',
-            'Governorate',
-            'city',
-            'email',
-            'password',
-        ]);
-
         $clientPhones = $request->input('phone');
-        $client = Client::create($clientData);
+        $client = Client::create($request->all());
 
-        foreach ($clientPhones as $phone) {
-            $client->phone()->create([
-                'phone' => $phone
-            ]);
+        if (is_array($clientPhones)) {
+            foreach ($clientPhones as $phone) {
+                $client->client_phone()->create(['phone' => $phone]);
+            }
+        } else {
+            $client->client_phone()->create(['phone' => $clientPhones]);
         }
-        return response()->json($client,200);
+
+        return (new ClientResource($client))->response()->setStatusCode(200);
+
     }
 
     /**
@@ -56,7 +53,7 @@ class ClientController extends Controller
     public function show(Client $client)
     {
         if($client->id){
-            return response()->json($client, 200);
+            return  new ClientResource($client, 200);
         }
         return abort(404);
     }
@@ -64,10 +61,11 @@ class ClientController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Client $client)
+    public function update(ClientRequest $request, Client $client)
     {
+        $validated = $request->validated();
         $client->update($request->all());
-        return response()->json($client,200);
+        return new  ClientResource ($client,200);
     }
 
     /**
@@ -78,7 +76,7 @@ class ClientController extends Controller
         // validation , security
         if($client->id){
             $client->delete();
-            return response()->json("client deleted",200);
+            return "client deleted";
         }
         return abort(404);
     }

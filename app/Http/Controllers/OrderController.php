@@ -54,7 +54,10 @@ class OrderController extends Controller
      */
     public function show(Order $order)
     {
-        //
+        if($order->id){
+            return response()->json($order, 200);
+        }
+        return abort(404);
     }
 
     /**
@@ -62,7 +65,21 @@ class OrderController extends Controller
      */
     public function update(Request $request, Order $order)
     {
-        //
+        if($order->status == "pending"){
+            $orderForm = $request->validate([
+                'ordMedications.*.key' => 'required',
+                'ordMedications.*.value' => 'required',
+                
+            ]);
+            $ordMedications = $request->input('ordMedications');
+            foreach($ordMedications as $medicineId => $amount){
+                $order->orderMedications()->update([
+                    'medicine_id' => $medicineId,
+                    'amount' => $amount,
+                ]);
+            }
+            return response()->json([$order,$order->orderMedications ], 200);
+        }
     }
 
     /**
@@ -70,6 +87,12 @@ class OrderController extends Controller
      */
     public function destroy(Order $order)
     {
-        //
+        if($order){
+            $order->delete();
+            $order->orderMedications()->delete();
+            return response()->json(["order deleted successfully"], 200);
+        }else{
+            return response()->json(["order not found"], 404);
+        }
     }
 }
