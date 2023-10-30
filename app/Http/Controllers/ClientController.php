@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreclientRequest;
 use Illuminate\Http\Request;
 use App\Models\Client;
 
@@ -14,15 +15,22 @@ class ClientController extends Controller
     {
         //validation or security
         $clients = Client::with('phone')->get();
-        return response()->json($clients, 200);
-    }
+        $clientsWithPhones = $clients->map(function ($client) {
+            $client['phones'] = $client->phone->pluck('phone')->toArray();
+            unset($client['phone']);
+            return $client;
+        });
+        
+        return response()->json($clientsWithPhones, 200);    }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreclientRequest $request )
     {
         //validation, security
+        $validated = $request->validated();
+
         $clientData = $request->only([
             'name',
             'Governorate',

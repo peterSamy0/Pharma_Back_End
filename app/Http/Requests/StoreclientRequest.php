@@ -11,7 +11,7 @@ class StoreclientRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,11 @@ class StoreclientRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => 'required|string|max:50',
+            'email' => 'required|email|unique:clients',
+            'password' => 'required',
+            'Governorate' => 'required',
+            'city' => 'required'
         ];
     }
 }
