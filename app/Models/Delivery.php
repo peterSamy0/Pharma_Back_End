@@ -15,5 +15,8 @@ class Delivery extends Model
     public function delivery_phone(){
         return $this->hasMany(Delivery_Phone::class);
     }
+    public function orders(){
+        return $this->hasMany(Order::class);
+    }
 
 }

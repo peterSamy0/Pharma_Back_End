@@ -22,7 +22,9 @@ class Order extends Model
         return $this->belongsTo(Client::class);
     }
     // order belongs to a delivery
-    // ......
+    public function delivery(){
+        return $this->belongsTo(Delivery::class);
+    }
 
     // filable fields
     protected $fillable = [

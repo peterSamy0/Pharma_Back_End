@@ -39,4 +39,7 @@ class Pharmacy extends Model
     function days (){
         return $this->hasMany(PharmacyDayOff::class);
     }
+    public function orders(){
+        return $this->hasMany(Order::class);
+    }
 }
