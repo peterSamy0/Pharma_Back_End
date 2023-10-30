@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-use App\Models\PharmacyDaysOff;
+use App\Models\PharmacyDayOff;
 
 class Day extends Model
 {
@@ -17,7 +17,7 @@ class Day extends Model
     ];
 
     function days(){
-        return $this->hasMany(PharmacyDaysOff::class);
+        return $this->hasMany(PharmacyDayOff::class);
     }
 }
 

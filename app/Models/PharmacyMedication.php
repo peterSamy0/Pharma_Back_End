@@ -1,11 +1,11 @@
 <?php
 
 namespace App\Models;
-use App\Models\Pharmacies;
+use App\Models\Pharmacy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class PharmacyMedications extends Model
+class PharmacyMedication extends Model
 {
     use HasFactory;
 
@@ -16,6 +16,6 @@ class PharmacyMedications extends Model
     ];
 
     function pharmacies(){
-        return $this->hasMany(Pharmacies::class);
+        return $this->hasMany(Pharmacy::class);
     }
 }

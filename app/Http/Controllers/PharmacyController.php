@@ -2,12 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Pharmacies;
+use App\Models\Pharmacy;
 use Illuminate\Http\Request;
-use App\Http\Resources\PhamaciesResourse;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Validation\Rule;
-
+use App\Http\Resources\PharmacyResourse;
+use App\Http\Requests\PharmacyRequest;
 
 class PharmacyController extends Controller
 {
@@ -16,81 +14,44 @@ class PharmacyController extends Controller
      */
     public function index()
     {   
-        $pharmacy = Pharmacies::all();
-    return PhamaciesResourse::collection($pharmacy , 200 );
+        $pharmacy = Pharmacy::all();
+    return PharmacyResourse::collection($pharmacy , 200 );
        
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(PharmacyRequest $request)
     {
-        $validator = Validator::make($request->all() , [
-            "name" => "required",
-            "password" => "required",
-            "email" => "unique:pharmacies",  
-            "image" => "required",
-            "licence_number" => "unique:pharmacies",
-            "bank_account" => "unique:pharmacies",    
-            "Governorate" => "required",
-            "city" => "required",
-            "street" => "required",  
-            "opening" => "required",
-            "closing" => "required",  
-        ]);
-
-        if($validator->fails()){
-            return response($validator->errors()->all() , 422);
-        }
-
-        $pharmacy= Pharmacies::create($request->all());
-        return  new PhamaciesResourse($pharmacy , 201);
+        $validated = $request->validated();
+        $pharmacy= Pharmacy::create($request->all());
+        return  new PharmacyResourse($pharmacy , 201);
     }
-
-   
-   
 
 
     /**
      * Display the specified resource.
      */
-        public function show(Pharmacies $pharmacy)
+        public function show(Pharmacy $pharmacy)
     {   
-        return new PhamaciesResourse($pharmacy , 200);  
+        return new PharmacyResourse($pharmacy , 200);  
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Pharmacies $pharmacy)
-    {
-        $validator = Validator::make($request->all() , [
-            "name" => "required",
-            "password" => "required",
-            "email" =>  [Rule::unique('pharmacies')->ignore($pharmacy)],
-            "image" => "required",
-            "licence_number" =>  [Rule::unique('pharmacies')->ignore($pharmacy)],
-            "bank_account" => [Rule::unique('pharmacies')->ignore($pharmacy)],    
-            "Governorate" => "required",
-            "city" => "required",
-            "street" => "required",  
-            "opening" => "required",
-            "closing" => "required",  
-        ]);
-
-        if($validator->fails()){
-            return response ($validator->errors()->all() , 422);
-        }
-
+    public function update( PharmacyRequest $request, Pharmacy $pharmacy)
+    {   
+        $validated = $request->validated();
         $pharmacy->update($request->all());
-        return new PhamaciesResourse ($pharmacy , 200);
+        return new PharmacyResourse ($pharmacy , 200);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Pharmacies $pharmacy)
+    public function destroy(Pharmacy $pharmacy)
     {
         $pharmacy->delete();
         return " Delete the pharmacy is Done";

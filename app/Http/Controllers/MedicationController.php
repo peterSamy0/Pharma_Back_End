@@ -5,8 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Medication;
 use Illuminate\Http\Request;
 use App\Http\Resources\MedicationResource;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Validation\Rule;
+use App\Http\Requests\MedicationRequest;
 
 class MedicationController extends Controller
 {
@@ -22,18 +21,10 @@ class MedicationController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(MedicationRequest $request)
     {
-        $validator = Validator::make($request->all() , [
-            "name" => "unique:medications",
-            "price" => "required",
-            "image" => "required",     
-        ]);
-
-        if($validator->fails()){
-            return response($validator->errors()->all() , 422);
-        }
-
+        
+        $validated = $request->validated();
         $medications= Medication::create($request->all());
         return  new MedicationResource ($medications , 201);
     }
@@ -51,19 +42,9 @@ class MedicationController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Medication $medication)
+    public function update(MedicationRequest $request, Medication $medication)
     {
-        $validator = Validator::make($request->all() , [
-
-            "name" => [Rule::unique('medications')->ignore($medication)],
-            "price" => "required",
-            "image" =>  "required"
-        ]);
-
-        if($validator->fails()){
-            return response ($validator->errors()->all() , 422);
-        }
-
+        $validated = $request->validated();
         $medication->update($request->all());
         return new MedicationResource ($medication , 200);
     }
