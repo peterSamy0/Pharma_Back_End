@@ -36,7 +36,7 @@ class ClientController extends Controller
      */
     public function store(Request $request)
     {
-        // try{
+        try{
             $userData = $request->input('user');
             $clientData = $request->input('client');
             $user = User::create($userData);
@@ -44,10 +44,10 @@ class ClientController extends Controller
             $client = Client::create($clientData);
     
             return (new ClientResource($client))->response()->setStatusCode(200);
-        // }catch(Exception $e){
-        //     Log::error($e->getMessage());
-        //     return response()->json(['error' => Log::error($e->getMessage())], 500);       
-        //  }
+        }catch(Exception $e){
+            Log::error($e->getMessage());
+            return response()->json(['error' => "internal error"], 500);       
+         }
     }
 
     /**
@@ -64,11 +64,19 @@ class ClientController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(ClientRequest $request, Client $client)
+    public function update(Request $request, Client $client, User $user)
     {
-        $validated = $request->validated();
-        $client->update($request->all());
-        return new  ClientResource ($client,200);
+        try{
+            $userData = $request->input('user');
+            $clientData = $request->input('client');
+            $user->update($userData);
+            $client->update($clientData);
+    
+            return (new ClientResource($client))->response()->setStatusCode(200);
+        }catch(Exception $e){
+            Log::error($e->getMessage());
+            return response()->json(['error' => "internal error"], 500);       
+         }
     }
 
     /**
