@@ -13,11 +13,9 @@ return new class extends Migration
     {
         Schema::create('deliveries', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade')->onUpdate('cascade')->references('id')->on('users');
             $table->string('Governorate');
             $table->string('city');
-            $table->string('email')->unique();
-            $table->string('password');
             $table->bigInteger('national_ID')->unique();
             $table->boolean('available')->default(true);
             $table->timestamps();
