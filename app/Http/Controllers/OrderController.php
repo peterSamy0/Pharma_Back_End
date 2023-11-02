@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\OrderResource;
 use App\Models\Order;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Validator;
 class OrderController extends Controller
 {
     /**
@@ -23,28 +24,37 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
+        // dd($request);
         //validation, security
-        $orderForm = $request->validate([
-            'pharmacy_id' => 'required',
-            'delivery_id'=> 'nullable',
-            'ordMedications.*.key' => 'required',
-            'ordMedications.*.value' => 'required',
+        $validator = Validator::make($request->all(),[
+            'pharmacy_id' => 'required | numeric',
+            'delivery_id'=> 'nullable | numeric',
+            'ordMedications' => 'required|array',
+            'ordMedications.*.key' => 'required|numeric',
+            'ordMedications.*.value' => 'required|numeric',
             
         ]);
-        $newOrder = new Order();
-        $newOrder->client_id = auth()->id();
-        $newOrder->pharmacy_id = $orderForm['pharmacy_id'];
-        $savedOrder = Order::create($newOrder);
+        if($validator->fails()){
+            return response()->json(['errors' => $validator->errors()], 422);
+        };
+       
+        $savedOrder = Order::create([
+            'pharmacy_id' => $request->pharmacy_id,
+            'client_id' => $request->client_id //auth()->id(); when making authentication
+        ]);
         // insert ordered medications
         // data will come from frontend in an assoc. array, 'medication_id' => amount
         $ordMedications = $request->input('ordMedications');
-        foreach($ordMedications as $medicineId => $amount){
+        
+        foreach ($ordMedications as $ordMedication) {
+            $medicineId = $ordMedication['key'];
+            $amount = $ordMedication['value'];
             $savedOrder->orderMedications()->create([
                 'medicine_id' => $medicineId,
                 'amount' => $amount,
             ]);
         }
-        return response()->json([$savedOrder,$savedOrder->orderMedications ], 200);
+        return response()->json($savedOrder, 200);
         
     }
     
@@ -53,12 +63,17 @@ class OrderController extends Controller
      * Display the specified resource.
      */
     public function show(Order $order)
-    {
-        if($order->id){
-            return response()->json($order, 200);
-        }
-        return abort(404);
+{
+    // Eager load the 'orderMedications' relationship along with the 'medication' relationship for each 'OrderMedication'
+    $order = Order::with('orderMedications.medication')->find($order->id);
+
+    if ($order) {
+        return new OrderResource($order);
     }
+
+    return abort(404);
+}
+
 
     /**
      * Update the specified resource in storage.

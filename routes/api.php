@@ -6,9 +6,11 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MedicationController;
 use App\Http\Controllers\PharmacyController;
-
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\api\DeliveryController;
 use App\Http\Controllers\api\DeliveryPhoneController;
+use App\Models\Order;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -30,5 +32,6 @@ Route ::apiResource('medications' , MedicationController::class);
 
 Route ::apiResource('pharmacies' , PharmacyController::class);
 Route::apiResource('deliveries',DeliveryController::class);
+Route::apiResource('orders',OrderController::class);
 
 // Route::apiResource('deliveries_Phone',DeliveryPhoneController::class);
