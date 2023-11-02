@@ -13,9 +13,7 @@ return new class extends Migration
     {
         Schema::create('pharmacies', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('password');
-            $table->string('email')->unique();
+            $table->foreignId('user_id')->constrained()->onDelete('cascade')->onUpdate('cascade')->references('id')->on('users');
             $table->string('image');
             $table->string('licence_number')->unique();
             $table->bigInteger('bank_account')->unique();
