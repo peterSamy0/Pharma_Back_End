@@ -14,16 +14,12 @@ class ClientResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        // return parent::toArray($request);
         return [
-            'id' => $this->id,
-            'name' =>$this->name,
-            'Governorate'=>$this->Governorate,
-            'city'=>$this->city,
-            'email'=>$this->email,
-            'password'=>$this->password,
-            'phone'=> $this->phone,
-            // 'phone' => $this->phone? $this->phone->phone : null,
+            'name' => optional($this->user)->name,
+            'Governorate' => $this->Governorate,
+            'city' => $this->city,
+            'email' => optional($this->user)->email,
         ];
+        
     }
 }
