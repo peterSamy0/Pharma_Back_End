@@ -22,22 +22,19 @@ class ClientRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string|max:50',
-            'email' => 'required|email|unique:clients',
-            'password' => 'required',
-            'Governorate' => 'required',
-            'city' => 'required'
+            'user.name' => 'required|string|max:255',
+            'user.email' => 'required|email|unique:users,email',
+            'user.password' => 'required|string|min:8',
+            'client.governorate' => 'required|string|max:255',
+            'client.city' => 'required|string|max:255',
         ];
     }
 
     public function messages()
     {
         return [
-            'name.required' => 'A name is required',
             'Governorate.required' => 'Governorate is required',
             'city.required' => 'city is required',
-            'email.required' => 'email is required',
-            'password.required' => 'password is required',
         ];
     }
 }

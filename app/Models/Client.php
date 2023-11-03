@@ -10,11 +10,9 @@ class Client extends Model
     use HasFactory;
 
     protected $fillable = [
-        "name" ,
+        "user_id",
         "Governorate",
         "city",
-        "email",
-        "password"
     ];
 
 
@@ -24,5 +22,9 @@ class Client extends Model
     public function orders(){
         return $this->hasMany(Order::class);
     }
+
+    public function user(){
+        return $this->belongsTo(User::class);
+    }   
 }
 

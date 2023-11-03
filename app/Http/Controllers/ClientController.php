@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 use App\Models\Client;
 use App\Http\Resources\ClientResource;
 use App\Http\Requests\ClientRequest;
+use App\Models\User;
+use Exception;
+use Illuminate\Support\Facades\Log;
 
 class ClientController extends Controller
 {
@@ -17,34 +20,34 @@ class ClientController extends Controller
     {
         //validation or security
 
-        $clients = Client::with('phone')->get();
-        $clientsWithPhones = $clients->map(function ($client) {
-            $client['phones'] = $client->phone->pluck('phone')->toArray();
-            unset($client['phone']);
-            return $client;
-        });
+        $clients = Client::all();
+
+        // $clients = Client::with('phone')->get();
+        // $clientsWithPhones = $clients->map(function ($client) {
+        //     $client['phones'] = $client->phone->pluck('phone')->toArray();
+        //     unset($client['phone']);
+        //     return $client;
+        // });
         
-        return response()->json($clientsWithPhones, 200);    
+        return response()->json($clients, 200);    
     }
     /**
      * Store a newly created resource in storage.
      */
-    public function store(ClientRequest $request)
+    public function store(Request $request)
     {
-        $validated = $request->validated();
-        $clientPhones = $request->input('phone');
-        $client = Client::create($request->all());
-
-        if (is_array($clientPhones)) {
-            foreach ($clientPhones as $phone) {
-                $client->client_phone()->create(['phone' => $phone]);
-            }
-        } else {
-            $client->client_phone()->create(['phone' => $clientPhones]);
-        }
-
-        return (new ClientResource($client))->response()->setStatusCode(200);
-
+        try{
+            $userData = $request->input('user');
+            $clientData = $request->input('client');
+            $user = User::create($userData);
+            $clientData['user_id'] = $user->id;
+            $client = Client::create($clientData);
+    
+            return (new ClientResource($client))->response()->setStatusCode(200);
+        }catch(Exception $e){
+            Log::error($e->getMessage());
+            return response()->json(['error' => "internal error"], 500);       
+         }
     }
 
     /**
@@ -53,7 +56,7 @@ class ClientController extends Controller
     public function show(Client $client)
     {
         if($client->id){
-            return  new ClientResource($client, 200);
+            return  new ClientResource($client);
         }
         return abort(404);
     }
@@ -61,11 +64,19 @@ class ClientController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(ClientRequest $request, Client $client)
+    public function update(Request $request, Client $client, User $user)
     {
-        $validated = $request->validated();
-        $client->update($request->all());
-        return new  ClientResource ($client,200);
+        try{
+            $userData = $request->input('user');
+            $clientData = $request->input('client');
+            $user->update($userData);
+            $client->update($clientData);
+    
+            return (new ClientResource($client))->response()->setStatusCode(200);
+        }catch(Exception $e){
+            Log::error($e->getMessage());
+            return response()->json(['error' => "internal error"], 500);       
+         }
     }
 
     /**
