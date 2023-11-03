@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Client;
 use App\Http\Resources\ClientResource;
 use App\Http\Requests\ClientRequest;
+use Illuminate\Support\Facades\Validator;
 
 class ClientController extends Controller
 {
@@ -46,6 +47,47 @@ class ClientController extends Controller
         return (new ClientResource($client))->response()->setStatusCode(200);
 
     }
+    public function createUser(Request $request)
+    {
+        try {
+            //Validated
+            $validateUser = Validator::make($request->all(), 
+            [
+                'user.name' => 'required',
+                'user.email' => 'required|email|unique:users,email',
+                'user.password' => 'required',
+                'client.Governorate' => 'required',
+                'client.city' => 'required'
+            ]);
+
+            if($validateUser->fails()){
+                return response()->json([
+                    'status' => false,
+                    'message' => 'validation error',
+                    'errors' => $validateUser->errors()
+                ], 401);
+            }
+
+            // $user = User::create([
+            //     'name' => $request->name,
+            //     'email' => $request->email,
+            //     'password' => Hash::make($request->password)
+            // ]);
+
+            // return response()->json([
+            //     'status' => true,
+            //     'message' => 'User Created Successfully',
+            //     'token' => $user->createToken("API TOKEN")->plainTextToken
+            // ], 200);
+
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => false,
+                'message' => $th->getMessage()
+            ], 500);
+        }
+    }
+
 
     /**
      * Display the specified resource.
@@ -53,7 +95,7 @@ class ClientController extends Controller
     public function show(Client $client)
     {
         if($client->id){
-            return  new ClientResource($client, 200);
+            return  new ClientResource($client);
         }
         return abort(404);
     }
@@ -65,7 +107,7 @@ class ClientController extends Controller
     {
         $validated = $request->validated();
         $client->update($request->all());
-        return new  ClientResource ($client,200);
+        return new  ClientResource ($client);
     }
 
     /**

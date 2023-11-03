@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInitaa322c53454393ed775cfe4807d54a50
+class ComposerStaticInitad697d6656e21b19281012351c1aecbc
 {
     public static $files = array (
         '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
@@ -352,8 +352,8 @@ class ComposerStaticInitaa322c53454393ed775cfe4807d54a50
         ),
         'Psr\\Http\\Message\\' => 
         array (
-            0 => __DIR__ . '/..' . '/psr/http-message/src',
-            1 => __DIR__ . '/..' . '/psr/http-factory/src',
+            0 => __DIR__ . '/..' . '/psr/http-factory/src',
+            1 => __DIR__ . '/..' . '/psr/http-message/src',
         ),
         'Psr\\Http\\Client\\' => 
         array (
@@ -525,7 +525,12 @@ class ComposerStaticInitaa322c53454393ed775cfe4807d54a50
     public static $classMap = array (
         'App\\Console\\Kernel' => __DIR__ . '/../..' . '/app/Console/Kernel.php',
         'App\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',
+        'App\\Http\\Controllers\\ClientController' => __DIR__ . '/../..' . '/app/Http/Controllers/ClientController.php',
         'App\\Http\\Controllers\\Controller' => __DIR__ . '/../..' . '/app/Http/Controllers/Controller.php',
+        'App\\Http\\Controllers\\MedicationController' => __DIR__ . '/../..' . '/app/Http/Controllers/MedicationController.php',
+        'App\\Http\\Controllers\\OrderController' => __DIR__ . '/../..' . '/app/Http/Controllers/OrderController.php',
+        'App\\Http\\Controllers\\PharmacyController' => __DIR__ . '/../..' . '/app/Http/Controllers/PharmacyController.php',
+        'App\\Http\\Controllers\\api\\DeliveryController' => __DIR__ . '/../..' . '/app/Http/Controllers/api/DeliveryController.php',
         'App\\Http\\Kernel' => __DIR__ . '/../..' . '/app/Http/Kernel.php',
         'App\\Http\\Middleware\\Authenticate' => __DIR__ . '/../..' . '/app/Http/Middleware/Authenticate.php',
         'App\\Http\\Middleware\\EncryptCookies' => __DIR__ . '/../..' . '/app/Http/Middleware/EncryptCookies.php',
@@ -536,6 +541,31 @@ class ComposerStaticInitaa322c53454393ed775cfe4807d54a50
         'App\\Http\\Middleware\\TrustProxies' => __DIR__ . '/../..' . '/app/Http/Middleware/TrustProxies.php',
         'App\\Http\\Middleware\\ValidateSignature' => __DIR__ . '/../..' . '/app/Http/Middleware/ValidateSignature.php',
         'App\\Http\\Middleware\\VerifyCsrfToken' => __DIR__ . '/../..' . '/app/Http/Middleware/VerifyCsrfToken.php',
+        'App\\Http\\Requests\\ClientRequest' => __DIR__ . '/../..' . '/app/Http/Requests/ClientRequest.php',
+        'App\\Http\\Requests\\MedicationRequest' => __DIR__ . '/../..' . '/app/Http/Requests/MedicationRequest.php',
+        'App\\Http\\Requests\\PharmacyRequest' => __DIR__ . '/../..' . '/app/Http/Requests/PharmacyRequest.php',
+        'App\\Http\\Requests\\StoreDeliveryController' => __DIR__ . '/../..' . '/app/Http/Requests/StoreDeliveryController.php',
+        'App\\Http\\Requests\\StoreclientRequest' => __DIR__ . '/../..' . '/app/Http/Requests/StoreclientRequest.php',
+        'App\\Http\\Requests\\UpdateDeliveryController' => __DIR__ . '/../..' . '/app/Http/Requests/UpdateDeliveryController.php',
+        'App\\Http\\Requests\\UpdateclientRequest' => __DIR__ . '/../..' . '/app/Http/Requests/UpdateclientRequest.php',
+        'App\\Http\\Resources\\ClientResource' => __DIR__ . '/../..' . '/app/Http/Resources/ClientResource.php',
+        'App\\Http\\Resources\\DeliveryPhoneResource' => __DIR__ . '/../..' . '/app/Http/Resources/DeliveryPhoneResource.php',
+        'App\\Http\\Resources\\DeliveryResource' => __DIR__ . '/../..' . '/app/Http/Resources/DeliveryResource.php',
+        'App\\Http\\Resources\\MedicationResource' => __DIR__ . '/../..' . '/app/Http/Resources/MedicationResource.php',
+        'App\\Http\\Resources\\PharmacyResourse' => __DIR__ . '/../..' . '/app/Http/Resources/PharmacyResourse.php',
+        'App\\Models\\Category' => __DIR__ . '/../..' . '/app/Models/Category.php',
+        'App\\Models\\Client' => __DIR__ . '/../..' . '/app/Models/Client.php',
+        'App\\Models\\ClientPhone' => __DIR__ . '/../..' . '/app/Models/ClientPhone.php',
+        'App\\Models\\Day' => __DIR__ . '/../..' . '/app/Models/Day.php',
+        'App\\Models\\Delivery' => __DIR__ . '/../..' . '/app/Models/Delivery.php',
+        'App\\Models\\Delivery_phone' => __DIR__ . '/../..' . '/app/Models/Delivery_phone.php',
+        'App\\Models\\Medication' => __DIR__ . '/../..' . '/app/Models/Medication.php',
+        'App\\Models\\Order' => __DIR__ . '/../..' . '/app/Models/Order.php',
+        'App\\Models\\OrderMedication' => __DIR__ . '/../..' . '/app/Models/OrderMedication.php',
+        'App\\Models\\Pharmacy' => __DIR__ . '/../..' . '/app/Models/Pharmacy.php',
+        'App\\Models\\PharmacyDayOff' => __DIR__ . '/../..' . '/app/Models/PharmacyDayOff.php',
+        'App\\Models\\PharmacyMedication' => __DIR__ . '/../..' . '/app/Models/PharmacyMedication.php',
+        'App\\Models\\PharmacyPhone' => __DIR__ . '/../..' . '/app/Models/PharmacyPhone.php',
         'App\\Models\\User' => __DIR__ . '/../..' . '/app/Models/User.php',
         'App\\Providers\\AppServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AppServiceProvider.php',
         'App\\Providers\\AuthServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AuthServiceProvider.php',
@@ -652,8 +682,30 @@ class ComposerStaticInitaa322c53454393ed775cfe4807d54a50
         'Cron\\HoursField' => __DIR__ . '/..' . '/dragonmantank/cron-expression/src/Cron/HoursField.php',
         'Cron\\MinutesField' => __DIR__ . '/..' . '/dragonmantank/cron-expression/src/Cron/MinutesField.php',
         'Cron\\MonthField' => __DIR__ . '/..' . '/dragonmantank/cron-expression/src/Cron/MonthField.php',
+        'Database\\Factories\\CategoryFactory' => __DIR__ . '/../..' . '/database/factories/CategoryFactory.php',
+        'Database\\Factories\\ClientFactory' => __DIR__ . '/../..' . '/database/factories/ClientFactory.php',
+        'Database\\Factories\\ClientPhoneFactory' => __DIR__ . '/../..' . '/database/factories/ClientPhoneFactory.php',
+        'Database\\Factories\\DayFactory' => __DIR__ . '/../..' . '/database/factories/DayFactory.php',
+        'Database\\Factories\\DeliveryFactory' => __DIR__ . '/../..' . '/database/factories/DeliveryFactory.php',
+        'Database\\Factories\\Delivery_PhoneFactory' => __DIR__ . '/../..' . '/database/factories/Delivery_PhoneFactory.php',
+        'Database\\Factories\\MedicationFactory' => __DIR__ . '/../..' . '/database/factories/MedicationFactory.php',
+        'Database\\Factories\\PharmacyDayOffFactory' => __DIR__ . '/../..' . '/database/factories/PharmacyDayOffFactory.php',
+        'Database\\Factories\\PharmacyFactory' => __DIR__ . '/../..' . '/database/factories/PharmacyFactory.php',
+        'Database\\Factories\\PharmacyMedicationFactory' => __DIR__ . '/../..' . '/database/factories/PharmacyMedicationFactory.php',
+        'Database\\Factories\\PharmacyPhoneFactory' => __DIR__ . '/../..' . '/database/factories/PharmacyPhoneFactory.php',
         'Database\\Factories\\UserFactory' => __DIR__ . '/../..' . '/database/factories/UserFactory.php',
+        'Database\\Seeders\\CategorySeeder' => __DIR__ . '/../..' . '/database/seeders/CategorySeeder.php',
+        'Database\\Seeders\\ClientPhonesTableSeeder' => __DIR__ . '/../..' . '/database/seeders/ClientPhonesTableSeeder.php',
+        'Database\\Seeders\\ClientsTableSeeder' => __DIR__ . '/../..' . '/database/seeders/ClientsTableSeeder.php',
         'Database\\Seeders\\DatabaseSeeder' => __DIR__ . '/../..' . '/database/seeders/DatabaseSeeder.php',
+        'Database\\Seeders\\DaySeeder' => __DIR__ . '/../..' . '/database/seeders/DaySeeder.php',
+        'Database\\Seeders\\DeliverySeeder' => __DIR__ . '/../..' . '/database/seeders/DeliverySeeder.php',
+        'Database\\Seeders\\Delivery_PhoneSeeder' => __DIR__ . '/../..' . '/database/seeders/Delivery_PhoneSeeder.php',
+        'Database\\Seeders\\MedicationSeeder' => __DIR__ . '/../..' . '/database/seeders/MedicationSeeder.php',
+        'Database\\Seeders\\PharmacyDayOffSeeder' => __DIR__ . '/../..' . '/database/seeders/PharmacyDayOffSeeder.php',
+        'Database\\Seeders\\PharmacyMedicationSeeder' => __DIR__ . '/../..' . '/database/seeders/PharmacyMedicationSeeder.php',
+        'Database\\Seeders\\PharmacyPhoneSeeder' => __DIR__ . '/../..' . '/database/seeders/PharmacyPhoneSeeder.php',
+        'Database\\Seeders\\PharmacySeeder' => __DIR__ . '/../..' . '/database/seeders/PharmacySeeder.php',
         'DateError' => __DIR__ . '/..' . '/symfony/polyfill-php83/Resources/stubs/DateError.php',
         'DateException' => __DIR__ . '/..' . '/symfony/polyfill-php83/Resources/stubs/DateException.php',
         'DateInvalidOperationException' => __DIR__ . '/..' . '/symfony/polyfill-php83/Resources/stubs/DateInvalidOperationException.php',
@@ -1782,6 +1834,8 @@ class ComposerStaticInitaa322c53454393ed775cfe4807d54a50
         'Illuminate\\Contracts\\Encryption\\Encrypter' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Contracts/Encryption/Encrypter.php',
         'Illuminate\\Contracts\\Encryption\\StringEncrypter' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Contracts/Encryption/StringEncrypter.php',
         'Illuminate\\Contracts\\Events\\Dispatcher' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Contracts/Events/Dispatcher.php',
+        'Illuminate\\Contracts\\Events\\ShouldDispatchAfterCommit' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Contracts/Events/ShouldDispatchAfterCommit.php',
+        'Illuminate\\Contracts\\Events\\ShouldHandleEventsAfterCommit' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Contracts/Events/ShouldHandleEventsAfterCommit.php',
         'Illuminate\\Contracts\\Filesystem\\Cloud' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Contracts/Filesystem/Cloud.php',
         'Illuminate\\Contracts\\Filesystem\\Factory' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Contracts/Filesystem/Factory.php',
         'Illuminate\\Contracts\\Filesystem\\FileNotFoundException' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Contracts/Filesystem/FileNotFoundException.php',
@@ -1821,6 +1875,7 @@ class ComposerStaticInitaa322c53454393ed775cfe4807d54a50
         'Illuminate\\Contracts\\Queue\\ShouldBeUnique' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Contracts/Queue/ShouldBeUnique.php',
         'Illuminate\\Contracts\\Queue\\ShouldBeUniqueUntilProcessing' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Contracts/Queue/ShouldBeUniqueUntilProcessing.php',
         'Illuminate\\Contracts\\Queue\\ShouldQueue' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Contracts/Queue/ShouldQueue.php',
+        'Illuminate\\Contracts\\Queue\\ShouldQueueAfterCommit' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Contracts/Queue/ShouldQueueAfterCommit.php',
         'Illuminate\\Contracts\\Redis\\Connection' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Contracts/Redis/Connection.php',
         'Illuminate\\Contracts\\Redis\\Connector' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Contracts/Redis/Connector.php',
         'Illuminate\\Contracts\\Redis\\Factory' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Contracts/Redis/Factory.php',
@@ -1917,6 +1972,7 @@ class ComposerStaticInitaa322c53454393ed775cfe4807d54a50
         'Illuminate\\Database\\DetectsLostConnections' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Database/DetectsLostConnections.php',
         'Illuminate\\Database\\Eloquent\\BroadcastableModelEventOccurred' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Database/Eloquent/BroadcastableModelEventOccurred.php',
         'Illuminate\\Database\\Eloquent\\BroadcastsEvents' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Database/Eloquent/BroadcastsEvents.php',
+        'Illuminate\\Database\\Eloquent\\BroadcastsEventsAfterCommit' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Database/Eloquent/BroadcastsEventsAfterCommit.php',
         'Illuminate\\Database\\Eloquent\\Builder' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Database/Eloquent/Builder.php',
         'Illuminate\\Database\\Eloquent\\Casts\\ArrayObject' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Database/Eloquent/Casts/ArrayObject.php',
         'Illuminate\\Database\\Eloquent\\Casts\\AsArrayObject' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Database/Eloquent/Casts/AsArrayObject.php',
@@ -3293,6 +3349,7 @@ class ComposerStaticInitaa322c53454393ed775cfe4807d54a50
         'Mockery\\VerificationDirector' => __DIR__ . '/..' . '/mockery/mockery/library/Mockery/VerificationDirector.php',
         'Mockery\\VerificationExpectation' => __DIR__ . '/..' . '/mockery/mockery/library/Mockery/VerificationExpectation.php',
         'Monolog\\Attribute\\AsMonologProcessor' => __DIR__ . '/..' . '/monolog/monolog/src/Monolog/Attribute/AsMonologProcessor.php',
+        'Monolog\\Attribute\\WithMonologChannel' => __DIR__ . '/..' . '/monolog/monolog/src/Monolog/Attribute/WithMonologChannel.php',
         'Monolog\\DateTimeImmutable' => __DIR__ . '/..' . '/monolog/monolog/src/Monolog/DateTimeImmutable.php',
         'Monolog\\ErrorHandler' => __DIR__ . '/..' . '/monolog/monolog/src/Monolog/ErrorHandler.php',
         'Monolog\\Formatter\\ChromePHPFormatter' => __DIR__ . '/..' . '/monolog/monolog/src/Monolog/Formatter/ChromePHPFormatter.php',
@@ -3455,6 +3512,7 @@ class ComposerStaticInitaa322c53454393ed775cfe4807d54a50
         'Nette\\Utils\\Html' => __DIR__ . '/..' . '/nette/utils/src/Utils/Html.php',
         'Nette\\Utils\\IHtmlString' => __DIR__ . '/..' . '/nette/utils/src/compatibility.php',
         'Nette\\Utils\\Image' => __DIR__ . '/..' . '/nette/utils/src/Utils/Image.php',
+        'Nette\\Utils\\ImageColor' => __DIR__ . '/..' . '/nette/utils/src/Utils/ImageColor.php',
         'Nette\\Utils\\ImageException' => __DIR__ . '/..' . '/nette/utils/src/Utils/exceptions.php',
         'Nette\\Utils\\ImageType' => __DIR__ . '/..' . '/nette/utils/src/Utils/ImageType.php',
         'Nette\\Utils\\Json' => __DIR__ . '/..' . '/nette/utils/src/Utils/Json.php',
@@ -3463,6 +3521,7 @@ class ComposerStaticInitaa322c53454393ed775cfe4807d54a50
         'Nette\\Utils\\Paginator' => __DIR__ . '/..' . '/nette/utils/src/Utils/Paginator.php',
         'Nette\\Utils\\Random' => __DIR__ . '/..' . '/nette/utils/src/Utils/Random.php',
         'Nette\\Utils\\Reflection' => __DIR__ . '/..' . '/nette/utils/src/Utils/Reflection.php',
+        'Nette\\Utils\\ReflectionMethod' => __DIR__ . '/..' . '/nette/utils/src/Utils/ReflectionMethod.php',
         'Nette\\Utils\\RegexpException' => __DIR__ . '/..' . '/nette/utils/src/Utils/exceptions.php',
         'Nette\\Utils\\Strings' => __DIR__ . '/..' . '/nette/utils/src/Utils/Strings.php',
         'Nette\\Utils\\Type' => __DIR__ . '/..' . '/nette/utils/src/Utils/Type.php',
@@ -3895,6 +3954,7 @@ class ComposerStaticInitaa322c53454393ed775cfe4807d54a50
         'PHPUnit\\Framework\\MockObject\\MockObject' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/MockObject/Runtime/Interface/MockObject.php',
         'PHPUnit\\Framework\\MockObject\\MockObjectApi' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/MockObject/Runtime/Api/MockObjectApi.php',
         'PHPUnit\\Framework\\MockObject\\MockObjectInternal' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/MockObject/Runtime/Interface/MockObjectInternal.php',
+        'PHPUnit\\Framework\\MockObject\\NeverReturningMethodException' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/MockObject/Exception/NeverReturningMethodException.php',
         'PHPUnit\\Framework\\MockObject\\ProxiedCloneMethod' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/MockObject/Runtime/Api/ProxiedCloneMethod.php',
         'PHPUnit\\Framework\\MockObject\\ReflectionException' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/MockObject/Exception/ReflectionException.php',
         'PHPUnit\\Framework\\MockObject\\ReturnValueGenerator' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/MockObject/Runtime/ReturnValueGenerator.php',
@@ -6476,9 +6536,9 @@ class ComposerStaticInitaa322c53454393ed775cfe4807d54a50
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInitaa322c53454393ed775cfe4807d54a50::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInitaa322c53454393ed775cfe4807d54a50::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInitaa322c53454393ed775cfe4807d54a50::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInitad697d6656e21b19281012351c1aecbc::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInitad697d6656e21b19281012351c1aecbc::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInitad697d6656e21b19281012351c1aecbc::$classMap;
 
         }, null, ClassLoader::class);
     }

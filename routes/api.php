@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\ClientController;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
@@ -31,4 +32,9 @@ Route ::apiResource('medications' , MedicationController::class);
 Route ::apiResource('pharmacies' , PharmacyController::class);
 Route::apiResource('deliveries',DeliveryController::class);
 
-// Route::apiResource('deliveries_Phone',DeliveryPhoneController::class);
+// Route::apiResource('deliveries_Phone',DeliveryPhoneController::class)
+
+
+// authentication and authorization route
+Route::post('/auth/register', [AuthController::class, 'createUser']);
+Route::post('/auth/login', [AuthController::class, 'loginUser']);
