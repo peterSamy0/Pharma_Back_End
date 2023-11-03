@@ -7,8 +7,11 @@ use Illuminate\Http\Request;
 use App\Models\Client;
 use App\Http\Resources\ClientResource;
 use App\Http\Requests\ClientRequest;
+use App\Models\User;
 use Illuminate\Support\Facades\Validator;
-
+use Exception;
+use Illuminate\Support\Facades\Hash;
+use Log;
 class ClientController extends Controller
 {
     /**
@@ -30,24 +33,38 @@ class ClientController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(ClientRequest $request)
-    {
-        $validated = $request->validated();
-        $clientPhones = $request->input('phone');
-        $client = Client::create($request->all());
+    // public function store(ClientRequest $request)
+    // {
+    //     $validated = $request->validated();
+    //     $clientPhones = $request->input('phone');
+    //     $client = Client::create($request->all());
 
-        if (is_array($clientPhones)) {
-            foreach ($clientPhones as $phone) {
-                $client->client_phone()->create(['phone' => $phone]);
-            }
-        } else {
-            $client->client_phone()->create(['phone' => $clientPhones]);
-        }
+    //     if (is_array($clientPhones)) {
+    //         foreach ($clientPhones as $phone) {
+    //             $client->client_phone()->create(['phone' => $phone]);
+    //         }
+    //     } else {
+    //         $client->client_phone()->create(['phone' => $clientPhones]);
+    //     }
 
-        return (new ClientResource($client))->response()->setStatusCode(200);
+    //     return (new ClientResource($client))->response()->setStatusCode(200);
 
-    }
-    public function createUser(Request $request)
+    // }
+    // public function store(Request $request)
+    // {
+    //     try{
+    //         $userData = $request->input('user');
+    //         $clientData = $request->input('client');
+    //         $user = User::create($userData);
+    //         $clientData['user_id'] = $user->id;
+    //         $client = Client::create($clientData);
+    
+    //         return (new ClientResource($client))->response()->setStatusCode(200);
+    //     }catch(Exception $e){
+    //         // return response()->json(['error' => $e->message()], 500);       
+    //      }
+    // }
+    public function store(Request $request)
     {
         try {
             //Validated
@@ -68,17 +85,23 @@ class ClientController extends Controller
                 ], 401);
             }
 
-            // $user = User::create([
-            //     'name' => $request->name,
-            //     'email' => $request->email,
-            //     'password' => Hash::make($request->password)
-            // ]);
+            $user = User::create([
+                'name' => $request->user['name'],
+                'email' => $request->user['email'],
+                'password' => Hash::make($request->user['password'])
+            ]);
+            $userId = $user->id;
+            $client = Client::create([
+                'user_id' => $userId,
+                'Governorate' => $request->client['Governorate'],
+                'city' => $request->client['city'],
+            ]);
 
-            // return response()->json([
-            //     'status' => true,
-            //     'message' => 'User Created Successfully',
-            //     'token' => $user->createToken("API TOKEN")->plainTextToken
-            // ], 200);
+            return response()->json([
+                'status' => true,
+                'message' => 'User Created Successfully',
+                'token' => $user->createToken("API TOKEN")->plainTextToken
+            ], 200);
 
         } catch (\Throwable $th) {
             return response()->json([
