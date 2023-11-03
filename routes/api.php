@@ -8,7 +8,9 @@ use App\Http\Controllers\MedicationController;
 use App\Http\Controllers\PharmacyController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\api\DeliveryController;
+use App\Http\Controllers\GovernorateController;
 use App\Http\Controllers\api\DeliveryPhoneController;
+use App\Models\Governorate;
 use App\Models\Order;
 
 /*
@@ -33,5 +35,6 @@ Route ::apiResource('medications' , MedicationController::class);
 Route ::apiResource('pharmacies' , PharmacyController::class);
 Route::apiResource('deliveries',DeliveryController::class);
 Route::apiResource('orders',OrderController::class);
+Route::apiResource('governorates',GovernorateController::class);
 
 // Route::apiResource('deliveries_Phone',DeliveryPhoneController::class);
