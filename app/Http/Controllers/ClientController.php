@@ -82,6 +82,8 @@ class ClientController extends Controller
             return response()->json([
                 'status' => true,
                 'message' => 'User Created Successfully',
+                'role' => $user->role,
+                'user_id' => $user->role,
                 'token' => $user->createToken("API TOKEN")->plainTextToken
             ], 200);
 

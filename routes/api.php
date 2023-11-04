@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\Logout;
 use App\Http\Controllers\ClientController;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
@@ -41,5 +42,5 @@ Route::apiResource('users',UserController::class);
 
 
 // authentication and authorization route
-Route::post('/auth/register', [AuthController::class, 'createUser']);
 Route::post('/auth/login', [AuthController::class, 'loginUser']);
+Route::post('/auth/logout', [Logout::class, 'logout']);
