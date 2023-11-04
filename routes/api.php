@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\Logout;
 use App\Http\Controllers\ClientController;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
@@ -10,6 +12,8 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\api\DeliveryController;
 use App\Http\Controllers\GovernorateController;
 use App\Http\Controllers\api\DeliveryPhoneController;
+use App\Http\Controllers\DayController;
+use App\Http\Controllers\UserController;
 use App\Models\Governorate;
 use App\Models\Order;
 
@@ -34,7 +38,14 @@ Route ::apiResource('medications' , MedicationController::class);
 
 Route ::apiResource('pharmacies' , PharmacyController::class);
 Route::apiResource('deliveries',DeliveryController::class);
+Route::apiResource('days',DayController::class);
+Route::apiResource('users',UserController::class);
 Route::apiResource('orders',OrderController::class);
 Route::apiResource('governorates',GovernorateController::class);
 
-// Route::apiResource('deliveries_Phone',DeliveryPhoneController::class);
+// Route::apiResource('deliveries_Phone',DeliveryPhoneController::class)
+
+
+// authentication and authorization route
+Route::post('/auth/login', [AuthController::class, 'loginUser']);
+Route::post('/auth/logout', [Logout::class, 'logout']);
