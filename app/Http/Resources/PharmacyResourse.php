@@ -16,10 +16,6 @@ class PharmacyResourse extends JsonResource
     {
         // return parent::toArray($request);
         return [
-            "id" => $this->id,
-            "name" => $this->name,
-            "password" => $this->password,
-            "email" => $this->email, 
             "image" => $this->image,
             "licence_number" => $this->licence_number,
             "bank_account" => $this->bank_account,    
@@ -28,9 +24,9 @@ class PharmacyResourse extends JsonResource
             "street" => $this->street, 
             "opening" => $this->opening,
             "closing" => $this->closing,  
-            'phone' => $this->phone,
-            'medication' => $this->medications,
-            'days_off' => $this->days->id,
+            // 'phone' => $this->phone,
+            // 'medication' => $this->medications,
+            'name' => $this->user->name,
         ];
     }
 }
