@@ -7,6 +7,7 @@ use App\Models\Order;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use App\Http\Requests\OrderRequest;
 class OrderController extends Controller
 {
     /**
@@ -28,21 +29,8 @@ class OrderController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(orderRequest $request)
     {
-        // dd($request);
-        //validation, security
-        $validator = Validator::make($request->all(),[
-            'pharmacy_id' => 'required | numeric',
-            'delivery_id'=> 'nullable | numeric',
-            'ordMedications' => 'required|array',
-            'ordMedications.*.key' => 'required|numeric',
-            'ordMedications.*.value' => 'required|numeric',
-            
-        ]);
-        if($validator->fails()){
-            return response()->json(['errors' => $validator->errors()], 422);
-        };
        
         $savedOrder = Order::create([
             'pharmacy_id' => $request->pharmacy_id,
