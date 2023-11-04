@@ -8,11 +8,14 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MedicationController;
 use App\Http\Controllers\PharmacyController;
-
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\api\DeliveryController;
+use App\Http\Controllers\GovernorateController;
 use App\Http\Controllers\api\DeliveryPhoneController;
 use App\Http\Controllers\DayController;
 use App\Http\Controllers\UserController;
+use App\Models\Governorate;
+use App\Models\Order;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,6 +40,8 @@ Route ::apiResource('pharmacies' , PharmacyController::class);
 Route::apiResource('deliveries',DeliveryController::class);
 Route::apiResource('days',DayController::class);
 Route::apiResource('users',UserController::class);
+Route::apiResource('orders',OrderController::class);
+Route::apiResource('governorates',GovernorateController::class);
 
 // Route::apiResource('deliveries_Phone',DeliveryPhoneController::class)
 

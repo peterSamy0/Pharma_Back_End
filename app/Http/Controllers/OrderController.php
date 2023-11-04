@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\OrderResource;
 use App\Models\Order;
+use Exception;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Validator;
 class OrderController extends Controller
 {
     /**
@@ -15,7 +17,12 @@ class OrderController extends Controller
         // middlware to view only pharmacy's orders
         // ......
         $orders = Order::all();
-        return response()->json($orders, 200);
+        $returnOrders = [];
+        foreach($orders as $order){
+            array_push($returnOrders,new OrderResource($order));
+        }
+        // dd($returnOrders);
+        return response()->json($returnOrders, 200);
     }
 
     /**
@@ -23,28 +30,37 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
+        // dd($request);
         //validation, security
-        $orderForm = $request->validate([
-            'pharmacy_id' => 'required',
-            'delivery_id'=> 'nullable',
-            'ordMedications.*.key' => 'required',
-            'ordMedications.*.value' => 'required',
+        $validator = Validator::make($request->all(),[
+            'pharmacy_id' => 'required | numeric',
+            'delivery_id'=> 'nullable | numeric',
+            'ordMedications' => 'required|array',
+            'ordMedications.*.key' => 'required|numeric',
+            'ordMedications.*.value' => 'required|numeric',
             
         ]);
-        $newOrder = new Order();
-        $newOrder->client_id = auth()->id();
-        $newOrder->pharmacy_id = $orderForm['pharmacy_id'];
-        $savedOrder = Order::create($newOrder);
+        if($validator->fails()){
+            return response()->json(['errors' => $validator->errors()], 422);
+        };
+       
+        $savedOrder = Order::create([
+            'pharmacy_id' => $request->pharmacy_id,
+            'client_id' => $request->client_id //auth()->id(); when making authentication
+        ]);
         // insert ordered medications
         // data will come from frontend in an assoc. array, 'medication_id' => amount
         $ordMedications = $request->input('ordMedications');
-        foreach($ordMedications as $medicineId => $amount){
+        
+        foreach ($ordMedications as $ordMedication) {
+            $medicineId = $ordMedication['key'];
+            $amount = $ordMedication['value'];
             $savedOrder->orderMedications()->create([
                 'medicine_id' => $medicineId,
                 'amount' => $amount,
             ]);
         }
-        return response()->json([$savedOrder,$savedOrder->orderMedications ], 200);
+        return response()->json($savedOrder, 200);
         
     }
     
@@ -53,33 +69,56 @@ class OrderController extends Controller
      * Display the specified resource.
      */
     public function show(Order $order)
-    {
-        if($order->id){
-            return response()->json($order, 200);
-        }
-        return abort(404);
+{
+    // Eager load the 'orderMedications' relationship along with the 'medication' relationship for each 'OrderMedication'
+    $order = Order::with('orderMedications.medication')->find($order->id);
+
+    if ($order) {
+        return new OrderResource($order);
     }
+
+    return abort(404);
+}
+
 
     /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, Order $order)
     {
+        // if(!$order || $order->client_id !== auth()->user()->id){
+        //     return abort(404);
+        // }
         if($order->status == "pending"){
-            $orderForm = $request->validate([
-                'ordMedications.*.key' => 'required',
-                'ordMedications.*.value' => 'required',
+            $validator = Validator::make($request->all(),[
+                'ordMedications' => 'required|array',
+                'ordMedications.*.key' => 'required|numeric',
+                'ordMedications.*.value' => 'required|numeric',
                 
             ]);
+            if($validator->fails()){
+                return response()->json(['errors' => $validator->errors()], 422);
+            };
             $ordMedications = $request->input('ordMedications');
-            foreach($ordMedications as $medicineId => $amount){
-                $order->orderMedications()->update([
-                    'medicine_id' => $medicineId,
-                    'amount' => $amount,
-                ]);
+            try{
+                foreach ($ordMedications as $ordMedication) {
+                    $medicineId = $ordMedication['key'];
+                    $amount = $ordMedication['value'];
+                    $order->orderMedications()->update([
+                        'medicine_id' => $medicineId,
+                        'amount' => $amount,
+                    ]);
+                
+                }
+            }catch(Exception $e){
+                return response()->json($e,500);
             }
-            return response()->json([$order,$order->orderMedications ], 200);
+            // return response()->json([$order,$order->orderMedications ], 200);
+            return $this->show($order);
+        }else{
+            return response()->json("sorry, the order has been prepared by the pharmacy",200);
         }
+        
     }
 
     /**
