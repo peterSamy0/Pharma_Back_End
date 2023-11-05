@@ -2,6 +2,9 @@
 
 namespace Database\Factories;
 
+use App\Models\City;
+use App\Models\Governorate;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -16,14 +19,13 @@ class DeliveryFactory extends Factory
      */
     public function definition(): array
     {
+        $deliveryUser = User::where('role', 'delivery')->inRandomOrder()->first();
         return [
-            //
-            'name'=>$this->faker->name,
-            "Governorate"=>$this->faker->city,
-            "city"=>$this->faker->city,
-            "email"=>$this->faker->SafeEmail,
-            "password"=>bcrypt($this->faker->password),
-            "national_ID"=>$this->faker->unique()->numberBetween(),
+            'user_id' => $deliveryUser->id,
+            'governorate_id' => Governorate::inRandomOrder()->first('id'),
+            'city_id' => City::inRandomOrder()->first('id'),
+            "national_ID"=>fake()->unique()->randomNumber(5),
+            "available" => fake()->boolean()
         ];
     }
 }

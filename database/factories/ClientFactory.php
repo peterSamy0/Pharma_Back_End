@@ -1,6 +1,10 @@
 <?php
 
 namespace Database\Factories;
+
+use App\Models\City;
+use App\Models\Governorate;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -15,12 +19,11 @@ class ClientFactory extends Factory
      */
     public function definition(): array
     {
+        $clientUser = User::where('role', 'client')->inRandomOrder()->first();
         return [
-            'name' => $this->faker->name,
-            'email' => $this->faker->safeEmail,
-            'password' => bcrypt('password'),
-            'Governorate' => $this->faker->state,
-            'city' => $this->faker->city,
+            'user_id' => $clientUser->id,
+            'governorate_id' => Governorate::inRandomOrder()->first('id'),
+            'city_id' => City::inRandomOrder()->first('id'),
         ];
     }
 }

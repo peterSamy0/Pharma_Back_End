@@ -13,7 +13,7 @@ class Day extends Model
 
     protected $fillable = [
         'id',
-        'days',
+        'day',
     ];
 
     function days(){

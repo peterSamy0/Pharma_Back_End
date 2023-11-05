@@ -8,10 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Governorate extends Model
 {
     use HasFactory;
-    protected $fillable = [
-       
-        'governorate'
-    ];
+    protected $fillable = ['governorate'];
     public function cities(){
         return $this->hasMany(City::class);
     }
