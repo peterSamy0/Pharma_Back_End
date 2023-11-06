@@ -45,8 +45,8 @@ class PharmacyController extends Controller
                 'user.name' => 'required',
                 'user.email' => 'required|email|unique:users,email',
                 'user.password' => 'required',
-                'pharmacy.Governorate' => 'required',
-                'pharmacy.city' => 'required',
+                'pharmacy.governorate_id' => 'required',
+                'pharmacy.city_id' => 'required',
                 'pharmacy.street' => 'required',
                 'pharmacy.licence_number' => 'required',
                 'pharmacy.opening' => 'required',
@@ -73,14 +73,14 @@ class PharmacyController extends Controller
                 'image' => $request->pharmacy['image'],
                 'licence_number' => $request->pharmacy['licence_number'],
                 'bank_account' => $request->pharmacy['bank_account'],
-                'Governorate' => $request->pharmacy['Governorate'],
-                'city' => $request->pharmacy['city'],
+                'governorate_id' => $request->pharmacy['governorate_id'],
+                'city_id' => $request->pharmacy['city_id'],
                 'street' => $request->pharmacy['street'],
                 'opening' => $request->pharmacy['opening'],
                 'closing' => $request->pharmacy['closing'],
                 'user_id' => $user->id,
-            ]);
-
+            ]);            	
+            
             $daysOff = $request->input('daysOff');
             if($daysOff){
                 foreach($daysOff as $dayOff){
