@@ -33,20 +33,33 @@ class PharmacyController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(PharmacyRequest $request)
+    public function store(Request $request)
     {
         try {
             //Validated
-            $validator = $request->validated();
-           
-            //validations error messages 
-            if ($validator->fails()) {
+            $validateUser = Validator::make($request->all(), 
+            [
+                'user.name' => 'required',
+                'user.email' => 'required|email|unique:users,email',
+                'user.password' => 'required',
+                'pharmacy.governorate_id' => 'required',
+                'pharmacy.city_id' => 'required',
+                'pharmacy.street' => 'required',
+                'pharmacy.licence_number' => 'required',
+                'pharmacy.opening' => 'required',
+                'pharmacy.closing' => 'required',
+                'pharmacy.bank_account' => 'required',
+                'pharmacy.image' => 'required'
+            ]);
+
+            if($validateUser->fails()){
                 return response()->json([
                     'status' => false,
-                    'message' => 'Validation error',
-                    'errors' => $validator->errors()
-                ], 422);
+                    'message' => 'validation error',
+                    'errors' => $validateUser->errors()
+                ], 401);
             }
+
             $user = User::create([
                 'name' => $request->user['name'],
                 'email' => $request->user['email'],
