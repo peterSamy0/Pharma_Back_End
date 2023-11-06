@@ -126,7 +126,7 @@ class PharmacyController extends Controller
             $user->name = $request->user['name'];
             $user->email = $request->user['email'];
             $user->password = Hash::make($request->user['password']);
-            $user->update();
+            $user->save();
             $pharmacy->image = $request->pharmacy['image'];
             $pharmacy->licence_number = $request->pharmacy['licence_number'];
             $pharmacy->bank_account = $request->pharmacy['bank_account'];
@@ -136,7 +136,7 @@ class PharmacyController extends Controller
             $pharmacy->opening = $request->pharmacy['opening'];
             $pharmacy->closing = $request->pharmacy['closing'];
             $pharmacy->user_id = $user->id;
-            $pharmacy->update();
+            $pharmacy->save();
     
             $daysOff = $request->input('daysOff');
             if ($daysOff) {
