@@ -12,6 +12,14 @@ class Order extends Model
     use HasFactory;
     use SoftDeletes;
 
+    // filalble fields
+    protected $fillable = [
+       
+        'client_id' ,
+        "pharmacy_id",
+        "delivery_id",
+        "status"
+    ];
     protected $dates = ['deleted_at']; 
     // order has many order medications
     public function orderMedications(){
@@ -26,12 +34,8 @@ class Order extends Model
         return $this->belongsTo(Delivery::class);
     }
 
-    // filable fields
-    protected $fillable = [
-       
-        'client_id' ,
-        "pharmacy_id",
-        "delivery_id",
-        "status"
-    ];
+    public function pharmacy(){
+        return $this->belongsTo(Pharmacy::class);
+    }
+
 }

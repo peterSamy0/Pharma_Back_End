@@ -18,4 +18,7 @@ class PharmacyMedication extends Model
     function pharmacies(){
         return $this->hasMany(Pharmacy::class);
     }
+    function medication(){
+        return $this->belongsTo(Medication::class);
+    }
 }

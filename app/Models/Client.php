@@ -29,5 +29,8 @@ class Client extends Model
     public function city(){
         return $this->belongsTo(City::class);
     }   
+    public function governorate(){
+        return $this->belongsTo(Governorate::class);
+    } 
 }
 

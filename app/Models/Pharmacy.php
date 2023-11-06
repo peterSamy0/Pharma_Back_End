@@ -26,12 +26,8 @@ class Pharmacy extends Model
         'user_id',
     ];
 
-    function medications(){
+    function pharmacyMedications(){
         return $this->hasMany(PharmacyMedication::class);
-    }
-
-    function phone(){
-        return $this->hasMany(PharmacyPhone::class);
     }
 
     function days (){
@@ -42,5 +38,11 @@ class Pharmacy extends Model
     }
     public function user(){
         return $this->belongsTo(User::class);
+    }
+    public function governorate(){
+        return $this->belongsTo(Governorate::class);
+    }
+    public function city(){
+        return $this->belongsTo(City::class);
     }
 }

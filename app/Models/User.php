@@ -49,6 +49,10 @@ class User extends Authenticatable
     }
 
     public function pharmacy(){
-        return $this->hasMany(Pharmacy::class);
+        return $this->belongsTo(Pharmacy::class);
+    }
+
+    public function delivery(){
+        return $this->belongsTo(Delivery::class);
     }
 }
