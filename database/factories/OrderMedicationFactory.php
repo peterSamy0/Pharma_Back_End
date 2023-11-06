@@ -20,8 +20,8 @@ class OrderMedicationFactory extends Factory
     public function definition(): array
     {
         return [
-            'order_id'=> Order::inRandomOrder()->first()->id ,
-            "medicine_id"=> Medication::inRandomOrder()->first()->id,
+            'order_id'=> Order::inRandomOrder()->first('id'),
+            "medicine_id"=> Medication::inRandomOrder()->first('id'),
             "amount" => $this->faker->randomDigit()
         ];
     }

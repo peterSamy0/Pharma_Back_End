@@ -18,9 +18,9 @@ class MedicationFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => $this->faker->name,
-            'price' => $this->faker->randomNumber(2),
-            'image' =>$this->faker->image,  
+            'name' => fake()->name(),
+            'price' => fake()->randomNumber(2),
+            'image' =>fake()->image(),  
             'category_id' => \App\Models\Category::inRandomOrder()->first()->id,
         ];
     }

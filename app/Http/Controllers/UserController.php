@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -13,8 +14,8 @@ class UserController extends Controller
      */
     public function index()
     {
-     $users = User::all();
-     return $users;   
+        $users = User::all();
+        return $users; 
     }
 
     /**
@@ -48,5 +49,17 @@ class UserController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+    public function getuser()
+    {
+        $user = Auth::user();
+        $userData = [
+            'id' => $user->id,
+            'name' => $user->name,
+            'email' => $user->email,
+            'role' => $user->role,
+        ];
+    
+        return response()->json($userData, 200);
     }
 }

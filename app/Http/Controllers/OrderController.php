@@ -57,16 +57,12 @@ class OrderController extends Controller
      * Display the specified resource.
      */
     public function show(Order $order)
-{
-    // Eager load the 'orderMedications' relationship along with the 'medication' relationship for each 'OrderMedication'
-    $order = Order::with('orderMedications.medication')->find($order->id);
-
-    if ($order) {
-        return new OrderResource($order);
+    {
+        if ($order) {
+            return new OrderResource($order);
+        }
+        return abort(404);
     }
-
-    return abort(404);
-}
 
 
     /**

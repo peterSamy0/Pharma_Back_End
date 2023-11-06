@@ -2,6 +2,9 @@
 
 namespace Database\Factories;
 
+use App\Models\City;
+use App\Models\Governorate;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -16,19 +19,17 @@ class PharmacyFactory extends Factory
      */
     public function definition(): array
     {
+        $pharamcyUser = User::where('role', 'pharmacy')->inRandomOrder()->first();
         return [
-            'name' => $this->faker->name,
-            'password' => bcrypt('password'),
-            'email' => $this->faker->unique()->safeEmail,
-            'image' => $this->faker->image,
-            'licence_number' => $this->faker->unique()->randomNumber(3),
-            'bank_account' => $this->faker->randomNumber(4),
-            'Governorate' => $this->faker->state,
-            'city' => $this->faker->city,
-            'street' => $this->faker->streetAddress,
-            'opening' => $this->faker->time,
-            'closing' => $this->faker->time,
-
+            'user_id' => $pharamcyUser->id,
+            'image' => fake()->image(),
+            'licence_number' => fake()->unique()->randomNumber(5),
+            'bank_account' => fake()->randomNumber(5),
+            'governorate_id' => Governorate::inRandomOrder()->first('id'),
+            'city_id' => City::inRandomOrder()->first('id'),
+            'street' => fake()->streetAddress(),
+            'opening' => fake()->time(),
+            'closing' => fake()->time(),
         ];
     }
 }

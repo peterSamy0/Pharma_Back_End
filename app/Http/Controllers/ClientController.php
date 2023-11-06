@@ -18,11 +18,6 @@ class ClientController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
-        //validation or security
-
-        $clients = Client::all();
 
         // $clients = Client::with('phone')->get();
         // $clientsWithPhones = $clients->map(function ($client) {
@@ -30,9 +25,13 @@ class ClientController extends Controller
         //     unset($client['phone']);
         //     return $client;
         // });
+        public function index()
+        {
+            $clients = Client::all();
         
-        return response()->json($clients, 200);    
-    }
+            return response()->json( ClientResource::collection($clients), 200);
+        } 
+
     /**
      * Store a newly created resource in storage.
      */

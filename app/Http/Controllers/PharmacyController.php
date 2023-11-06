@@ -10,17 +10,24 @@ use App\Http\Requests\PharmacyRequest;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-
+use Illuminate\Support\Facades\Auth;
 class PharmacyController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {   
-        $pharmacy = Pharmacy::all();
-    return PharmacyResourse::collection($pharmacy);
-       
+        try{
+            $pharmacy = Pharmacy::all();
+            return PharmacyResourse::collection($pharmacy);
+           
+        }catch(\Throwable $th){
+            return response()->json([
+                'status'=> false,
+                "message" => $th->getMessage()
+            ]);
+        }
     }
 
     /**
