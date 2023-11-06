@@ -22,9 +22,14 @@ class PharmacyRequest extends FormRequest
      */
     public function rules(): array
     {
+        $userId = $this->route('pharmacy')->user_id;
         return [
             'user.name' => 'required',
-            'user.email' => 'required|email|unique:users,email',
+            'user.email' => [
+                'required',
+                'email',
+                Rule::unique('users', 'email')->ignore($userId),
+            ],
             'user.password' => 'required',
             'pharmacy.governorate_id' => 'required',
             'pharmacy.city_id' => 'required',

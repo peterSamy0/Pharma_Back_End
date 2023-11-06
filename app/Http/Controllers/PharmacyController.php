@@ -105,31 +105,39 @@ class PharmacyController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update( PharmacyRequest $request, Pharmacy $pharmacy)
-    {   
-        $user = Auth::user();
-        // $user = User::find($pharmacy->user_id);
-        // $user->name = $request->user['name'];
-        // $user->email = $request->user['email'];
-        // $user->password = Hash::make($request->user['password']);
-        // $user->role = 'pharmacy';
-        // $user->update();
+    public function update( Request $request, Pharmacy $pharmacy)
+    {  
+        try{
 
-        // // Update pharmacy
-        // $pharmacyToUpdate = Pharmacy::where('user_id', $user->id)->first();
-        // $pharmacyToUpdate->image = $request->pharmacy['image'];
-        // $pharmacyToUpdate->licence_number = $request->pharmacy['licence_number'];
-        // $pharmacyToUpdate->bank_account = $request->pharmacy['bank_account'];
-        // $pharmacyToUpdate->governorate_id = $request->pharmacy['governorate_id'];
-        // $pharmacyToUpdate->city_id = $request->pharmacy['city_id'];
-        // $pharmacyToUpdate->street = $request->pharmacy['street'];
-        // $pharmacyToUpdate->opening = $request->pharmacy['opening'];
-        // $pharmacyToUpdate->closing = $request->pharmacy['closing'];
-        // $pharmacyToUpdate->user_id = $user->id;
-        // $pharmacyToUpdate->update();
-
-        // $daysOff = $request->input('daysOff');
-        return response()->json('successfully updated...', 200);
+            $user = User::find($pharmacy->user_id);
+            $user->name = $request->user['name'];
+            $user->email = $request->user['email'];
+            $user->password = Hash::make($request->user['password']);
+            $user->update();
+            $pharmacy->image = $request->pharmacy['image'];
+            $pharmacy->licence_number = $request->pharmacy['licence_number'];
+            $pharmacy->bank_account = $request->pharmacy['bank_account'];
+            $pharmacy->governorate_id = $request->pharmacy['governorate_id'];
+            $pharmacy->city_id = $request->pharmacy['city_id'];
+            $pharmacy->street = $request->pharmacy['street'];
+            $pharmacy->opening = $request->pharmacy['opening'];
+            $pharmacy->closing = $request->pharmacy['closing'];
+            $pharmacy->user_id = $user->id;
+            $pharmacy->update();
+    
+            $daysOff = $request->input('daysOff');
+            if ($daysOff) {
+                foreach ($daysOff as $dayOff) {
+                    PharmacyDayOff::where('pharmacy_id', $pharmacy->id)
+                        ->update([
+                            'day_id' =>  $dayOff, // Specify the column name and the new value to update
+                        ]);
+                }
+            }
+            return response()->json($user, 200);
+        } catch(\Throwable $th){
+            return response()->json($th->getMessage(), 403);
+        }
     }
 
     /**
