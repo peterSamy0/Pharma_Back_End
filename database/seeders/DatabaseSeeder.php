@@ -19,8 +19,8 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        $this->call(GovernorateSeeder::class); 
-        $this->call(CitySeeder::class); 
+        // $this->call(GovernorateSeeder::class); //has an insertion api request
+        // $this->call(CitySeeder::class); //has an insertion api request
         $this->call(UserSeeder::class);
         $this->call(ClientsTableSeeder::class);
         $this->call(PharmacySeeder::class);
