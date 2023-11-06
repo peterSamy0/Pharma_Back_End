@@ -17,8 +17,8 @@ class PharmacyDayOff extends Model
         'day_id',
     ];
 
-    function dayoff(){
-        return $this->hasMany(Day::class);
+    function day(){
+        return $this->belongsTo(Day::class);
     }
 
     function pharmacy(){

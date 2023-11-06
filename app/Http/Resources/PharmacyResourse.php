@@ -30,6 +30,12 @@ class PharmacyResourse extends JsonResource
                     "street" => $pharmacy->street, 
                     "opening" => $pharmacy->opening,
                     "closing" => $pharmacy->closing,  
+                    "daysOff" => $pharmacy->daysOff->map(function ($day) {
+                        return [
+                            "day_id" => $day->day_id,
+                            "day_name" => $day->day->day
+                        ];
+                    }),    
                     // 'phone' => $this->phone,
                     'medication' => $pharmacy->pharmacyMedications->map(function ($medicine){
                         return[
@@ -54,6 +60,12 @@ class PharmacyResourse extends JsonResource
             "street" => $this->street, 
             "opening" => $this->opening,
             "closing" => $this->closing,  
+            "daysOff" => $this->daysOff->map(function ($day) {
+                return [
+                    "day_id" => $day->day_id,
+                    "day_name" => $day->day->day
+                ];
+            }),  
             // 'phone' => $this->phone,
             'medication' => $this->pharmacyMedications->map(function ($medicine){
                 return[

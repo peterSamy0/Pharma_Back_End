@@ -16,8 +16,10 @@ class Day extends Model
         'day',
     ];
 
-    function days(){
-        return $this->hasMany(PharmacyDayOff::class);
+    function daysOff(){
+        return $this->belongsTo(PharmacyDayOff::class);
     }
+
+
 }
 

@@ -30,7 +30,7 @@ class Pharmacy extends Model
         return $this->hasMany(PharmacyMedication::class);
     }
 
-    function days (){
+    function daysOff (){
         return $this->hasMany(PharmacyDayOff::class);
     }
     public function orders(){
@@ -45,4 +45,5 @@ class Pharmacy extends Model
     public function city(){
         return $this->belongsTo(City::class);
     }
+
 }

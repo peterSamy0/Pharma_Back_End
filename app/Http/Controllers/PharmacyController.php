@@ -33,36 +33,20 @@ class PharmacyController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(PharmacyRequest $request)
     {
-        // $validated = $request->validated();
-        // $pharmacy= Pharmacy::create($request->all());
-        // return  new PharmacyResourse($pharmacy);
         try {
             //Validated
-            $validateUser = Validator::make($request->all(), 
-            [
-                'user.name' => 'required',
-                'user.email' => 'required|email|unique:users,email',
-                'user.password' => 'required',
-                'pharmacy.governorate_id' => 'required',
-                'pharmacy.city_id' => 'required',
-                'pharmacy.street' => 'required',
-                'pharmacy.licence_number' => 'required',
-                'pharmacy.opening' => 'required',
-                'pharmacy.closing' => 'required',
-                'pharmacy.bank_account' => 'required',
-                'pharmacy.image' => 'required'
-            ]);
-
-            if($validateUser->fails()){
+            $validator = $request->validated();
+           
+            //validations error messages 
+            if ($validator->fails()) {
                 return response()->json([
                     'status' => false,
-                    'message' => 'validation error',
-                    'errors' => $validateUser->errors()
-                ], 401);
+                    'message' => 'Validation error',
+                    'errors' => $validator->errors()
+                ], 422);
             }
-
             $user = User::create([
                 'name' => $request->user['name'],
                 'email' => $request->user['email'],
@@ -123,9 +107,29 @@ class PharmacyController extends Controller
      */
     public function update( PharmacyRequest $request, Pharmacy $pharmacy)
     {   
-        $validated = $request->validated();
-        $pharmacy->update($request->all());
-        return new PharmacyResourse ($pharmacy);
+        $user = Auth::user();
+        // $user = User::find($pharmacy->user_id);
+        // $user->name = $request->user['name'];
+        // $user->email = $request->user['email'];
+        // $user->password = Hash::make($request->user['password']);
+        // $user->role = 'pharmacy';
+        // $user->update();
+
+        // // Update pharmacy
+        // $pharmacyToUpdate = Pharmacy::where('user_id', $user->id)->first();
+        // $pharmacyToUpdate->image = $request->pharmacy['image'];
+        // $pharmacyToUpdate->licence_number = $request->pharmacy['licence_number'];
+        // $pharmacyToUpdate->bank_account = $request->pharmacy['bank_account'];
+        // $pharmacyToUpdate->governorate_id = $request->pharmacy['governorate_id'];
+        // $pharmacyToUpdate->city_id = $request->pharmacy['city_id'];
+        // $pharmacyToUpdate->street = $request->pharmacy['street'];
+        // $pharmacyToUpdate->opening = $request->pharmacy['opening'];
+        // $pharmacyToUpdate->closing = $request->pharmacy['closing'];
+        // $pharmacyToUpdate->user_id = $user->id;
+        // $pharmacyToUpdate->update();
+
+        // $daysOff = $request->input('daysOff');
+        return response()->json('successfully updated...', 200);
     }
 
     /**
@@ -137,3 +141,34 @@ class PharmacyController extends Controller
         return " Delete the pharmacy is Done";
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+// example for insert data for pharmacy 
+// {
+//     "user": {
+//         "name" : "test" ,
+//         "email" : "tes1t@gmail.com" ,
+//         "password" :  "123456789"
+//     },
+//     "pharmacy" : {  
+//         "image" : "test.png",
+//         "licence_number" : 147856932,
+//         "bank_account" : 2589634,
+//         "governorate_id" : 20,
+//         "city_id" : 1,
+//         "street" : "street test",
+//         "opening" : "12:00:00",
+//         "closing" : "06:00:00"
+//     },
+//     "daysOff": [1, 2]
