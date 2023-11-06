@@ -36,23 +36,13 @@ class PharmacyController extends Controller
     public function store(PharmacyRequest $request)
     {
         try {
-            //Validated
-            $validator = $request->validated();
-           
-            //validations error messages 
-            if ($validator->fails()) {
-                return response()->json([
-                    'status' => false,
-                    'message' => 'Validation error',
-                    'errors' => $validator->errors()
-                ], 422);
-            }
             $user = User::create([
                 'name' => $request->user['name'],
                 'email' => $request->user['email'],
                 'password' => Hash::make($request->user['password']),
                 'role' => 'pharmacy'
             ]);
+            
             $pharmacy = Pharmacy::create([
                 'image' => $request->pharmacy['image'],
                 'licence_number' => $request->pharmacy['licence_number'],
@@ -108,7 +98,6 @@ class PharmacyController extends Controller
     public function update( Request $request, Pharmacy $pharmacy)
     {  
         try{
-
             $user = User::find($pharmacy->user_id);
             $user->name = $request->user['name'];
             $user->email = $request->user['email'];
