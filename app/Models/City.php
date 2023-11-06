@@ -14,10 +14,17 @@ class City extends Model
         'governorate_id'
     ];
     // city has many clients
-    public function clients(){
+    public function client(){
         return $this->hasMany(Client::class);
     }
     public function governorate(){
         return $this->belongsTo(Governorate::class);
     }
+    public function pharmacy(){
+        return $this->belongsTo(Pharmacy::class);
+    }
+    public function delivery(){
+        return $this->belongsTo(Delivery::class);
+    }
+    
 }
