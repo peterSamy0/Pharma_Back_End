@@ -19,7 +19,8 @@ class PharmacyResourse extends JsonResource
         if($this instanceof Collection){
             $this->map(function ($pharmacy){
                 return[
-                    "pharmacy name" => $pharmacy->user->name,
+                    "pharmacy_name" => $pharmacy->user->name,
+                    "pharmacy_email" => $pharmacy->user->email,
                     "image" => $pharmacy->image,
                     "licence_number" => $pharmacy->licence_number,
                     "bank_account" => $pharmacy->bank_account,    
@@ -29,12 +30,20 @@ class PharmacyResourse extends JsonResource
                     "opening" => $pharmacy->opening,
                     "closing" => $pharmacy->closing,  
                     // 'phone' => $this->phone,
-                    'medication' => $this->medications,
+                    'medication' => $pharmacy->pharmacyMedications->map(function ($medicine){
+                        return[
+                            'medicine_name' => $medicine->medication->name,
+                            'medicine_price' => $medicine->medication->price,
+                            'medicine_image' => $medicine->medication->image,
+                            'medicine_category' => $medicine->medication->category->name,
+                        ];
+                    }),
                 ];
             });
         }
         return [
-            "pharmacy name" => $this->user->name,
+            "pharmacy_name" => $this->user->name,
+            "pharmacy_email" => $this->user->email,
             "image" => $this->image,
             "licence_number" => $this->licence_number,
             "bank_account" => $this->bank_account,    
@@ -46,10 +55,10 @@ class PharmacyResourse extends JsonResource
             // 'phone' => $this->phone,
             'medication' => $this->pharmacyMedications->map(function ($medicine){
                 return[
-                    'medicine name' => $medicine->medication->name,
-                    'medicine price' => $medicine->medication->price,
-                    'medicine image' => $medicine->medication->image,
-                    'medicine category' => $medicine->medication->category->name,
+                    'medicine_name' => $medicine->medication->name,
+                    'medicine_price' => $medicine->medication->price,
+                    'medicine_image' => $medicine->medication->image,
+                    'medicine_category' => $medicine->medication->category->name,
                 ];
             }),
         ];

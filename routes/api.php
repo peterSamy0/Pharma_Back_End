@@ -33,9 +33,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::apiResource('clients', ClientController::class);
-
 Route ::apiResource('medications' , MedicationController::class);
-
 Route ::apiResource('pharmacies' , PharmacyController::class);
 Route::apiResource('deliveries',DeliveryController::class);
 Route::apiResource('days',DayController::class);
