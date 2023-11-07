@@ -165,16 +165,7 @@ class PharmacyController extends Controller
 
 
 
-
-
-
-
-
-
-
-
-
-
+/**  */
 // example for insert data for pharmacy 
 // {
 //     "user": {

@@ -49,22 +49,22 @@ class ClientController extends Controller
     {
         try {
             //Validated
-            // $validateUser = Validator::make($request->all(), 
-            // [
-            //     'user.name' => 'required',
-            //     'user.email' => 'required|email|unique:users,email',
-            //     'user.password' => 'required',
-            //     'client.governorate_id' => 'required',
-            //     'client.city_id' => 'required'
-            // ]);
+            $validateUser = Validator::make($request->all(), 
+            [
+                'user.name' => 'required',
+                'user.email' => 'required|email|unique:users,email',
+                'user.password' => 'required',
+                'client.governorate_id' => 'required',
+                'client.city_id' => 'required'
+            ]);
 
-            // if($validateUser->fails()){
-            //     return response()->json([
-            //         'status' => false,
-            //         'message' => 'validation error',
-            //         'errors' => $validateUser->errors()
-            //     ], 401);
-            // }
+            if($validateUser->fails()){
+                return response()->json([
+                    'status' => false,
+                    'message' => 'validation error',
+                    'errors' => $validateUser->errors()
+                ], 401);
+            }
 
             $user = User::create([
                 'name' => $request->user['name'],
@@ -158,5 +158,78 @@ class ClientController extends Controller
 //     "client" : {  
 //         "governorate_id" : 20,
 //         "city_id" : 45
+//     }
+// }
+
+
+
+// view client 
+// {
+//     "data": {
+//         "user_id": 1,
+//         "client_name": "Anabel Bechtelar",
+//         "client_email": "schiller.aaliyah@example.org",
+//         "Governorate": "District of Columbia",
+//         "city": "Bauchfort",
+//         "orders": [
+//             {
+//                 "id": 5,
+//                 "client name": "Anabel Bechtelar",
+//                 "pharmacy name": "Miss Stacey Tillman III",
+//                 "delivery name": "Dennis Wisoky",
+//                 "status": "pending",
+//                 "created at": "2023-11-05T20:10:13.000000Z",
+//                 "updated at": "2023-11-05T20:10:13.000000Z",
+//                 "orderMedications": [
+//                     {
+//                         "medicine id": 75,
+//                         "amount": 1,
+//                         "created_at": "2023-11-05T20:10:20.000000Z",
+//                         "updated_at": "2023-11-05T20:10:20.000000Z"
+//                     },
+//                     {
+//                         "medicine id": 19,
+//                         "amount": 1,
+//                         "created_at": "2023-11-05T20:10:21.000000Z",
+//                         "updated_at": "2023-11-05T20:10:21.000000Z"
+//                     },
+//                     {
+//                         "medicine id": 16,
+//                         "amount": 9,
+//                         "created_at": "2023-11-05T20:10:22.000000Z",
+//                         "updated_at": "2023-11-05T20:10:22.000000Z"
+//                     }
+//                 ]
+//             },
+//             {
+//                 "id": 19,
+//                 "client name": "Anabel Bechtelar",
+//                 "pharmacy name": "Dr. Michelle Huel Jr.",
+//                 "delivery name": "Rubye Schimmel",
+//                 "status": "accepted",
+//                 "created at": "2023-11-05T20:10:13.000000Z",
+//                 "updated at": "2023-11-05T20:10:13.000000Z",
+//                 "orderMedications": [
+//                     {
+//                         "medicine id": 31,
+//                         "amount": 2,
+//                         "created_at": "2023-11-05T20:10:23.000000Z",
+//                         "updated_at": "2023-11-05T20:10:23.000000Z"
+//                     },
+//                     {
+//                         "medicine id": 89,
+//                         "amount": 4,
+//                         "created_at": "2023-11-05T20:10:24.000000Z",
+//                         "updated_at": "2023-11-05T20:10:24.000000Z"
+//                     },
+//                     {
+//                         "medicine id": 69,
+//                         "amount": 3,
+//                         "created_at": "2023-11-05T20:10:26.000000Z",
+//                         "updated_at": "2023-11-05T20:10:26.000000Z"
+//                     }
+//                 ]
+//             }
+//         ]
 //     }
 // }
