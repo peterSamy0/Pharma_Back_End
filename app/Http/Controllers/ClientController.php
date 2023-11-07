@@ -49,33 +49,33 @@ class ClientController extends Controller
     {
         try {
             //Validated
-            $validateUser = Validator::make($request->all(), 
-            [
-                'user.name' => 'required',
-                'user.email' => 'required|email|unique:users,email',
-                'user.password' => 'required',
-                'client.Governorate' => 'required',
-                'client.city' => 'required'
-            ]);
+            // $validateUser = Validator::make($request->all(), 
+            // [
+            //     'user.name' => 'required',
+            //     'user.email' => 'required|email|unique:users,email',
+            //     'user.password' => 'required',
+            //     'client.governorate_id' => 'required',
+            //     'client.city_id' => 'required'
+            // ]);
 
-            if($validateUser->fails()){
-                return response()->json([
-                    'status' => false,
-                    'message' => 'validation error',
-                    'errors' => $validateUser->errors()
-                ], 401);
-            }
+            // if($validateUser->fails()){
+            //     return response()->json([
+            //         'status' => false,
+            //         'message' => 'validation error',
+            //         'errors' => $validateUser->errors()
+            //     ], 401);
+            // }
 
             $user = User::create([
                 'name' => $request->user['name'],
                 'email' => $request->user['email'],
                 'password' => Hash::make($request->user['password'])
             ]);
-            $userId = $user->id;
+
             $client = Client::create([
-                'user_id' => $userId,
-                'Governorate' => $request->client['Governorate'],
-                'city' => $request->client['city'],
+                'user_id' => $user->id,
+                'governorate_id' => $request->client['governorate_id'],
+                'city_id' => $request->client['city_id'],
             ]);
 
             return response()->json([
@@ -110,18 +110,23 @@ class ClientController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Client $client, User $user)
+    public function update(Request $request, Client $client)
     {
         try{
-            $userData = $request->input('user');
-            $clientData = $request->input('client');
-            $user->update($userData);
-            $client->update($clientData);
-    
-            return (new ClientResource($client))->response()->setStatusCode(200);
-        }catch(Exception $e){
-            // Log::error($e->getMessage());
-            return response()->json(['error' => "internal error"], 500);       
+            $user = User::find($client->user_id);
+            $user->name = $request->user['name'];
+            $user->email = $request->user['email'];
+            $user->password = Hash::make($request->user['password']);
+            $user->update();
+            
+            $client->governorate_id = $request->client['governorate_id'];
+            $client->city_id = $request->client['city_id'];
+            $client->update();
+
+            return response()->json($user,200);
+
+        }catch(\Throwable $th){
+            return response()->json(['error' => $th->getMessage()], 500);       
          }
     }
 
@@ -138,3 +143,20 @@ class ClientController extends Controller
         return abort(404);
     }
 }
+
+
+
+
+
+// example for update and inserting data in clients
+// {
+//     "user": {
+//         "name" : "second update" ,
+//         "email" : "littel.domenick@example.org",
+//         "password" :  "123456789"
+//     },
+//     "client" : {  
+//         "governorate_id" : 20,
+//         "city_id" : 45
+//     }
+// }
