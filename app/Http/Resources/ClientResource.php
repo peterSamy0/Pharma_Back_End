@@ -23,22 +23,24 @@ class ClientResource extends JsonResource
             return [
                 'data' => $this->map(function ($client) {
                     return [
-                        'name' => optional($client->user)->name,
-                        'Governorate' => $client->governorate->governorate,
-                        'city' => $client->city->city,
-                        'email' => optional($client->user)->email,
-                        'order' =>  OrderResource::collection($this->orders)
+                        "user_id" => $client->user->id,
+                        "client_name" => $client->user->name,
+                        "client_email" => $client->user->email,
+                        "Governorate" => $client->governorate->governorate,
+                        "city" => $client->city->city,
+                        'orders' =>  OrderResource::collection($this->orders)
                     ];
                 })
             ];
         }
         return [
             'data' => [
-                'name' => optional($this->user)->name,
-                'Governorate' => $this->governorate->governorate,
-                'city' => $this->city->city,
-                'email' => optional($this->user)->email,
-                'order' =>  OrderResource::collection($this->orders)
+                "user_id" => $this->user->id,
+                "client_name" => $this->user->name,
+                "client_email" => $this->user->email,
+                "Governorate" => $this->governorate->governorate,
+                "city" => $this->city->city,
+                'orders' =>  OrderResource::collection($this->orders)
             ]
         ];
     }
