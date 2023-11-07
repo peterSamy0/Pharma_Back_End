@@ -36,7 +36,6 @@ class PharmacyController extends Controller
     public function store(Request $request)
     {
         try {
-<<<<<<< HEAD
             //Validated
             $validateUser = Validator::make($request->all(), 
             [
@@ -61,8 +60,6 @@ class PharmacyController extends Controller
                 ], 401);
             }
 
-=======
->>>>>>> peter
             $user = User::create([
                 'name' => $request->user['name'],
                 'email' => $request->user['email'],
