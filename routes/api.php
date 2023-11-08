@@ -16,6 +16,7 @@ use App\Http\Controllers\DayController;
 use App\Http\Controllers\UserController;
 use App\Models\Governorate;
 use App\Models\Order;
+use App\Http\Controllers\ContactusController;
 
 /*
 |--------------------------------------------------------------------------
@@ -50,3 +51,5 @@ Route::middleware('auth:sanctum')->get('/user', [UserController::class, 'getuser
 // authentication and authorization route
 Route::post('/auth/login', [AuthController::class, 'loginUser']);
 Route::post('/auth/logout', [Logout::class, 'logout']);
+
+Route::resource('contactus', ContactusController::class);
