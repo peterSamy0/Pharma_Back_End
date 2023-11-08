@@ -10,7 +10,16 @@ class Delivery extends Model
     use HasFactory;
 
     protected $table= "deliveries";
-    protected $fillable=['name',"Governorate","city","email","password","national_ID","available"];
+    protected $fillable=[
+        'name',
+        "email",
+        "password",
+        "governorate_id",
+        "city_id",
+        "national_ID",
+        "available", 
+        "user_id"
+    ];
 
     public function delivery_phone(){
         return $this->hasMany(Delivery_Phone::class);

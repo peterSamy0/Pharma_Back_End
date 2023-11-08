@@ -76,6 +76,7 @@ class ClientController extends Controller
                 'user_id' => $user->id,
                 'governorate_id' => $request->client['governorate_id'],
                 'city_id' => $request->client['city_id'],
+                'role' => 'client'
             ]);
 
             return response()->json([

@@ -13,6 +13,7 @@ use App\Http\Controllers\api\DeliveryController;
 use App\Http\Controllers\GovernorateController;
 use App\Http\Controllers\api\DeliveryPhoneController;
 use App\Http\Controllers\DayController;
+use App\Http\Controllers\PharmacyMedicationController;
 use App\Http\Controllers\UserController;
 use App\Models\Governorate;
 use App\Models\Order;
@@ -35,6 +36,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::apiResource('clients', ClientController::class);
 Route ::apiResource('medications' , MedicationController::class);
 Route ::apiResource('pharmacies' , PharmacyController::class);
+Route ::apiResource('pharmacyMedications' , PharmacyMedicationController::class);
 Route::apiResource('deliveries',DeliveryController::class);
 Route::apiResource('days',DayController::class);
 Route::apiResource('users',UserController::class);
