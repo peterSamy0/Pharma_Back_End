@@ -52,8 +52,9 @@ class PharmacyMedicationController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(PharmacyMedication $pharmacyMedication)
     {
-        //
+        $pharmacyMedication->delete();
+        return response()->json("deleted successfully",200);
     }
 }

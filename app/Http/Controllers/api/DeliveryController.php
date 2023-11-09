@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers\api;
 
-use App\Models\Delivery;
+use Exception;
 use App\Models\User;
+use App\Models\Delivery;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use App\Http\Controllers\Controller;
@@ -36,7 +37,7 @@ class DeliveryController extends Controller
                 'role' => 'delivery'
             ]);
             
-            Delivery::create([
+            $delivery = Delivery::create([
                 // 'image' => $request->delivery['image'],
                 'national_ID' => $request->delivery['nationalID'],
                 'governorate_id' => $request->delivery['governorateID'],
@@ -46,18 +47,24 @@ class DeliveryController extends Controller
             ]);            	
             
             
-            return response()->json([
-                'status' => true,
-                'message' => 'User Created Successfully',
-                'user_id' => $user->id,
-                'token' => $user->createToken("API TOKEN")->plainTextToken
-            ], 200);
+            if ($delivery) {
+                return response()->json([
+                    'status' => true,
+                    'message' => 'User Created Successfully',
+                    'user_id' => $user->id,
+                    'delivery_id' => $delivery->id,
+                    'role' => $user->role,
+                    'token' => $user->createToken("API TOKEN")->plainTextToken
+                ], 200);
+            } else {
+                throw new Exception('Failed to create delivery');
+            }
 
-        } catch (\Throwable $th) {
+        } catch (Exception $e) {
             return response()->json([
                 'status' => false,
-                'message' => $th->getMessage()
-            ], 500);
+                'message' => $e->getMessage()
+            ], 400);
         }
     }
 
