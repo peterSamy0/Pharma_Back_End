@@ -19,7 +19,6 @@ class PharmacyMedicationFactory extends Factory
         return [
             'pharmacy_id' => \App\Models\Pharmacy::inRandomOrder()->first('id'),
             'medication_id' => \App\Models\Medication::inRandomOrder()->first('id'),
-            
         ];
     }
 }
