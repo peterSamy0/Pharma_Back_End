@@ -42,6 +42,7 @@ return array(
     'App\\Http\\Resources\\ClientResource' => $baseDir . '/app/Http/Resources/ClientResource.php',
     'App\\Http\\Resources\\DeliveryPhoneResource' => $baseDir . '/app/Http/Resources/DeliveryPhoneResource.php',
     'App\\Http\\Resources\\DeliveryResource' => $baseDir . '/app/Http/Resources/DeliveryResource.php',
+    'App\\Http\\Resources\\GovernorateHomeResource' => $baseDir . '/app/Http/Resources/GovernorateHomeResource.php',
     'App\\Http\\Resources\\GovernorateResource' => $baseDir . '/app/Http/Resources/GovernorateResource.php',
     'App\\Http\\Resources\\MedicationResource' => $baseDir . '/app/Http/Resources/MedicationResource.php',
     'App\\Http\\Resources\\OrderResource' => $baseDir . '/app/Http/Resources/OrderResource.php',

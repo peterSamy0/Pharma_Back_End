@@ -481,8 +481,8 @@ class ComposerStaticInitad697d6656e21b19281012351c1aecbc
         ),
         'Http\\Message\\' => 
         array (
-            0 => __DIR__ . '/..' . '/php-http/message/src',
-            1 => __DIR__ . '/..' . '/php-http/message-factory/src',
+            0 => __DIR__ . '/..' . '/php-http/message-factory/src',
+            1 => __DIR__ . '/..' . '/php-http/message/src',
         ),
         'Http\\Discovery\\' => 
         array (
@@ -628,6 +628,7 @@ class ComposerStaticInitad697d6656e21b19281012351c1aecbc
         'App\\Http\\Resources\\ClientResource' => __DIR__ . '/../..' . '/app/Http/Resources/ClientResource.php',
         'App\\Http\\Resources\\DeliveryPhoneResource' => __DIR__ . '/../..' . '/app/Http/Resources/DeliveryPhoneResource.php',
         'App\\Http\\Resources\\DeliveryResource' => __DIR__ . '/../..' . '/app/Http/Resources/DeliveryResource.php',
+        'App\\Http\\Resources\\GovernorateHomeResource' => __DIR__ . '/../..' . '/app/Http/Resources/GovernorateHomeResource.php',
         'App\\Http\\Resources\\GovernorateResource' => __DIR__ . '/../..' . '/app/Http/Resources/GovernorateResource.php',
         'App\\Http\\Resources\\MedicationResource' => __DIR__ . '/../..' . '/app/Http/Resources/MedicationResource.php',
         'App\\Http\\Resources\\OrderResource' => __DIR__ . '/../..' . '/app/Http/Resources/OrderResource.php',

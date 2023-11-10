@@ -48,7 +48,7 @@ class OrderResource extends JsonResource
             'id' => $this->id,
             'client_name' => $this->client->user->name,
             'pharmacy_name' => $this->pharmacy->user->name,
-            'delivery_name' => $this->delivery->user->name,
+            'delivery_name' => $this->delivery ? $this->delivery->user->name : "no delivery yet",
             'status' => $this->status,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
