@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers\api;
 
-use App\Http\Controllers\Controller;
+use Exception;
+use App\Models\User;
 use App\Models\Delivery;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Hash;
 use App\Http\Resources\DeliveryResource;
+use Illuminate\Support\Facades\Validator;
 use App\Http\Requests\StoreDeliveryController;
 use App\Http\Requests\UpdateDeliveryController;
 
@@ -24,34 +27,45 @@ class DeliveryController extends Controller
        }
 
     
-    public function store(StoreDeliveryController $request)
+    public function store(Request $request)
     {
-        
-        $validator = Validator::make($request->all());
-        if ($validator->fails()) {
-            return response()->json([
-                'errors' => $validator->errors()
-            ], 422);
-        }
-
-
-        $del_Phones = $request->input('phone');
-
-        $delivery = Delivery::create($request->all());
-
-
-        if(is_array( $del_Phones)){
-        foreach ($del_Phones as $phone) {
-            $delivery->delivery_phone()->create([
-                'phone' => $phone
+        try {
+            $user = User::create([
+                'name' => $request->user['name'],
+                'email' => $request->user['email'],
+                'password' => Hash::make($request->user['password']),
+                'role' => 'delivery'
             ]);
-        }
-        }else{
+            
+            $delivery = Delivery::create([
+                // 'image' => $request->delivery['image'],
+                'national_ID' => $request->delivery['nationalID'],
+                'governorate_id' => $request->delivery['governorateID'],
+                'city_id' => $request->delivery['cityID'],
+                'available' => $request->delivery['available'],
+                'user_id' => $user->id,
+            ]);            	
+            
+            
+            if ($delivery) {
+                return response()->json([
+                    'status' => true,
+                    'message' => 'User Created Successfully',
+                    'user_id' => $user->id,
+                    'delivery_id' => $delivery->id,
+                    'role' => $user->role,
+                    'token' => $user->createToken("API TOKEN")->plainTextToken
+                ], 200);
+            } else {
+                throw new Exception('Failed to create delivery');
+            }
 
-        $delivery->delivery_phone()->create([
-                    'phone' => $del_Phones
-        ]);}
-        return (new DeliveryResource($delivery))->response()->setStatusCode(200);
+        } catch (Exception $e) {
+            return response()->json([
+                'status' => false,
+                'message' => $e->getMessage()
+            ], 400);
+        }
     }
 
     /**
@@ -67,13 +81,27 @@ class DeliveryController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateDeliveryController $request, Delivery $delivery)
+    public function update(Request $request, Delivery $delivery)
     {       
        
-        $delivery->update($request->all());
+        try {
+            $user = User::find($delivery->user_id);
+            $user->name = $request->user['name'];
+            $user->email = $request->user['email'];
+            $user->password = Hash::make($request->user['password']);
+            $user->update();
+            // $delivery->image = $request->delivery['image'];
+            $delivery->national_ID = $request->delivery['nationalID'];
+            $delivery->governorate_id = $request->delivery['governorateID'];
+            $delivery->city_id = $request->delivery['cityID'];
+            $delivery->available = $request->delivery['available'];
+            $delivery->user_id = $user->id;
+            $delivery->update();
 
-        return (new DeliveryResource($delivery))->response()->setStatusCode(200);
-
+            return response()->json($user, 200);
+        } catch(\Throwable $th){
+            return response()->json($th->getMessage(), 403);
+        }
 
     }
 
@@ -87,3 +115,34 @@ class DeliveryController extends Controller
         return (new DeliveryResource($delivery))->response()->setStatusCode(201);
     }
 }
+
+
+// example for  sign up delivery
+// {
+//     "user": {
+//         "name" : "new delivery" ,
+//         "email" : "insert.delivery@example.org",
+//         "password" :  "123456789"
+//     },
+//     "delivery" : { 
+//         "nationalID": 12345678945, 
+//         "governorateID" : 20,
+//         "cityID" : 1,
+//         "available": false
+//     }
+// }
+
+// example for update delivery
+// {
+//     "user": {
+//         "name" : "updated delivery" ,
+//         "email" : "updated.delivery@example.org",
+//         "password" :  "123456789"
+//     },
+//     "delivery" : { 
+//         "nationalID": 12345678912345, 
+//         "governorateID" : 20,
+//         "cityID" : 1,
+//         "available": true
+//     }
+// }

@@ -20,13 +20,15 @@ class PharmacyFactory extends Factory
     public function definition(): array
     {
         $pharamcyUser = User::where('role', 'pharmacy')->inRandomOrder()->first();
+        $governorate = Governorate::inRandomOrder()->first();
+        $city = City::where('governorate_id', $governorate->id)->inRandomOrder()->first();
         return [
             'user_id' => $pharamcyUser->id,
             'image' => fake()->image(),
             'licence_number' => fake()->unique()->randomNumber(5),
             'bank_account' => fake()->randomNumber(5),
-            'governorate_id' => Governorate::inRandomOrder()->first('id'),
-            'city_id' => City::inRandomOrder()->first('id'),
+            'governorate_id' => $governorate->id,
+            'city_id' => $city->id,
             'street' => fake()->streetAddress(),
             'opening' => fake()->time(),
             'closing' => fake()->time(),

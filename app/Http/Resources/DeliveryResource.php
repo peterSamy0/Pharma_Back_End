@@ -26,8 +26,10 @@ class DeliveryResource extends JsonResource
                     "national_ID"=>$delivery->national_ID,
                     "Governorate"=>$delivery->governorate->governorate,
                     "city"=>$delivery->city->city,
+                    "governorate_id"=>$delivery->governorate->id,
+                    "city_id"=>$delivery->city->id,
                     "available"=>$delivery->available,
-                    "orders" => $delivery->orders
+                    'orders' =>  OrderResource::collection($delivery->orders)
                 ];
             });
         }
@@ -35,10 +37,14 @@ class DeliveryResource extends JsonResource
             'id'=>$this->id,
             'name'=>$this->user->name,
             "email"=>$this->user->email,
+            "password"=>$this->user->password,
             "national_ID"=>$this->national_ID,
             "Governorate"=>$this->governorate->governorate,
             "city"=>$this->city->city,
             "available"=>$this->available,
+            "governorate_id"=>$this->governorate->id,
+            "city_id"=>$this->city->id,
+            // 'orders' =>  OrderResource::collection($this->orders)
             "orders" => $this->orders->map(function ($order){
                 return [
                     "order id" => $order->id,

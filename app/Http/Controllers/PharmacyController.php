@@ -97,6 +97,8 @@ class PharmacyController extends Controller
                 'status' => true,
                 'message' => 'User Created Successfully',
                 'user_id' => $user->id,
+                'role' => $user->role,
+                'pharmacy_id' => $pharmacy->id,
                 'token' => $user->createToken("API TOKEN")->plainTextToken
             ], 200);
 
