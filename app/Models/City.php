@@ -20,8 +20,8 @@ class City extends Model
     public function governorate(){
         return $this->belongsTo(Governorate::class);
     }
-    public function pharmacy(){
-        return $this->belongsTo(Pharmacy::class);
+    public function pharmacies(){
+        return $this->hasMany(Pharmacy::class);
     }
     public function delivery(){
         return $this->belongsTo(Delivery::class);

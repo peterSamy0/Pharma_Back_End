@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Governorate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use App\Http\Resources\GovernorateHomeResource;
 use App\Http\Resources\GovernorateResource;
 
 class GovernorateController extends Controller
@@ -12,8 +13,13 @@ class GovernorateController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
+        // dd($request->home);
+        if($request->home == true){
+            $governorates = Governorate::all();
+            return response()->json(GovernorateHomeResource::collection($governorates), 200);
+        }
         $governorates = Governorate::all();
         return response()->json(GovernorateResource::collection($governorates), 200);
     }
