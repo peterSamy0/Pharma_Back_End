@@ -53,3 +53,22 @@ Route::post('/auth/login', [AuthController::class, 'loginUser']);
 Route::post('/auth/logout', [Logout::class, 'logout']);
 
 Route::resource('contactus', ContactusController::class);
+
+// use App\Http\Controllers\PayPalController;
+
+// Route::post('/api/create-paypal-order', [PayPalController::class, 'createOrder']);
+// Route::post('/api/execute-paypal-order', [PayPalController::class, 'executeOrder']);
+
+
+use App\Http\Controllers\PaymentController;
+
+
+// Route::post('/payment/process', 'PaymentController@processPayment');
+
+Route::post('/pay', [PaymentController::class, 'pay']);
+// Route::post('/process-payment', 'PaymentController@processPayment');
+
+// Route::get('success', [PaymentController::class,'success']);
+// Route::get('error', [PaymentController::class,'error']);
+// routes/api.php or routes/web.php
+// Route::post('/pay', 'PaymentController@pay')->name('pay');
