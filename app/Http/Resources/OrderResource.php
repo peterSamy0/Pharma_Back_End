@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use App\Http\Resources\MedicationResource;
+use App\Models\OrderMedication;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 
 class OrderResource extends JsonResource
@@ -23,17 +24,17 @@ class OrderResource extends JsonResource
                 'data' => $this->map(function ($order) {
                     return [
                             'id' => $order->id,
-                            'client name' => $order->client->user->name,
-                            'pharmacy name' => $order->pharmacy->user->name,
-                            'delivery name' => $order->delivery->user->name,
+                            'client_name' => $order->client->user->name,
+                            'pharmacy_name' => $order->pharmacy->user->name,
+                            'delivery_name' => $order->delivery->user->name,
                             'status' => $order->status,
-                            'created at' => $order->created_at,
-                            'updated at' => $order->updated_at,
+                            'created_at' => $order->created_at,
+                            'updated_at' => $order->updated_at,
                             'orderMedications' => $order->orderMedications->map(function ($ordMedication){
                                 return [
                                     // "order id"=>  $ordMedication->order_id,
-                                    // "medicine name" => $ordMedication->medication,
-                                    "medicine id" => $ordMedication->medicine_id,
+                                    "medicine_name" => $ordMedication->medication->name,
+                                    "medicine_id" => $ordMedication->medicine_id,
                                     "amount"=>  $ordMedication->amount,
                                     "created_at"=> $ordMedication->created_at,
                                     "updated_at"=> $ordMedication->updated_at,
@@ -45,17 +46,19 @@ class OrderResource extends JsonResource
         }
         return [
             'id' => $this->id,
-            'client name' => $this->client->user->name,
-            'pharmacy name' => $this->pharmacy->user->name,
-            'delivery name' => $this->delivery->user->name,
+            'client_name' => $this->client->user->name,
+            'pharmacy_name' => $this->pharmacy->user->name,
+            'delivery_name' => $this->delivery->user->name,
             'status' => $this->status,
-            'created at' => $this->created_at,
-            'updated at' => $this->updated_at,
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at,
             'orderMedications' => $this->orderMedications->map(function ($ordMedication){
                 return [
                     // "order id"=>  $ordMedication->order_id,
-                    // "medicine name" => $ordMedication->medication,
-                    "medicine id" => $ordMedication->medicine_id,
+                    // dd($ordMedication->medication),
+                    "medicine_name" => $ordMedication->medicine->name,
+                    "medicine_image" => $ordMedication->medicine->image,
+                    "medicine_id" => $ordMedication->medicine_id,
                     "amount"=>  $ordMedication->amount,
                     "created_at"=> $ordMedication->created_at,
                     "updated_at"=> $ordMedication->updated_at,

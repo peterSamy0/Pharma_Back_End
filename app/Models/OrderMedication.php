@@ -25,7 +25,7 @@ class OrderMedication extends Model
     }
 
     // belongs to medications
-    public function medication(){
+    public function medicine(){
         return $this->belongsTo(Medication::class);
     }
  
