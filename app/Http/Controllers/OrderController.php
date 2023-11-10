@@ -16,7 +16,7 @@ class OrderController extends Controller
      */
     public function index()
     {
-	dd(Auth::user());
+	//dd(Auth::user());
         $orders = Order::all();
         $returnOrders = [];
         foreach($orders as $order){
@@ -29,7 +29,7 @@ class OrderController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(orderRequest $request)
+    public function store(Request $request)
     {
        
         $savedOrder = Order::create([
