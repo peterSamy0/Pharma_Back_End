@@ -2,15 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Pharmacy;
-use App\Models\PharmacyDayOff;
-use Illuminate\Http\Request;
-use App\Http\Resources\PharmacyResourse;
-use App\Http\Requests\PharmacyRequest;
 use App\Models\User;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Validator;
+use App\Models\Pharmacy;
+use App\Models\UserPhone;
+use Illuminate\Http\Request;
+use App\Models\PharmacyDayOff;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use App\Http\Requests\PharmacyRequest;
+use App\Http\Resources\PharmacyResourse;
+use Illuminate\Support\Facades\Validator;
+
 class PharmacyController extends Controller
 {
     /**
@@ -49,7 +51,8 @@ class PharmacyController extends Controller
                 'pharmacy.opening' => 'required',
                 'pharmacy.closing' => 'required',
                 'pharmacy.bank_account' => 'required',
-                'pharmacy.image' => 'required'
+                'pharmacy.image' => 'required',
+                'phone' => 'required'
             ]);
 
             if($validateUser->fails()){
@@ -93,6 +96,15 @@ class PharmacyController extends Controller
                         "pharmacy_id" => $pharmacy->id
                     ]);
             };
+            $userPhones = $request->input('phone');
+            if (is_array($userPhones)) {
+                foreach ($userPhones as $phone) {
+                    UserPhone::create([
+                        'user_id' => $user->id,
+                        'phone' => $phone
+                    ]);
+                }
+            }
             return response()->json([
                 'status' => true,
                 'message' => 'User Created Successfully',

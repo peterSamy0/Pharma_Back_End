@@ -12,7 +12,6 @@
         "laravel/tinker": "^2.8",
         "league/omnipay": "^3.2",
         "omnipay/paypal": "^3.0",
-        "paypal/rest-api-sdk-php": "^1.6",
         "stripe/stripe-php": "^13.2"
     },
     "require-dev": {

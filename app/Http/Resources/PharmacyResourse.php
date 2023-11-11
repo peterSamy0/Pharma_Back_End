@@ -77,7 +77,7 @@ class PharmacyResourse extends JsonResource
                 return[
                     'id' => $medicine->medication->id,
                     'medicine_name' => $medicine->medication->name,
-                    'medicine_price' => $medicine->medication->price,
+                    'medicine_price' => $medicine->price ? $medicine->price : $medicine->medication->price,
                     'medicine_image' => $medicine->medication->image,
                     'medicine_category' => $medicine->medication->category->name,
                 ];

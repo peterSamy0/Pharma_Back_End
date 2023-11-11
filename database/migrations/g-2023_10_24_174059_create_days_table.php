@@ -26,3 +26,8 @@ return new class extends Migration
         Schema::dropIfExists('days');
     }
 };
+
+
+
+// INSERT INTO days (day) VALUES 
+// ("Monday"), ("Tuesday"), ("Wednesday"), ("Thursday"), ("Friday"), ("Saturday"), ("Sunday")

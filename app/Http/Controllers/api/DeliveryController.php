@@ -5,6 +5,7 @@ namespace App\Http\Controllers\api;
 use Exception;
 use App\Models\User;
 use App\Models\Delivery;
+use App\Models\UserPhone;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use App\Http\Controllers\Controller;
@@ -58,6 +59,16 @@ class DeliveryController extends Controller
                 ], 200);
             } else {
                 throw new Exception('Failed to create delivery');
+            }
+
+            $userPhones = $request->input('phone');
+            if (is_array($userPhones)) {
+                foreach ($userPhones as $phone) {
+                    UserPhone::create([
+                        'user_id' => $user->id,
+                        'phone' => $phone
+                    ]);
+                }
             }
 
         } catch (Exception $e) {

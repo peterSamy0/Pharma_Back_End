@@ -13,6 +13,7 @@ class PharmacyMedication extends Model
         'id',
         'pharmacy_id',
         'medication_id',
+        'price'
     ];
 
     function pharmacies(){

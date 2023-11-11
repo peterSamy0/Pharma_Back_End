@@ -2,16 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreclientRequest;
-use Illuminate\Http\Request;
-use App\Models\Client;
-use App\Http\Resources\ClientResource;
-use App\Http\Requests\ClientRequest;
-use App\Models\User;
-use Illuminate\Support\Facades\Validator;
-use Exception;
-use Illuminate\Support\Facades\Hash;
 use Log;
+use Exception;
+use App\Models\User;
+use App\Models\Client;
+use App\Models\UserPhone;
+use Illuminate\Http\Request;
+use App\Http\Requests\ClientRequest;
+use Illuminate\Support\Facades\Hash;
+use App\Http\Resources\ClientResource;
+use App\Http\Requests\StoreclientRequest;
+use Illuminate\Support\Facades\Validator;
 
 class ClientController extends Controller
 {
@@ -34,16 +35,7 @@ class ClientController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     */
-
-    //     $clientPhones = $request->input('phone');
-    //     if (is_array($clientPhones)) {
-    //         foreach ($clientPhones as $phone) {
-    //             $client->clientPhone()->create(['phone' => $phone]);
-    //         }
-    //     } else {
-    //         $client->client_phone()->create(['phone' => $clientPhones]);
-    //     }
+    */
 
     public function store(Request $request)
     {
@@ -55,7 +47,8 @@ class ClientController extends Controller
                 'user.email' => 'required|email|unique:users,email',
                 'user.password' => 'required',
                 'client.governorate_id' => 'required',
-                'client.city_id' => 'required'
+                'client.city_id' => 'required',
+                'phone' => 'required'
             ]);
 
             if($validateUser->fails()){
@@ -79,11 +72,21 @@ class ClientController extends Controller
                 'role' => 'client'
             ]);
 
+            $userPhones = $request->input('phone');
+            if (is_array($userPhones)) {
+                foreach ($userPhones as $phone) {
+                    UserPhone::create([
+                        'user_id' => $user->id,
+                        'phone' => $phone
+                    ]);
+                }
+            }
+
             return response()->json([
                 'status' => true,
                 'message' => 'User Created Successfully',
                 'user_id' => $user->id,
-                'client_id' => $client->id,
+                '_id' => $client->id,
                 'role' => ($user->role) ? $user->role : 'client',
                 'token' => $user->createToken("API TOKEN")->plainTextToken,
             ], 200);

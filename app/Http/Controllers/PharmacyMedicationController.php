@@ -19,20 +19,21 @@ class PharmacyMedicationController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
-    {
-        $medications = $request->input('medicationsList');
-        if($medications){
-            foreach($medications as $medicine){
-                PharmacyMedication::create([
-                    'pharmacy_id' => $medicine['pharmacy_id'],
-                    'medication_id' => $medicine['medicine_id']
-                ]);
-            };
-        }
-        return response()->json("add successfully", 200);
-    }
 
+        public function store(Request $request)
+{
+    $medications = $request->input('medicationsList');
+    if ($medications) {
+        foreach ($medications as $medicine) {
+            PharmacyMedication::create([
+                'pharmacy_id' => $medicine['pharmacy_id'],
+                'medication_id' => $medicine['medication_id'],
+                'price' => $medicine['price']
+            ]);
+        }
+    }
+    return response()->json("add successfully", 200);
+}
     /**
      * Display the specified resource.
      */
