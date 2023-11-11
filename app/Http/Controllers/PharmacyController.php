@@ -18,6 +18,11 @@ class PharmacyController extends Controller
     /**
      * Display a listing of the resource.
      */
+
+    function __construct(){
+        $this->middleware('auth:sanctum')->only(['show', 'destroy', 'update']);
+    }
+
     public function index(Request $request)
     {   
         try{
@@ -127,7 +132,11 @@ class PharmacyController extends Controller
      * Display the specified resource.
      */
     public function show(Pharmacy $pharmacy){   
-        return new PharmacyResourse($pharmacy);  
+        $user = Auth::user();
+        if($user->id == $pharmacy->user_id){
+            return new PharmacyResourse($pharmacy);  
+        }
+        return abort(403);
     }
 
     /**
@@ -135,36 +144,40 @@ class PharmacyController extends Controller
      */
     public function update( Request $request, Pharmacy $pharmacy)
     {  
-        try{
-            $user = User::find($pharmacy->user_id);
-            $user->name = $request->user['name'];
-            $user->email = $request->user['email'];
-            $user->password = Hash::make($request->user['password']);
-            $user->save();
-            $pharmacy->image = $request->pharmacy['image'];
-            $pharmacy->licence_number = $request->pharmacy['licence_number'];
-            $pharmacy->bank_account = $request->pharmacy['bank_account'];
-            $pharmacy->governorate_id = $request->pharmacy['governorate_id'];
-            $pharmacy->city_id = $request->pharmacy['city_id'];
-            $pharmacy->street = $request->pharmacy['street'];
-            $pharmacy->opening = $request->pharmacy['opening'];
-            $pharmacy->closing = $request->pharmacy['closing'];
-            $pharmacy->user_id = $user->id;
-            $pharmacy->save();
-    
-            $daysOff = $request->input('daysOff');
-            if ($daysOff) {
-                foreach ($daysOff as $dayOff) {
-                    PharmacyDayOff::where('pharmacy_id', $pharmacy->id)
-                        ->update([
-                            'day_id' =>  $dayOff, // Specify the column name and the new value to update
-                        ]);
+        $user = Auth::user();
+        if($user->id == $pharmacy->user_id){
+            try{
+                $user = User::find($pharmacy->user_id);
+                $user->name = $request->user['name'];
+                $user->email = $request->user['email'];
+                $user->password = Hash::make($request->user['password']);
+                $user->save();
+                $pharmacy->image = $request->pharmacy['image'];
+                $pharmacy->licence_number = $request->pharmacy['licence_number'];
+                $pharmacy->bank_account = $request->pharmacy['bank_account'];
+                $pharmacy->governorate_id = $request->pharmacy['governorate_id'];
+                $pharmacy->city_id = $request->pharmacy['city_id'];
+                $pharmacy->street = $request->pharmacy['street'];
+                $pharmacy->opening = $request->pharmacy['opening'];
+                $pharmacy->closing = $request->pharmacy['closing'];
+                $pharmacy->user_id = $user->id;
+                $pharmacy->save();
+        
+                $daysOff = $request->input('daysOff');
+                if ($daysOff) {
+                    foreach ($daysOff as $dayOff) {
+                        PharmacyDayOff::where('pharmacy_id', $pharmacy->id)
+                            ->update([
+                                'day_id' =>  $dayOff, // Specify the column name and the new value to update
+                            ]);
+                    }
                 }
+                return response()->json($user, 200);
+            } catch(\Throwable $th){
+                return response()->json($th->getMessage(), 403);
             }
-            return response()->json($user, 200);
-        } catch(\Throwable $th){
-            return response()->json($th->getMessage(), 403);
         }
+        return abort(403);
     }
 
     /**
@@ -172,8 +185,12 @@ class PharmacyController extends Controller
      */
     public function destroy(Pharmacy $pharmacy)
     {
-        $pharmacy->delete();
-        return " Delete the pharmacy is Done";
+        $user = Auth::user();
+        if($user->id == $pharmacy->user_id){
+            $pharmacy->delete();
+            return " Delete the pharmacy is Done";
+        }
+        return abort(403);
     }
 }
 

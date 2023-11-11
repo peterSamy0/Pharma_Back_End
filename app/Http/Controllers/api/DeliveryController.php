@@ -9,6 +9,7 @@ use App\Models\UserPhone;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Resources\DeliveryResource;
 use Illuminate\Support\Facades\Validator;
@@ -17,6 +18,10 @@ use App\Http\Requests\UpdateDeliveryController;
 
 class DeliveryController extends Controller
 {
+
+    function __construct(){
+        $this->middleware('auth:sanctum')->only(['show', 'destroy', 'update']);
+    }
     /**
      * Display a listing of the resource.
      */
@@ -30,6 +35,7 @@ class DeliveryController extends Controller
     
     public function store(Request $request)
     {
+        
         try {
             $user = User::create([
                 'name' => $request->user['name'],
@@ -62,6 +68,7 @@ class DeliveryController extends Controller
             }
 
             $userPhones = $request->input('phone');
+
             if (is_array($userPhones)) {
                 foreach ($userPhones as $phone) {
                     UserPhone::create([
@@ -84,8 +91,11 @@ class DeliveryController extends Controller
      */
     public function show(Delivery $delivery)
     {
-
-        return (new DeliveryResource($delivery))->response()->setStatusCode(200);
+        $user = Auth::user();
+        if($user->id == $delivery->user_id){
+            return (new DeliveryResource($delivery))->response()->setStatusCode(200);
+        }
+        return abort(403);
     }
 
   
@@ -94,25 +104,28 @@ class DeliveryController extends Controller
      */
     public function update(Request $request, Delivery $delivery)
     {       
-       
-        try {
-            $user = User::find($delivery->user_id);
-            $user->name = $request->user['name'];
-            $user->email = $request->user['email'];
-            $user->password = Hash::make($request->user['password']);
-            $user->update();
-            // $delivery->image = $request->delivery['image'];
-            $delivery->national_ID = $request->delivery['nationalID'];
-            $delivery->governorate_id = $request->delivery['governorateID'];
-            $delivery->city_id = $request->delivery['cityID'];
-            $delivery->available = $request->delivery['available'];
-            $delivery->user_id = $user->id;
-            $delivery->update();
+        $user = Auth::user();
+        if($user->id == $delivery->user_id){
+            try {
+                $user = User::find($delivery->user_id);
+                $user->name = $request->user['name'];
+                $user->email = $request->user['email'];
+                $user->password = Hash::make($request->user['password']);
+                $user->update();
+                // $delivery->image = $request->delivery['image'];
+                $delivery->national_ID = $request->delivery['nationalID'];
+                $delivery->governorate_id = $request->delivery['governorateID'];
+                $delivery->city_id = $request->delivery['cityID'];
+                $delivery->available = $request->delivery['available'];
+                $delivery->user_id = $user->id;
+                $delivery->update();
 
-            return response()->json($user, 200);
-        } catch(\Throwable $th){
-            return response()->json($th->getMessage(), 403);
+                return response()->json($user, 200);
+            } catch(\Throwable $th){
+                return response()->json($th->getMessage(), 403);
+            }
         }
+        return abort(403);
 
     }
 
@@ -121,9 +134,12 @@ class DeliveryController extends Controller
      */
     public function destroy(Delivery $delivery)
     {
-        //
-        $delivery->delete();
-        return (new DeliveryResource($delivery))->response()->setStatusCode(201);
+        $user = Auth::user();
+        if($user->id == $delivery->user_id){
+            $delivery->delete();
+            return (new DeliveryResource($delivery))->response()->setStatusCode(201);
+        }
+        return abort(403);
     }
 }
 

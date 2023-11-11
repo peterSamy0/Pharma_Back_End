@@ -9,6 +9,7 @@ use App\Models\Client;
 use App\Models\UserPhone;
 use Illuminate\Http\Request;
 use App\Http\Requests\ClientRequest;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Resources\ClientResource;
 use App\Http\Requests\StoreclientRequest;
@@ -20,12 +21,10 @@ class ClientController extends Controller
      * Display a listing of the resource.
      */
 
-        // $clients = Client::with('phone')->get();
-        // $clientsWithPhones = $clients->map(function ($client) {
-        //     $client['phones'] = $client->phone->pluck('phone')->toArray();
-        //     unset($client['phone']);
-        //     return $client;
-        // });
+        function __construct(){
+            $this->middleware('auth:sanctum')->only(['show', 'destroy', 'update']);
+        }
+
         public function index()
         {
             $clients = Client::all();
@@ -106,10 +105,13 @@ class ClientController extends Controller
      */
     public function show(Client $client)
     {
-        if($client->id){
-            return  new ClientResource($client);
+        $user = Auth::user();
+        if($user->id == $client->user_id){
+            if($client->id){
+                return  new ClientResource($client);
+            }
         }
-        return abort(404);
+        return abort(403);
     }
 
     /**
@@ -117,22 +119,26 @@ class ClientController extends Controller
      */
     public function update(Request $request, Client $client)
     {
-        try{
-            $user = User::find($client->user_id);
-            $user->name = $request->user['name'];
-            $user->email = $request->user['email'];
-            $user->password = Hash::make($request->user['password']);
-            $user->update();
-            
-            $client->governorate_id = $request->client['governorate_id'];
-            $client->city_id = $request->client['city_id'];
-            $client->update();
-
-            return response()->json($user,200);
-
-        }catch(\Throwable $th){
-            return response()->json(['error' => $th->getMessage()], 500);       
-         }
+        $user = Auth::user();
+        if($user->id == $client->user_id){
+            try{
+                $user = User::find($client->user_id);
+                $user->name = $request->user['name'];
+                $user->email = $request->user['email'];
+                $user->password = Hash::make($request->user['password']);
+                $user->update();
+                
+                $client->governorate_id = $request->client['governorate_id'];
+                $client->city_id = $request->client['city_id'];
+                $client->update();
+    
+                return response()->json($user,200);
+    
+            }catch(\Throwable $th){
+                return response()->json(['error' => $th->getMessage()], 500);       
+            }
+        }
+        return abort(403);
     }
 
     /**
@@ -141,11 +147,14 @@ class ClientController extends Controller
     public function destroy(Client $client)
     {
         // validation , security
-        if($client->id){
-            $client->delete();
-            return "client deleted";
+        $user = Auth::user();
+        if($user->id == $client->user_id){
+            if($client->id){
+                $client->delete();
+                return "client deleted";
+            }
         }
-        return abort(404);
+        return abort(403);
     }
 }
 

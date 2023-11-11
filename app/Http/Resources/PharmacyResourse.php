@@ -42,6 +42,7 @@ class PharmacyResourse extends JsonResource
                     'medication' => $pharmacy->pharmacyMedications->map(function ($medicine){
                         return[
                             'id' => $medicine->medication->id,
+                            'pharmacyMedication_id'=> $medicine->id,
                             'medicine_name' => $medicine->medication->name,
                             'medicine_price' => $medicine->medication->price,
                             'medicine_image' => $medicine->medication->image,
@@ -76,6 +77,7 @@ class PharmacyResourse extends JsonResource
             'medication' => $this->pharmacyMedications->map(function ($medicine){
                 return[
                     'id' => $medicine->medication->id,
+                    'pharmacyMedication_id'=> $medicine->id,
                     'medicine_name' => $medicine->medication->name,
                     'medicine_price' => $medicine->price ? $medicine->price : $medicine->medication->price,
                     'medicine_image' => $medicine->medication->image,

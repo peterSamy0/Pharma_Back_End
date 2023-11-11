@@ -44,6 +44,8 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
+    protected $tokenName = 'token';
+    
     public function client(){
         $this->belongsTo(Client::class);
     }
