@@ -18,6 +18,7 @@ use App\Http\Controllers\UserController;
 use App\Models\Governorate;
 use App\Models\Order;
 use App\Http\Controllers\ContactusController;
+use App\Http\Controllers\CategoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -43,7 +44,7 @@ Route::apiResource('days',DayController::class);
 Route::apiResource('users',UserController::class);
 Route::apiResource('orders',OrderController::class);
 Route::apiResource('governorates',GovernorateController::class);
-
+Route::apiResource('categories',CategoryController::class);
 Route::middleware('auth:sanctum')->get('/user', [UserController::class, 'getuser']);
 
 

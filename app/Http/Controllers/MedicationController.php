@@ -23,10 +23,12 @@ class MedicationController extends Controller
      */
     public function store(MedicationRequest $request)
     {
-        
         $validated = $request->validated();
         $medications= Medication::create($request->all());
         return  new MedicationResource ($medications , 201);
+       
+        
+
     }
 
     /**

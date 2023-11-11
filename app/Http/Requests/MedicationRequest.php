@@ -22,10 +22,10 @@ class MedicationRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "name" => "unique:medications",
-            "price" => "required",
-            "image" => "required", 
-            'category_id' => 'required',
+            "name" => "required | unique:medications",
+            "price" => "required | integer",
+            "image" => "required | unique:medications", 
+            'category' => 'required',
             
         ];
     }
@@ -33,10 +33,10 @@ class MedicationRequest extends FormRequest
     public function messages()
 {
     return [
-        'name.required' => 'A name is required',
-        'price.required' => 'price is required',
-        'image.required' => 'image is required',
-        'category_id' => 'category is required',
+        'name.required' => 'the name is required',
+        'price.required' => ' the price is required',
+        'image.required' => ' the image is required',
+        'category' => ' the category is required',
     ];
 }
 }

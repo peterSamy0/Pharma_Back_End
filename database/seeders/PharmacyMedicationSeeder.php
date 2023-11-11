@@ -12,6 +12,6 @@ class PharmacyMedicationSeeder extends Seeder
      */
     public function run(): void
     {
-        PharmacyMedication::factory()->count(1000)->create();
+        PharmacyMedication::factory()->count(50)->create();
     }
 }
