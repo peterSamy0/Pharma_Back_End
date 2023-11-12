@@ -34,6 +34,7 @@ class OrderResource extends JsonResource
                                 return [
                                     // "order id"=>  $ordMedication->order_id,
                                     "medicine_name" => $ordMedication->medication->name,
+                                    "price" => $ordMedication->medicine->price,
                                     "medicine_id" => $ordMedication->medicine_id,
                                     "amount"=>  $ordMedication->amount,
                                     "created_at"=> $ordMedication->created_at,
@@ -58,6 +59,7 @@ class OrderResource extends JsonResource
                     // dd($ordMedication->medication),
                     "medicine_name" => $ordMedication->medicine->name,
                     "medicine_image" => $ordMedication->medicine->image,
+                    "price" => $ordMedication->medicine->price,
                     "medicine_id" => $ordMedication->medicine_id,
                     "amount"=>  $ordMedication->amount,
                     "created_at"=> $ordMedication->created_at,

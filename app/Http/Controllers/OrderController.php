@@ -16,7 +16,7 @@ class OrderController extends Controller
      */
     public function index()
     {
-	//dd(Auth::user());
+	// dd(Auth::user());
         $orders = Order::all();
         $returnOrders = [];
         foreach($orders as $order){
@@ -73,34 +73,62 @@ class OrderController extends Controller
         // if(!$order || $order->client_id !== auth()->user()->id){
         //     return abort(404);
         // }
-        if($order->status == "pending"){
-            $validator = Validator::make($request->all(),[
-                'ordMedications' => 'required|array',
-                'ordMedications.*.key' => 'required|numeric',
-                'ordMedications.*.value' => 'required|numeric',
-                
-            ]);
-            if($validator->fails()){
-                return response()->json(['errors' => $validator->errors()], 422);
-            };
-            $ordMedications = $request->input('ordMedications');
+        
+        // if the request is to update delivery
+        // dd($request->setDelivery);
+        if($request->setDelivery){
+            // dd($order->delivery->user->name);
             try{
-                foreach ($ordMedications as $ordMedication) {
-                    $medicineId = $ordMedication['key'];
-                    $amount = $ordMedication['value'];
-                    $order->orderMedications()->update([
-                        'medicine_id' => $medicineId,
-                        'amount' => $amount,
-                    ]);
-                
-                }
+                $order->update([
+                    "delivery_id" => $request->deliveryId,
+                    "status" => "withDelivery"
+                ]);
+                return response()->json(['order has been assigned to ' . $order->delivery->user->name],200);
             }catch(Exception $e){
-                return response()->json($e,500);
+                return response()->json([$e->getMessage()],500);
+
             }
-            // return response()->json([$order,$order->orderMedications ], 200);
-            return $this->show($order);
+
         }else{
-            return response()->json("sorry, the order has been prepared by the pharmacy",200);
+            // updating order items
+            if($order->status == "pending"){
+                $validator = Validator::make($request->all(),[
+                    'ordMedications' => 'required|array',
+                    'ordMedications.*.key' => 'required|numeric',
+                    'ordMedications.*.value' => 'required|numeric',
+                    
+                ]);
+                if($validator->fails()){
+                    return response()->json(['errors' => $validator->errors()], 422);
+                };
+                $ordMedications = $request->input('ordMedications');
+                try{
+                    foreach ($ordMedications as $ordMedication) {
+                        $medicineId = $ordMedication['key'];
+                        $amount = $ordMedication['value'];
+                        if ($amount === 0) {
+                        $order->orderMedications()->where('medicine_id', $medicineId)->delete();
+                        if ($order->orderMedications->isEmpty()) {
+                            // No associated order medications, so delete the order
+                            $order->delete();
+                            return response()->json('Order deleted successfully');
+                        }
+                    } else {
+                        // Update the orderMedication
+                        $order->orderMedications()->where('medicine_id', $medicineId)->update([
+                            'amount' => $amount,
+                        ]);
+                    }
+                }
+                    
+                }catch(Exception $e){
+                    return response()->json($e,500);
+                }
+                // return response()->json([$order,$order->orderMedications ], 200);
+                return $this->show($order);
+            }else{
+                return response()->json("sorry, the order has been prepared by the pharmacy",200);
+            }
         }
         
     }
