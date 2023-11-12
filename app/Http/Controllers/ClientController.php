@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\ClientOrdersRescource;
 use Log;
 use Exception;
 use App\Models\User;
@@ -105,13 +106,13 @@ class ClientController extends Controller
      */
     public function show(Client $client)
     {
-        $user = Auth::user();
-        if($user->id == $client->user_id){
-            if($client->id){
+        // $user = Auth::user();
+        // if($user->id == $client->user_id){
+            // if($client->id){
                 return  new ClientResource($client);
-            }
-        }
-        return abort(403);
+            // }
+        // }
+        // return abort(403);
     }
 
     /**
@@ -156,6 +157,7 @@ class ClientController extends Controller
         }
         return abort(403);
     }
+
 }
 
 
