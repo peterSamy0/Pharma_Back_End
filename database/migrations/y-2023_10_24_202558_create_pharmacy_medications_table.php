@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('pharmacy_id')->constrained()->onDelete('cascade')->onUpdate('cascade')->references('id')->on('pharmacies');
             $table->foreignId('medication_id')->constrained()->onDelete('cascade')->onUpdate('cascade')->references('id')->on('medications');
+            $table->bigInteger('price')->nullable()->default(null);
             $table->timestamps();
         });
     }

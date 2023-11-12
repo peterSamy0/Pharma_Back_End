@@ -2,16 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreclientRequest;
-use Illuminate\Http\Request;
-use App\Models\Client;
-use App\Http\Resources\ClientResource;
-use App\Http\Requests\ClientRequest;
-use App\Models\User;
-use Illuminate\Support\Facades\Validator;
-use Exception;
-use Illuminate\Support\Facades\Hash;
 use Log;
+use Exception;
+use App\Models\User;
+use App\Models\Client;
+use App\Models\UserPhone;
+use Illuminate\Http\Request;
+use App\Http\Requests\ClientRequest;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use App\Http\Resources\ClientResource;
+use App\Http\Requests\StoreclientRequest;
+use Illuminate\Support\Facades\Validator;
 
 class ClientController extends Controller
 {
@@ -19,12 +21,10 @@ class ClientController extends Controller
      * Display a listing of the resource.
      */
 
-        // $clients = Client::with('phone')->get();
-        // $clientsWithPhones = $clients->map(function ($client) {
-        //     $client['phones'] = $client->phone->pluck('phone')->toArray();
-        //     unset($client['phone']);
-        //     return $client;
-        // });
+        function __construct(){
+            $this->middleware('auth:sanctum')->only(['show', 'destroy', 'update']);
+        }
+
         public function index()
         {
             $clients = Client::all();
@@ -34,37 +34,29 @@ class ClientController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     */
-
-    //     $clientPhones = $request->input('phone');
-    //     if (is_array($clientPhones)) {
-    //         foreach ($clientPhones as $phone) {
-    //             $client->clientPhone()->create(['phone' => $phone]);
-    //         }
-    //     } else {
-    //         $client->client_phone()->create(['phone' => $clientPhones]);
-    //     }
+    */
 
     public function store(Request $request)
     {
         try {
             //Validated
-            // $validateUser = Validator::make($request->all(), 
-            // [
-            //     'user.name' => 'required',
-            //     'user.email' => 'required|email|unique:users,email',
-            //     'user.password' => 'required',
-            //     'client.governorate_id' => 'required',
-            //     'client.city_id' => 'required'
-            // ]);
+            $validateUser = Validator::make($request->all(), 
+            [
+                'user.name' => 'required',
+                'user.email' => 'required|email|unique:users,email',
+                'user.password' => 'required',
+                'client.governorate_id' => 'required',
+                'client.city_id' => 'required',
+                'phone' => 'required'
+            ]);
 
-            // if($validateUser->fails()){
-            //     return response()->json([
-            //         'status' => false,
-            //         'message' => 'validation error',
-            //         'errors' => $validateUser->errors()
-            //     ], 401);
-            // }
+            if($validateUser->fails()){
+                return response()->json([
+                    'status' => false,
+                    'message' => 'validation error',
+                    'errors' => $validateUser->errors()
+                ], 401);
+            }
 
             $user = User::create([
                 'name' => $request->user['name'],
@@ -76,14 +68,26 @@ class ClientController extends Controller
                 'user_id' => $user->id,
                 'governorate_id' => $request->client['governorate_id'],
                 'city_id' => $request->client['city_id'],
+                'role' => 'client'
             ]);
+
+            $userPhones = $request->input('phone');
+            if (is_array($userPhones)) {
+                foreach ($userPhones as $phone) {
+                    UserPhone::create([
+                        'user_id' => $user->id,
+                        'phone' => $phone
+                    ]);
+                }
+            }
 
             return response()->json([
                 'status' => true,
                 'message' => 'User Created Successfully',
-                'role' => $user->role,
-                'user_id' => $user->role,
-                'token' => $user->createToken("API TOKEN")->plainTextToken
+                'user_id' => $user->id,
+                '_id' => $client->id,
+                'role' => ($user->role) ? $user->role : 'client',
+                'token' => $user->createToken("API TOKEN")->plainTextToken,
             ], 200);
 
         } catch (\Throwable $th) {
@@ -101,10 +105,13 @@ class ClientController extends Controller
      */
     public function show(Client $client)
     {
-        if($client->id){
-            return  new ClientResource($client);
+        $user = Auth::user();
+        if($user->id == $client->user_id){
+            if($client->id){
+                return  new ClientResource($client);
+            }
         }
-        return abort(404);
+        return abort(403);
     }
 
     /**
@@ -112,22 +119,26 @@ class ClientController extends Controller
      */
     public function update(Request $request, Client $client)
     {
-        try{
-            $user = User::find($client->user_id);
-            $user->name = $request->user['name'];
-            $user->email = $request->user['email'];
-            $user->password = Hash::make($request->user['password']);
-            $user->update();
-            
-            $client->governorate_id = $request->client['governorate_id'];
-            $client->city_id = $request->client['city_id'];
-            $client->update();
-
-            return response()->json($user,200);
-
-        }catch(\Throwable $th){
-            return response()->json(['error' => $th->getMessage()], 500);       
-         }
+        $user = Auth::user();
+        if($user->id == $client->user_id){
+            try{
+                $user = User::find($client->user_id);
+                $user->name = $request->user['name'];
+                $user->email = $request->user['email'];
+                $user->password = Hash::make($request->user['password']);
+                $user->update();
+                
+                $client->governorate_id = $request->client['governorate_id'];
+                $client->city_id = $request->client['city_id'];
+                $client->update();
+    
+                return response()->json($user,200);
+    
+            }catch(\Throwable $th){
+                return response()->json(['error' => $th->getMessage()], 500);       
+            }
+        }
+        return abort(403);
     }
 
     /**
@@ -136,11 +147,14 @@ class ClientController extends Controller
     public function destroy(Client $client)
     {
         // validation , security
-        if($client->id){
-            $client->delete();
-            return "client deleted";
+        $user = Auth::user();
+        if($user->id == $client->user_id){
+            if($client->id){
+                $client->delete();
+                return "client deleted";
+            }
         }
-        return abort(404);
+        return abort(403);
     }
 }
 
@@ -158,5 +172,78 @@ class ClientController extends Controller
 //     "client" : {  
 //         "governorate_id" : 20,
 //         "city_id" : 45
+//     }
+// }
+
+
+
+// view client 
+// {
+//     "data": {
+//         "user_id": 1,
+//         "client_name": "Anabel Bechtelar",
+//         "client_email": "schiller.aaliyah@example.org",
+//         "Governorate": "District of Columbia",
+//         "city": "Bauchfort",
+//         "orders": [
+//             {
+//                 "id": 5,
+//                 "client name": "Anabel Bechtelar",
+//                 "pharmacy name": "Miss Stacey Tillman III",
+//                 "delivery name": "Dennis Wisoky",
+//                 "status": "pending",
+//                 "created at": "2023-11-05T20:10:13.000000Z",
+//                 "updated at": "2023-11-05T20:10:13.000000Z",
+//                 "orderMedications": [
+//                     {
+//                         "medicine id": 75,
+//                         "amount": 1,
+//                         "created_at": "2023-11-05T20:10:20.000000Z",
+//                         "updated_at": "2023-11-05T20:10:20.000000Z"
+//                     },
+//                     {
+//                         "medicine id": 19,
+//                         "amount": 1,
+//                         "created_at": "2023-11-05T20:10:21.000000Z",
+//                         "updated_at": "2023-11-05T20:10:21.000000Z"
+//                     },
+//                     {
+//                         "medicine id": 16,
+//                         "amount": 9,
+//                         "created_at": "2023-11-05T20:10:22.000000Z",
+//                         "updated_at": "2023-11-05T20:10:22.000000Z"
+//                     }
+//                 ]
+//             },
+//             {
+//                 "id": 19,
+//                 "client name": "Anabel Bechtelar",
+//                 "pharmacy name": "Dr. Michelle Huel Jr.",
+//                 "delivery name": "Rubye Schimmel",
+//                 "status": "accepted",
+//                 "created at": "2023-11-05T20:10:13.000000Z",
+//                 "updated at": "2023-11-05T20:10:13.000000Z",
+//                 "orderMedications": [
+//                     {
+//                         "medicine id": 31,
+//                         "amount": 2,
+//                         "created_at": "2023-11-05T20:10:23.000000Z",
+//                         "updated_at": "2023-11-05T20:10:23.000000Z"
+//                     },
+//                     {
+//                         "medicine id": 89,
+//                         "amount": 4,
+//                         "created_at": "2023-11-05T20:10:24.000000Z",
+//                         "updated_at": "2023-11-05T20:10:24.000000Z"
+//                     },
+//                     {
+//                         "medicine id": 69,
+//                         "amount": 3,
+//                         "created_at": "2023-11-05T20:10:26.000000Z",
+//                         "updated_at": "2023-11-05T20:10:26.000000Z"
+//                     }
+//                 ]
+//             }
+//         ]
 //     }
 // }

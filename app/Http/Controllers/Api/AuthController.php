@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\Api;
 
 use App\Models\User;
+use App\Models\Client;
+use App\Models\Delivery;
+use App\Models\Pharmacy;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -41,10 +44,22 @@ class AuthController extends Controller
             }
 
             $user = User::where('email', $request->email)->first();
+            $pharmacy = Pharmacy::where('user_id', $user->id)->first();
+            $delivery = Delivery::where('user_id', $user->id)->first();
+            $client = Client::where('user_id', $user->id)->first();
 
+            $id = null;
+            if ($pharmacy) {
+                $id = $pharmacy->id;
+            } elseif ($delivery) {
+                $id = $delivery->id;
+            } elseif ($client) {
+                $id = $client->id;  
+            }
             return response()->json([
                 'status' => true,
                 'user_id' => $user->id,
+                '_id' => $id,
                 'role' => $user->role,
                 'message' => 'User Logged In Successfully',
                 'token' => $user->createToken("API TOKEN")->plainTextToken

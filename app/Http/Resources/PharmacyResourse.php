@@ -26,7 +26,9 @@ class PharmacyResourse extends JsonResource
                     "licence_number" => $pharmacy->licence_number,
                     "bank_account" => $pharmacy->bank_account,    
                     "Governorate" => $pharmacy->governorate->governorate,
+                    "governorate_id" => $pharmacy->governorate->id,
                     "city" => $pharmacy->city->city,
+                    "city_id" => $pharmacy->city->id,
                     "street" => $pharmacy->street, 
                     "opening" => $pharmacy->opening,
                     "closing" => $pharmacy->closing,  
@@ -40,6 +42,7 @@ class PharmacyResourse extends JsonResource
                     'medication' => $pharmacy->pharmacyMedications->map(function ($medicine){
                         return[
                             'id' => $medicine->medication->id,
+                            'pharmacyMedication_id'=> $medicine->id,
                             'medicine_name' => $medicine->medication->name,
                             'medicine_price' => $medicine->medication->price,
                             'medicine_image' => $medicine->medication->image,
@@ -52,12 +55,15 @@ class PharmacyResourse extends JsonResource
         return [
             "pharmacy_id" => $this->user->id,
             "pharmacy_name" => $this->user->name,
+            "password" => $this->user->password,
             "pharmacy_email" => $this->user->email,
             "image" => $this->image,
             "licence_number" => $this->licence_number,
             "bank_account" => $this->bank_account,    
             "Governorate" => $this->governorate->governorate,
+            "governorate_id" => $this->governorate->id,
             "city" => $this->city->city,
+            "city_id" => $this->city->id,
             "street" => $this->street, 
             "opening" => $this->opening,
             "closing" => $this->closing,  
@@ -71,8 +77,9 @@ class PharmacyResourse extends JsonResource
             'medication' => $this->pharmacyMedications->map(function ($medicine){
                 return[
                     'id' => $medicine->medication->id,
+                    'pharmacyMedication_id'=> $medicine->id,
                     'medicine_name' => $medicine->medication->name,
-                    'medicine_price' => $medicine->medication->price,
+                    'medicine_price' => $medicine->price ? $medicine->price : $medicine->medication->price,
                     'medicine_image' => $medicine->medication->image,
                     'medicine_category' => $medicine->medication->category->name,
                 ];
