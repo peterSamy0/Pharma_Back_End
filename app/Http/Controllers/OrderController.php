@@ -78,6 +78,12 @@ class OrderController extends Controller
         
         // if the request is to update delivery
         // dd($request->setDelivery);
+        if($request->delivery){
+            $order->update(
+                ["status"=>"withDelivery"]
+            );
+            return response()->json("order accepted successfully", 200);
+        }
         if($request->setDelivery){
             // dd($order->delivery->user->name);
             try{

@@ -48,6 +48,7 @@ class OrderResource extends JsonResource
         return [
             'id' => $this->id,
             'client_name' => $this->client->user->name,
+            'pharmacy_address' => $this->pharmacy->governorate->governorate . ", ".$this->pharmacy->city->city . ", ".$this->pharmacy->street,
             'pharmacy_name' => $this->pharmacy->user->name,
             'delivery_name' => $this->delivery ? $this->delivery->user->name : "no delivery yet",
             'status' => $this->status,
