@@ -45,5 +45,9 @@ class Pharmacy extends Model
     public function city(){
         return $this->belongsTo(City::class);
     }
+    
+    public function userPhone(){
+        return $this->hasMany(UserPHone::class);
+    }
 
 }

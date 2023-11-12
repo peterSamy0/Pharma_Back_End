@@ -22,6 +22,11 @@ class PharmacyResourse extends JsonResource
                     "pharmacy_id" => $pharmacy->user->id,
                     "pharmacy_name" => $pharmacy->user->name,
                     "pharmacy_email" => $pharmacy->user->email,
+                    "pharmacy_phone" => $pharmacy->user->userPhone->map(function ($item) {
+                        return [
+                            'phone' => $item->phone
+                        ];
+                    }),
                     "image" => $pharmacy->image,
                     "licence_number" => $pharmacy->licence_number,
                     "bank_account" => $pharmacy->bank_account,    
@@ -56,6 +61,11 @@ class PharmacyResourse extends JsonResource
             "pharmacy_id" => $this->user->id,
             "pharmacy_name" => $this->user->name,
             "password" => $this->user->password,
+            "pharmacy_phone" => $this->user->userPhone->map(function ($item) {
+                return [
+                    'phone' => $item->phone
+                ];
+            }),
             "pharmacy_email" => $this->user->email,
             "image" => $this->image,
             "licence_number" => $this->licence_number,
