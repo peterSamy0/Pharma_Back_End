@@ -20,7 +20,7 @@ class PharmacyController extends Controller
      */
 
     function __construct(){
-        $this->middleware('auth:sanctum')->only(['show', 'destroy', 'update']);
+        $this->middleware('auth:sanctum')->only([ 'destroy', 'update']);
     }
 
     public function index(Request $request)
@@ -132,11 +132,11 @@ class PharmacyController extends Controller
      * Display the specified resource.
      */
     public function show(Pharmacy $pharmacy){   
-        $user = Auth::user();
-        if($user->id == $pharmacy->user_id){
+        // $user = Auth::user();
+        // if($user->id == $pharmacy->user_id){
             return new PharmacyResourse($pharmacy);  
-        }
-        return abort(403);
+        // }
+        // return abort(403);
     }
 
     /**

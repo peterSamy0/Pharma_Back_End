@@ -23,6 +23,11 @@ class DeliveryResource extends JsonResource
                     'id'=>$delivery->id,
                     'name'=>$delivery->user->name,
                     "email"=>$delivery->user->email,
+                    "delivery_phone" => $delivery->user->userPhone->map(function ($item) {
+                        return [
+                            'phone' => $item->phone
+                        ];
+                    }),
                     "national_ID"=>$delivery->national_ID,
                     "Governorate"=>$delivery->governorate->governorate,
                     "city"=>$delivery->city->city,
@@ -38,6 +43,11 @@ class DeliveryResource extends JsonResource
             'name'=>$this->user->name,
             "email"=>$this->user->email,
             "password"=>$this->user->password,
+            "delivery_phone" => $this->user->userPhone->map(function ($item) {
+                return [
+                    'phone' => $item->phone
+                ];
+            }),
             "national_ID"=>$this->national_ID,
             "Governorate"=>$this->governorate->governorate,
             "city"=>$this->city->city,
