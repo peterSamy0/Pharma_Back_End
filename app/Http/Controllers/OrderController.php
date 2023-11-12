@@ -34,7 +34,8 @@ class OrderController extends Controller
        
         $savedOrder = Order::create([
             'pharmacy_id' => $request->pharmacy_id,
-            'client_id' => $request->client_id //auth()->id(); when making authentication
+            'client_id' => $request->client_id, //auth()->id(); when making authentication
+            'delivery_id' => null
         ]);
         // insert ordered medications
         // data will come from frontend in an assoc. array, 'medication_id' => amount
