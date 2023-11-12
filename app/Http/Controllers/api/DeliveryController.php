@@ -10,6 +10,7 @@ use Illuminate\Validation\Rule;
 use App\Http\Resources\DeliveryResource;
 use App\Http\Requests\StoreDeliveryController;
 use App\Http\Requests\UpdateDeliveryController;
+use Illuminate\Support\Facades\Auth;
 
 class DeliveryController extends Controller
 {
