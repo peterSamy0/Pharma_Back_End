@@ -18,12 +18,13 @@
 </head>
 <body>
    <header class="bg-light text-dark">
-        <h1 class="display-4">Delivery Details</h1>
+        {{-- <h1 class="display-4">Delivery Details</h1> --}}
+        <h2>Delivery Name: {{ $delivery->user['name'] }}</h2>
     </header>
     <div class="container w-75">
         <div class="card p-3 shadow ">
             <div class="card-content ">
-                <h2>ID: {{ $delivery['id'] }}</h2>
+                <p>ID: {{ $delivery['id'] }}</p>
                 <p>Name: {{ $delivery->user['name'] }}</p>
                 <p>NationalID: {{ $delivery['national_ID'] }}</p>
                 <p>Governorate: {{ $delivery->governorate['governorate'] }}</p>

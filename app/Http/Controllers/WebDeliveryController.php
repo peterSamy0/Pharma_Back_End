@@ -13,7 +13,7 @@ class WebDeliveryController extends Controller
      */
     public function index()
     {
-        $delivery = Delivery::all();
+        $delivery = Delivery::paginate(10);
         // @dump( $delivery);
        $delivery = DeliveryResource::collection($delivery , 200 );
        return view('dashboard' , ['deliveries' => $delivery]);

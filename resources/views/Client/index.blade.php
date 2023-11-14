@@ -75,7 +75,7 @@
                             
                             </td>
                             <td>
-                                <a class="btn  btn-success" href="javascript:void(0);" onclick="showClientDetails({{ $client->id }})">
+                                <a class="btn" style="background-color: #3c6167; color:#e7eaf0 " href="javascript:void(0);" onclick="showClientDetails({{ $client->id }})">
                                    Show 
                                    {{-- <i class="fas fa-eye"></i> --}}
                                    {{-- @dump($client->id); --}}
@@ -109,6 +109,12 @@
                     @endforeach
                 </tbody>
             </table>
+            <nav aria-label="Page navigation example mt-5">
+                <ul class="pagination justify-content-center mt-5">
+{{$clients->links()}}
+                </ul>
+            </nav>
+
            </div>
         </div>
         @endif
@@ -130,8 +136,8 @@
                 text: "You won't be able to revert this!",
                 icon: 'warning',
                 showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
                 confirmButtonText: 'Yes, delete it!',
                 preConfirm: () => {
                   

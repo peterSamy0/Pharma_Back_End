@@ -20,14 +20,17 @@ use App\Http\Controllers\WebOrderController;
 
 Route::get('/', function () {
     return view('dashboard');
-});
+})->middleware('auth');
 
-Route::resource('medications', WebMedicationController::class);
+Route::resource('medications', WebMedicationController::class)->middleware('auth');
 
-Route::resource('pharmacies', WebPharmacyController::class);
+Route::resource('pharmacies', WebPharmacyController::class)->middleware('auth');
 
-Route::resource('clients', WebClientController::class);
+Route::resource('clients', WebClientController::class)->middleware('auth');
 
-Route::resource('deliveries', WebDeliveryController::class);
+Route::resource('deliveries', WebDeliveryController::class)->middleware('auth');
 
-Route::resource('orders', WebOrderController::class);
+Route::resource('orders', WebOrderController::class)->middleware('auth');
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

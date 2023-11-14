@@ -18,12 +18,13 @@
 </head>
 <body>
    <header class="bg-light text-dark">
-        <h1 class="display-4">Pharmacy Details</h1>
-    </header>
+    <h2>Pharmacy Name: {{  $pharmacy->user['name'] }}</h2>
+</header>
     <div class="container w-75">
         <div class="card p-3 shadow ">
             <div class="card-content ">
-                <h2>ID: {{ $pharmacy['id'] }}</h2>
+                {{-- <h2>Pharmacy Name: {{  $pharmacy->user['name'] }}</h2> --}}
+                <p>ID: {{ $pharmacy['id'] }}</p>
                 <p>Street : {{ $pharmacy['licence_number'] }}</p>
                 <p>Governorate: {{ $pharmacy->governorate['governorate'] }}</p>
                 <p>City: {{ $pharmacy->city['city'] }}</p>

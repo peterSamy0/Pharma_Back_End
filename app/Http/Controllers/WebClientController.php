@@ -13,7 +13,7 @@ class WebClientController extends Controller
      */
     public function index()
     {
-        $client = Client::all();
+        $client = Client::paginate(10);
         // @dump( $client);
        $client = ClientResource::collection($client , 200 );
        return view('dashboard' , ['clients' => $client]);

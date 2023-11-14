@@ -22,11 +22,11 @@
 <body>
 <div class="container-scroller">
 <!-- partial:../../partials/_sidebar.html -->
-<nav class="sidebar sidebar-offcanvas" id="sidebar">
-<div class="sidebar-brand-wrapper d-none d-lg-flex align-items-center justify-content-center fixed-top">
+<nav class="sidebar sidebar-offcanvas" style="background-color: #3c6167;" id="sidebar">
+<div class="sidebar-brand-wrapper d-none d-lg-flex align-items-center justify-content-center fixed-top" style="background-color: #3c6167">
 {{-- <a class="sidebar-brand brand-logo" href="../../index.html"><img src="../../assets/images/logo.svg" alt="logo" /></a> --}}
-<a class="sidebar-brand brand-logo" href="../../index.html"><img src="../../assets/images/logo.png" alt="logo" /></a>
-<a class="sidebar-brand brand-logo-mini" href="../../index.html"><img src="../../assets/images/logo-mini.svg" alt="logo" /></a>
+<a class="sidebar-brand brand-logo " href="../../index.html" style="color: azure; font-size:20px; font-weight:bold; text-decoration:none;">Pharma</a>
+<a class="sidebar-brand brand-logo-mini" href="/" style="color: azure; font-size:20px; font-weight:bold; text-decoration:none;">Ph</a>
 </div>
 <ul class="nav">
 <li class="nav-item profile">
@@ -42,13 +42,14 @@
 </div> --}}
 {{-- <div class="profile-name">
 <h5 class="mb-0 font-weight-normal">{{ $name }}</h5>
-<span>Gold Member</span>
+<span>
+    Gold Member</span>
 </div>
 --}}
 @if (Auth::check())
 <div class="profile-name">
-<h5 class="mb-0 font-weight-normal">{{ Auth::user()->name }}</h5>
-<span>Gold Member</span>
+<h5 class="mb-0 font-weight-normal" style="color: aliceblue">{{ Auth::user()->name }}</h5>
+<span style="color: aliceblue">{{ Auth::user()->role}}</span>
 </div>
 @else
 <div class="profile-name">
@@ -56,7 +57,7 @@
 </div>
 @endif
 </div>
-<a href="#" id="profile-dropdown" data-toggle="dropdown"><i class="mdi mdi-dots-vertical"></i></a>
+{{-- <a href="#" id="profile-dropdown" data-toggle="dropdown"><i class="mdi mdi-dots-vertical"></i></a> --}}
 <div class="dropdown-menu dropdown-menu-right sidebar-dropdown preview-list" aria-labelledby="profile-dropdown">
 <a href="#" class="dropdown-item preview-item">
 <div class="preview-thumbnail">
@@ -94,23 +95,23 @@
 </div>
 </li>
 <li class="nav-item nav-category">
-<span class="nav-link">Navigation</span>
+<span class="nav-link" style="color:aliceblue">Navigation</span>
 </li>
-{{-- <li class="nav-item menu-items">
-<a class="nav-link" href="../../index.html">
+<li class="nav-item menu-items">
+<a checked class="nav-link" href="/">
 <span class="menu-icon">
 <i class="mdi mdi-speedometer"></i>
 </span>
-<span class="menu-title">Dashboard</span>
+<span class="menu-title" style="color:aliceblue">Dashboard</span>
 </a>
-</li> --}}
+</li>
 <li class="nav-item menu-items">
 <a class="nav-link" href="{{ route('medications.index') }}">
 
 <span class="menu-icon">
 <i class="mdi mdi-laptop"></i>
 </span>
-<span class="menu-title">Medication</span>
+<span class="menu-title" style="color: aliceblue">Medication</span>
 </a>
 </li>
 <li class="nav-item menu-items">
@@ -118,7 +119,7 @@
 <span class="menu-icon">
 <i class="mdi mdi-playlist-play"></i>
 </span>
-<span class="menu-title">Pharmacy</span>
+<span class="menu-title" style="color: aliceblue">Pharmacy</span>
 </a>
 </li>
 
@@ -127,7 +128,7 @@
     <span class="menu-icon">
     <i class="mdi mdi-playlist-play"></i>
     </span>
-    <span class="menu-title">Client</span>
+    <span class="menu-title" style="color: aliceblue">Client</span>
     </a>
     </li>
     <li class="nav-item menu-items">
@@ -135,7 +136,7 @@
         <span class="menu-icon">
         <i class="mdi mdi-playlist-play"></i>
         </span>
-        <span class="menu-title">Delivery</span>
+        <span class="menu-title" style="color: aliceblue">Delivery</span>
         </a>
     </li>
     <li class="nav-item menu-items">
@@ -143,166 +144,78 @@
         <span class="menu-icon">
         <i class="mdi mdi-playlist-play"></i>
         </span>
-        <span class="menu-title">Order</span>
+        <span class="menu-title" style="color: aliceblue">Order</span>
         </a>
     </li>
 </ul>
 </nav>
 <div class="container-fluid page-body-wrapper">
-<nav class="navbar p-0 fixed-top d-flex flex-row">
-<div class="navbar-brand-wrapper d-flex d-lg-none align-items-center justify-content-center">
+<nav class="navbar p-0 fixed-top d-flex flex-row" style="background-color: #3c6167">
+<div class="navbar-brand-wrapper d-flex d-lg-none align-items-center justify-content-center "  style="background-color:  #3c6167"> 
 <a class="navbar-brand brand-logo-mini" href="../../index.html"><img src="../../assets/images/logo-mini.svg" alt="logo" /></a>
 </div>
 <div class="navbar-menu-wrapper flex-grow d-flex align-items-stretch">
-<button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
+<button class="navbar-toggler navbar-toggler align-self-center" style="color: aliceblue" type="button" data-toggle="minimize">
 <span class="mdi mdi-menu"></span>
 </button>
 <ul class="navbar-nav w-100">
-<li class="nav-item w-100">
-<form class="nav-link mt-2 mt-md-0 d-none d-lg-flex search">
+<h4 class="text-center" style="position: relative; left:40%">Admin Dashboard</h4>
+{{-- <li class="nav-item w-100"> --}}
+{{-- <form class="nav-link mt-2 mt-md-0 d-none d-lg-flex search">
 <input type="text" class="form-control" placeholder="Search products">
-</form>
-</li>
+</form> --}}
+{{-- </li> --}}
 </ul>
-<ul class="navbar-nav navbar-nav-right">
-<li class="nav-item dropdown d-none d-lg-block">
-<a class="nav-link btn btn-success create-new-button" id="createbuttonDropdown" data-toggle="dropdown" aria-expanded="false" href="#">+ Create New Project</a>
-<div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="createbuttonDropdown">
-<h6 class="p-3 mb-0">Projects</h6>
-<div class="dropdown-divider"></div>
-<a class="dropdown-item preview-item">
-<div class="preview-thumbnail">
-<div class="preview-icon bg-dark rounded-circle">
-<i class="mdi mdi-file-outline text-primary"></i>
-</div>
-</div>
-<div class="preview-item-content">
-<p class="preview-subject ellipsis mb-1">Software Development</p>
-</div>
-</a>
-<div class="dropdown-divider"></div>
-<a class="dropdown-item preview-item">
-<div class="preview-thumbnail">
-<div class="preview-icon bg-dark rounded-circle">
-<i class="mdi mdi-web text-info"></i>
-</div>
-</div>
-<div class="preview-item-content">
-<p class="preview-subject ellipsis mb-1">UI Development</p>
-</div>
-</a>
-<div class="dropdown-divider"></div>
-<a class="dropdown-item preview-item">
-<div class="preview-thumbnail">
-<div class="preview-icon bg-dark rounded-circle">
-<i class="mdi mdi-layers text-danger"></i>
-</div>
-</div>
-<div class="preview-item-content">
-<p class="preview-subject ellipsis mb-1">Software Testing</p>
-</div>
-</a>
-<div class="dropdown-divider"></div>
-<p class="p-3 mb-0 text-center">See all projects</p>
-</div>
+{{-- <ul class="navbar-nav navbar-nav-right">
+
+<li> --}}
+    {{-- <ul class="navbar-nav ms-auto"> --}}
+        {{-- <li class="nav-item dropdown">
+            <h2 id="navbarDropdown" style="" class="nav-link dropdown-toggle " role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                {{ Auth::user()->name }}
+            </h2>
+            
+            <div class="dropdown-menu dropdown-menu-end" style=" background-color:aliceblue"  aria-labelledby="navbarDropdown">
+                
+                <a style="color:#9ecfd3; background-color:aliceblue" class="dropdown-item" href="{{ route('logout') }}"
+                   onclick="event.preventDefault();
+                                 document.getElementById('logout-form').submit();">
+                    {{ __('Logout') }}
+                </a>
+        
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                    @csrf
+                </form>
+            </div>
+        </li> --}}
+        <li class="nav-item dropdown" style=" list-style-type: none; top:20%">
+            <a id="navbarDropdown" style="color: aliceblue" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                {{ Auth::user()->name }}
+            </a>
+        
+            <div class="dropdown-menu dropdown-menu-end" style="background-color:aliceblue">
+                
+                <h6 class="dropdown-header" style="color: #3c6167">{{ __('Options') }}</h6>
+                
+                <a class="dropdown-header" style="color: #3c6167" href="{{ route('logout') }}"
+                   onclick="event.preventDefault();
+                                 document.getElementById('logout-form').submit();">
+                    {{ __('Logout') }}
+                </a>
+                
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                    @csrf
+                </form>
+            </div>
+        </li>
+    {{-- </ul>         --}}
 </li>
-<li class="nav-item nav-settings d-none d-lg-block">
-<a class="nav-link" href="#">
-<i class="mdi mdi-view-grid"></i>
-</a>
-</li>
-<li class="nav-item dropdown border-left">
-<a class="nav-link count-indicator dropdown-toggle" id="messageDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
-<i class="mdi mdi-email"></i>
-<span class="count bg-success"></span>
-</a>
-<div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="messageDropdown">
-<h6 class="p-3 mb-0">Messages</h6>
-<div class="dropdown-divider"></div>
-<a class="dropdown-item preview-item">
-<div class="preview-thumbnail">
-<img src="../../assets/images/faces/face4.jpg" alt="image" class="rounded-circle profile-pic">
-</div>
-<div class="preview-item-content">
-<p class="preview-subject ellipsis mb-1">Mark send you a message</p>
-<p class="text-muted mb-0"> 1 Minutes ago </p>
-</div>
-</a>
-<div class="dropdown-divider"></div>
-<a class="dropdown-item preview-item">
-<div class="preview-thumbnail">
-<img src="../../assets/images/faces/face2.jpg" alt="image" class="rounded-circle profile-pic">
-</div>
-<div class="preview-item-content">
-<p class="preview-subject ellipsis mb-1">Cregh send you a message</p>
-<p class="text-muted mb-0"> 15 Minutes ago </p>
-</div>
-</a>
-<div class="dropdown-divider"></div>
-<a class="dropdown-item preview-item">
-<div class="preview-thumbnail">
-<img src="../../assets/images/faces/face3.jpg" alt="image" class="rounded-circle profile-pic">
-</div>
-<div class="preview-item-content">
-<p class="preview-subject ellipsis mb-1">Profile picture updated</p>
-<p class="text-muted mb-0"> 18 Minutes ago </p>
-</div>
-</a>
-<div class="dropdown-divider"></div>
-<p class="p-3 mb-0 text-center">4 new messages</p>
-</div>
-</li>
-<li class="nav-item dropdown border-left">
-<a class="nav-link count-indicator dropdown-toggle" id="notificationDropdown" href="#" data-toggle="dropdown">
-<i class="mdi mdi-bell"></i>
-<span class="count bg-danger"></span>
-</a>
-<div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="notificationDropdown">
-<h6 class="p-3 mb-0">Notifications</h6>
-<div class="dropdown-divider"></div>
-<a class="dropdown-item preview-item">
-<div class="preview-thumbnail">
-<div class="preview-icon bg-dark rounded-circle">
-<i class="mdi mdi-calendar text-success"></i>
-</div>
-</div>
-<div class="preview-item-content">
-<p class="preview-subject mb-1">Event today</p>
-<p class="text-muted ellipsis mb-0"> Just a reminder that you have an event today </p>
-</div>
-</a>
-<div class="dropdown-divider"></div>
-<a class="dropdown-item preview-item">
-<div class="preview-thumbnail">
-<div class="preview-icon bg-dark rounded-circle">
-<i class="mdi mdi-settings text-danger"></i>
-</div>
-</div>
-<div class="preview-item-content">
-<p class="preview-subject mb-1">Settings</p>
-<p class="text-muted ellipsis mb-0"> Update dashboard </p>
-</div>
-</a>
-<div class="dropdown-divider"></div>
-<a class="dropdown-item preview-item">
-<div class="preview-thumbnail">
-<div class="preview-icon bg-dark rounded-circle">
-<i class="mdi mdi-link-variant text-warning"></i>
-</div>
-</div>
-<div class="preview-item-content">
-<p class="preview-subject mb-1">Launch Admin</p>
-<p class="text-muted ellipsis mb-0"> New admin wow! </p>
-</div>
-</a>
-<div class="dropdown-divider"></div>
-<p class="p-3 mb-0 text-center">See all notifications</p>
-</div>
-</li>
-<li class="nav-item dropdown">
+
+</ul>
+{{-- <li class="nav-item dropdown">
 <a class="nav-link" id="profileDropdown" href="#" data-toggle="dropdown">
 <div class="navbar-profile">
-<img class="img-xs rounded-circle" src="../../assets/images/faces/rawan.jpeg" alt=""> 
+    <img class="img-xs rounded-circle " src="../../assets/images/logo.png" alt="">
 </div> 
 @if (Auth::check())
 <div class="profile-name">
@@ -341,7 +254,7 @@
 <div class="dropdown-divider"></div>
 <p class="p-3 mb-0 text-center">Advanced settings</p>
 </div>
-</li>
+</li> --}}
 </ul>
 <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
 <span class="mdi mdi-format-line-spacing"></span>
@@ -350,6 +263,7 @@
 </nav>
 <!-- partial -->
 <div class="main-panel">
+    
 <div class="content-wrapper">
 @if(isset($medications))
 @include('Medication.index')
@@ -387,6 +301,7 @@
 <!-- container-scroller -->
 <!-- plugins:js -->
 <script src="../../assets/vendors/js/vendor.bundle.base.js"></script>
+
 <!-- endinject -->
 <!-- Plugin js for this page -->
 <!-- End plugin js for this page -->

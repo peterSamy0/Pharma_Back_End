@@ -14,7 +14,7 @@ class WebMedicationController extends Controller
      */
     public function index()
     {
-        $medications = Medication::all();
+        $medications = Medication::paginate(10);
         // @dump( $medications);
        $medications = MedicationResource::collection($medications , 200 );
        return view('dashboard' , ['medications' => $medications]);

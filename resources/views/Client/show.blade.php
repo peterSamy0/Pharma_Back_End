@@ -18,12 +18,12 @@
 </head>
 <body>
    <header class="bg-light text-dark">
-        <h1 class="display-4">Client Details</h1>
-    </header>
+    <h2>Client Name:{{ $client->user['name'] }} </h2>
+</header>
     <div class="container w-75">
         <div class="card p-3 shadow ">
             <div class="card-content ">
-                <h2>ID: {{ $client['id'] }}</h2>
+                <p>ID: {{ $client['id'] }}</p>
                 <p>Name: {{ $client->user['name'] }}</p>
                 <p>Governorate: {{ $client->governorate['governorate'] }}</p>
                 <p>City: {{ $client->city['city'] }}</p>

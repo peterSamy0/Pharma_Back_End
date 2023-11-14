@@ -13,7 +13,7 @@ class WebPharmacyController extends Controller
      */
     public function index()
     {
-        $pharmacy = Pharmacy::all();
+        $pharmacy = Pharmacy::paginate(10);
         // @dump( $pharmacy);
        $pharmacy = PharmacyResourse::collection($pharmacy , 200 );
        return view('dashboard' , ['pharmacies' => $pharmacy]);
