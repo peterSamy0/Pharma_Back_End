@@ -481,8 +481,8 @@ class ComposerStaticInitad697d6656e21b19281012351c1aecbc
         ),
         'Http\\Message\\' => 
         array (
-            0 => __DIR__ . '/..' . '/php-http/message-factory/src',
-            1 => __DIR__ . '/..' . '/php-http/message/src',
+            0 => __DIR__ . '/..' . '/php-http/message/src',
+            1 => __DIR__ . '/..' . '/php-http/message-factory/src',
         ),
         'Http\\Discovery\\' => 
         array (
@@ -597,6 +597,7 @@ class ComposerStaticInitad697d6656e21b19281012351c1aecbc
         'App\\Http\\Controllers\\PharmacyController' => __DIR__ . '/../..' . '/app/Http/Controllers/PharmacyController.php',
         'App\\Http\\Controllers\\PharmacyMedicationController' => __DIR__ . '/../..' . '/app/Http/Controllers/PharmacyMedicationController.php',
         'App\\Http\\Controllers\\UserController' => __DIR__ . '/../..' . '/app/Http/Controllers/UserController.php',
+        'App\\Http\\Controllers\\api\\DeliveryController' => __DIR__ . '/../..' . '/app/Http/Controllers/api/DeliveryController.php',
         'App\\Http\\Kernel' => __DIR__ . '/../..' . '/app/Http/Kernel.php',
         'App\\Http\\Middleware\\Authenticate' => __DIR__ . '/../..' . '/app/Http/Middleware/Authenticate.php',
         'App\\Http\\Middleware\\EncryptCookies' => __DIR__ . '/../..' . '/app/Http/Middleware/EncryptCookies.php',
@@ -622,6 +623,7 @@ class ComposerStaticInitad697d6656e21b19281012351c1aecbc
         'App\\Http\\Resources\\MedicationResource' => __DIR__ . '/../..' . '/app/Http/Resources/MedicationResource.php',
         'App\\Http\\Resources\\OrderResource' => __DIR__ . '/../..' . '/app/Http/Resources/OrderResource.php',
         'App\\Http\\Resources\\PharmacyMedicationResource' => __DIR__ . '/../..' . '/app/Http/Resources/PharmacyMedicationResource.php',
+        'App\\Http\\Resources\\PharmacyOrdersRescource' => __DIR__ . '/../..' . '/app/Http/Resources/PharmacyOrdersRescource.php',
         'App\\Http\\Resources\\PharmacyResourse' => __DIR__ . '/../..' . '/app/Http/Resources/PharmacyResourse.php',
         'App\\Http\\Resources\\UserResource' => __DIR__ . '/../..' . '/app/Http/Resources/UserResource.php',
         'App\\Models\\Category' => __DIR__ . '/../..' . '/app/Models/Category.php',

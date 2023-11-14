@@ -18,7 +18,9 @@ class Order extends Model
         'client_id' ,
         "pharmacy_id",
         "delivery_id",
-        "status"
+        "status",
+        "totalprice",
+        "payment",
     ];
     protected $dates = ['deleted_at']; 
     // order has many order medications

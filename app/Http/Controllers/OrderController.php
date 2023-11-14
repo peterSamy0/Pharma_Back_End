@@ -30,28 +30,31 @@ class OrderController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    {
-       
-        $savedOrder = Order::create([
-            'pharmacy_id' => $request->pharmacy_id,
-            'client_id' => $request->client_id, //auth()->id(); when making authentication
-            'delivery_id' => null
+{
+    \Log::info('Received data:', ['data' => $request->all()]);
+
+    $savedOrder = Order::create([
+        'pharmacy_id' => $request->pharmacy_id,
+        'client_id' => $request->client_id,
+        'delivery_id' => null,
+        'totalprice' => $request->totalPrice,
+    ]);
+
+    // Insert ordered medications
+    $ordMedications = $request->input('ordMedications');
+
+    foreach ($ordMedications as $ordMedication) {
+        $medicineId = $ordMedication['key'];
+        $amount = $ordMedication['value'];
+        $savedOrder->orderMedications()->create([
+            'medicine_id' => $medicineId,
+            'amount' => $amount,
         ]);
-        // insert ordered medications
-        // data will come from frontend in an assoc. array, 'medication_id' => amount
-        $ordMedications = $request->input('ordMedications');
-        
-        foreach ($ordMedications as $ordMedication) {
-            $medicineId = $ordMedication['key'];
-            $amount = $ordMedication['value'];
-            $savedOrder->orderMedications()->create([
-                'medicine_id' => $medicineId,
-                'amount' => $amount,
-            ]);
-        }
-        return response()->json($savedOrder, 200);
-        
     }
+    // return view ("stripe", ["data"=> $savedOrder]);
+    // Return the order along with the order ID
+    return response()->json(['order' => new OrderResource($savedOrder), 'orderid' => $savedOrder->id], 200);
+}
     
 
     /**
