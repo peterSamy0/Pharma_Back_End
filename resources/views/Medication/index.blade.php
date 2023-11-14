@@ -53,6 +53,7 @@
                         <th>Image</th>
                         <th>Show</th>
                         <th>Update</th>
+                        <th>Create</th>
                         <th>Delete</th>
                     </tr>
                 </thead>
@@ -70,7 +71,7 @@
                                         <img src="{{ asset('img/' . $medication['image']) }}" alt="{{ $medication['name'] }}" class="w-100 rounded-4 shadow" style="object-fit: cover; width:100px!important">
                                 @endif 
                              --}}
-                                <img src="https://i.pinimg.com/236x/fb/ee/ee/fbeeee5fbe06cef68c557b2b509a8c6e.jpg" alt="Avatar" style="width: 50px; height: 50px;">
+                                <img src="{{asset ('images/Store_Images/'.$medication['image'])}}" alt="Avatar" style="width: 50px; height: 50px;">
                             </td>
                             
                             </td>
@@ -85,6 +86,11 @@
                                   Update 
                                    {{-- <i class="fas fa-edit"></i>    --}}
                                     {{-- @dump($medication->id); --}}
+                                </a>
+                            </td>
+                            <td>
+                                <a class="btn btn-primary" href="{{route ('medications.create')}}">
+                                 Create
                                 </a>
                             </td>
                             <td>

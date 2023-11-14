@@ -6,6 +6,7 @@ use App\Http\Controllers\WebPharmacyController;
 use App\Http\Controllers\WebClientController;
 use App\Http\Controllers\WebDeliveryController;
 use App\Http\Controllers\WebOrderController;
+use App\Http\Controllers\WebCategoriesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,3 +32,5 @@ Route::resource('clients', WebClientController::class);
 Route::resource('deliveries', WebDeliveryController::class);
 
 Route::resource('orders', WebOrderController::class);
+
+Route::resource('categories', WebCategoryController::class);

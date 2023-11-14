@@ -26,10 +26,10 @@
                 <input type="text" id="price" name="price" value="{{ $medication['price'] }}" class="form-control">
             </div>
 
-            <div class="mb-3">
+            {{-- <div class="mb-3">
                 <label for="category" class="form-label text-dark">Category</label>
                 <input type="text" id="category" name="category" value="{{ $medication->category['name'] }}" class="form-control">
-            </div>
+            </div> --}}
 
             <button type="submit" class="btn btn-success w-100 mt-3">Update</button>
         </form>
