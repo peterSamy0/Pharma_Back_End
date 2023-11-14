@@ -2,8 +2,9 @@
 
 namespace App\Http\Resources;
 
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
+use App\Http\Resources\OrderResource;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class PharmacyResourse extends JsonResource
@@ -94,6 +95,7 @@ class PharmacyResourse extends JsonResource
                     'medicine_image' => $medicine->medication->image,
                     'medicine_decription' => $medicine->medication->description,
                     'medicine_category' => $medicine->medication->category->name,
+                    // 'orders' =>  OrderResource::collection($medicine->orders)
                 ];
             }),
         ];

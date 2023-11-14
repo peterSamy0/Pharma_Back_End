@@ -1,14 +1,15 @@
 <?php
 
 namespace App\Models;
-use App\Models\PharmacyMedication;
+use App\Models\User;
+use App\Models\Order;
 use App\Models\PharmacyPhone;
 use App\Models\PharmacyDayOff;
-use App\Models\User;
 
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\PharmacyMedication;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Pharmacy extends Model
 {

@@ -45,6 +45,7 @@ Route::apiResource('orders',OrderController::class);
 Route::apiResource('governorates',GovernorateController::class);
 
 Route::middleware('auth:sanctum')->get('/user', [UserController::class, 'getuser']);
+Route::get('clientsOrders/{id}', [ClientController::class, 'getClientOrders']);
 
 
 // Route::apiResource('deliveries_Phone',DeliveryPhoneController::class)

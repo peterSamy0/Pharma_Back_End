@@ -192,6 +192,17 @@ class PharmacyController extends Controller
         }
         return abort(403);
     }
+
+    public function getPharmacyOrders(Pharmacy $pharmacy)
+    {
+        $user = Auth::user();
+        if($user->id == $pharmacy->user_id){
+            
+            return " Delete the pharmacy is Done";
+        }
+        return abort(403);
+    }
+
 }
 
 
