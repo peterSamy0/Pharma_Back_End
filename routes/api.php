@@ -4,7 +4,6 @@ use App\Http\Controllers\AddMedicationsByPharmacyModelController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\Logout;
 use App\Http\Controllers\ClientController;
-use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MedicationController;
@@ -12,10 +11,10 @@ use App\Http\Controllers\PharmacyController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\api\DeliveryController;
 use App\Http\Controllers\GovernorateController;
-use App\Http\Controllers\api\DeliveryPhoneController;
 use App\Http\Controllers\DayController;
 use App\Http\Controllers\PharmacyMedicationController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\CategoryController;
 use App\Models\Governorate;
 use App\Models\Order;
 use App\Http\Controllers\ContactusController;
@@ -67,7 +66,6 @@ Route::resource('contactus', ContactusController::class);
 
 
 use App\Http\Controllers\PaymentController;
-use App\Http\Controllers\CategoryController;
 
 
 // Route::post('/payment/process', 'PaymentController@processPayment');

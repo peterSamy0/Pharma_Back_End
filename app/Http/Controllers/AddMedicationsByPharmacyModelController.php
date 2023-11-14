@@ -36,7 +36,6 @@ class AddMedicationsByPharmacyModelController extends Controller
                 'category' => 'required',
                 'price' => 'required',
                 'medicineName' => 'required',
-                'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048'
             ]);
 
             if($validateUser->fails()){
@@ -47,17 +46,17 @@ class AddMedicationsByPharmacyModelController extends Controller
                 ], 401);
             }
 
-            if ($request->hasFile('userImage')) {
-                $imagePath = $request->file('userImage')->store('images/profile', 'public');
+            if ($request->hasFile('image')) {
+                $imagePath = $request->file('image')->store('images/Request', 'public');
             } else {
                 $imagePath = null;
             }
             
             $addMedicationsByPharmacyModel = addMedicationsByPharmacyModel::create([
-                'medicineName' => $request->userFullName,
-                'category_id' => $request->userEmail,
+                'medicineName' => $request->medicineName,
+                'category_id' => $request->category,
                 'price' => $request->price,
-                'image' =>  $imagePath,
+                // 'image' =>  $imagePath,
                 'user_id' => $user->id
             ]);
             return response()->json($addMedicationsByPharmacyModel, 200);
