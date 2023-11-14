@@ -9,15 +9,30 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Requests\OrderRequest;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
+
 class OrderController extends Controller
 {
+
+    function __construct(){
+        $this->middleware('auth:sanctum')->only(['index','show', 'destroy', 'update']);
+    }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-	// dd(Auth::user());
-        $orders = Order::all();
+        $user = Auth::user();
+
+        if (Gate::allows('is_pharmacy', $user)) {
+            $orders = $user->pharmacy->orders;
+        } elseif (Gate::allows('is_client', $user)) {
+            $orders = $user->client->orders;
+        } elseif (Gate::allows('is_delivery', $user)) {
+            $orders = $user->delivery->orders;
+        } else {
+            return response()->json(['error' => 'Unauthorized'], 403);
+        }
         $returnOrders = [];
         foreach($orders as $order){
             array_push($returnOrders,new OrderResource($order));

@@ -20,7 +20,8 @@ class MedicationResource extends JsonResource
             'name' =>$this->name,
             'price'=>$this->price,
             'image'=>$this->image,
-            'category_id'=>$this->category_id,   
+            'category_id'=>$this->category_id,
+            'category_id'=>$this->category->name,   
             'category' =>$this->category->name,
         ];
     }
