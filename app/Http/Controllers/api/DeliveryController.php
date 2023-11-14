@@ -71,6 +71,7 @@ class DeliveryController extends Controller
                 'user_id' => $user->id,
                 'delivery_id' => $delivery->id,
                 'role' => $user->role,
+                'image' => $user->image,
                 'token' => $user->createToken("API TOKEN")->plainTextToken
             ], 200);
             

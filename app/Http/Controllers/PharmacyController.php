@@ -92,34 +92,27 @@ class PharmacyController extends Controller
                 'user_id' => $user->id,
             ]);            	
             
-            // $daysOff = $request->input('pharmacyDayOff');
-            // if($daysOff){
-            //     foreach($daysOff as $dayOff){
-            //         PharmacyDayOff::create([
-            //             'day_id' => $dayOff,
-            //             "pharmacy_id" => $pharmacy->id
-            //         ]);
-            //     };
-            // }else{
-            //     PharmacyDayOff::create([
-            //             'day_id' => null,
-            //             "pharmacy_id" => $pharmacy->id
-            //         ]);
-            // };
-            $userPhones = $request->input('pharmaPhone');
-            if (is_array($userPhones)) {
-                foreach ($userPhones as $phone) {
-                    UserPhone::create([
-                        'user_id' => $user->id,
-                        'phone' => $phone
+            $daysOff = $request->input('pharmacyDayOff');
+            if(is_array($daysOff)){
+                foreach($daysOff as $dayOff){
+                    PharmacyDayOff::create([
+                        'day_id' => $dayOff,
+                        "pharmacy_id" => $pharmacy->id
                     ]);
-                }
+                };
             }
+
+            $userPhones = $request->input('pharmaPhone');
+            UserPhone::create([
+                'user_id' => $user->id,
+                'phone' => $userPhones
+            ]);
             return response()->json([
                 'status' => true,
                 'message' => 'User Created Successfully',
                 'user_id' => $user->id,
                 'role' => $user->role,
+                'image' => $user->image,
                 'pharmacy_id' => $pharmacy->id,
                 'token' => $user->createToken("API TOKEN")->plainTextToken
             ], 200);

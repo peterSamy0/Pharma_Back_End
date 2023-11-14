@@ -25,7 +25,7 @@ class ClientResource extends JsonResource
                         "client_name" => $client->user->name,
                         "client_email" => $client->user->email,
                         "client_password" => $client->user->password,
-                        "client_image" => $this->user->image,
+                        "image" => $this->user->image,
                         "client_phone" => $client->user->userPhone->map(function ($item) {
                             return [
                                 'phone' => $item->phone
@@ -44,7 +44,7 @@ class ClientResource extends JsonResource
                 "client_name" => $this->user->name,
                 "client_email" => $this->user->email,
                 "client_password" => $this->user->password,
-                "client_image" => $this->user->image,
+                "image" => $this->user->image,
                 "client_phone" => $this->user->userPhone,
                 "Governorate" => $this->governorate->governorate,
                 "city" => $this->city->city,

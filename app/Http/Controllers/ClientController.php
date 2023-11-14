@@ -29,7 +29,6 @@ class ClientController extends Controller
         public function index()
         {
             $clients = Client::all();
-        
             return response()->json( ClientResource::collection($clients), 200);
         } 
 
@@ -81,20 +80,17 @@ class ClientController extends Controller
             ]);
 
             $userPhones = $request->input('userPhone');
-            if (is_array($userPhones) && count($userPhones) > 0) {
-                foreach ($userPhones as $phone) {
-                    UserPhone::create([
-                        'user_id' => $user->id,
-                        'phone' => $phone
-                    ]);
-                }
-            }
+            UserPhone::create([
+                'user_id' => $user->id,
+                'phone' => $userPhones
+            ]);
 
             return response()->json([
                 'status' => true,
                 'message' => 'User Created Successfully',
                 'user_id' => $user->id,
                 '_id' => $client->id,
+                'image' => $user->image,
                 'role' => ($user->role) ? $user->role : 'client',
                 'token' => $user->createToken("API TOKEN")->plainTextToken,
             ], 200);

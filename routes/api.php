@@ -70,10 +70,21 @@ use App\Http\Controllers\PaymentController;
 
 // Route::post('/payment/process', 'PaymentController@processPayment');
 
-Route::post('/pay', [PaymentController::class, 'pay']);
+// Route::post('/createCheckoutSession', [PaymentController::class, 'createCheckoutSession']);
 // Route::post('/process-payment', 'PaymentController@processPayment');
+// Route::get('/create-subscription-product', [PaymentController::class, 'createSubscriptionProduct']);
+// Route::post('/create-payment-intent', [PaymentController::class, 'createPaymentIntent']);
 
 // Route::get('success', [PaymentController::class,'success']);
 // Route::get('error', [PaymentController::class,'error']);
 // routes/api.php or routes/web.php
 // Route::post('/pay', 'PaymentController@pay')->name('pay');
+
+
+
+// Route::get('stripe', [PaymentController::class , 'stripe']);
+// Route::post('stripe', [PaymentController::class, 'stripePost'])->name('stripe.post');
+
+Route::get('/laravel-route', function () {
+    return view('your-blade-view');  // Replace 'your-blade-view' with the actual Blade view name
+});
