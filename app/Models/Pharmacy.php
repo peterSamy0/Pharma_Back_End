@@ -5,7 +5,7 @@ use App\Models\User;
 use App\Models\Order;
 use App\Models\PharmacyPhone;
 use App\Models\PharmacyDayOff;
-
+use App\Models\UserPhone;
 
 use App\Models\PharmacyMedication;
 use Illuminate\Database\Eloquent\Model;
@@ -48,7 +48,7 @@ class Pharmacy extends Model
     }
     
     public function userPhone(){
-        return $this->hasMany(UserPHone::class);
+        return $this->hasMany(UserPhone::class);
     }
 
 }

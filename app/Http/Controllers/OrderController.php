@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Requests\OrderRequest;
 use Illuminate\Support\Facades\Auth;
+
 class OrderController extends Controller
 {
     /**

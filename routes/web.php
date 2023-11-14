@@ -1,6 +1,11 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\WebMedicationController;
+use App\Http\Controllers\WebPharmacyController;
+use App\Http\Controllers\WebClientController;
+use App\Http\Controllers\WebDeliveryController;
+use App\Http\Controllers\WebOrderController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,6 +19,15 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('dashboard');
 });
 
+Route::resource('medications', WebMedicationController::class);
+
+Route::resource('pharmacies', WebPharmacyController::class);
+
+Route::resource('clients', WebClientController::class);
+
+Route::resource('deliveries', WebDeliveryController::class);
+
+Route::resource('orders', WebOrderController::class);

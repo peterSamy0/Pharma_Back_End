@@ -121,7 +121,7 @@ class ClientController extends Controller
     public function update(Request $request, Client $client)
     {
         $user = Auth::user();
-        if($user->id == $client->user_id){
+        if($user->id == $client->user_id || $user->role == "admin")
             try{
                 $user = User::find($client->user_id);
                 $user->name = $request->user['name'];
@@ -149,7 +149,7 @@ class ClientController extends Controller
     {
         // validation , security
         $user = Auth::user();
-        if($user->id == $client->user_id){
+        if($user->id == $client->user_id || $user->role == "admin"){
             if($client->id){
                 $client->delete();
                 return "client deleted";
@@ -158,7 +158,6 @@ class ClientController extends Controller
         return abort(403);
     }
 
-}
 
 
 
