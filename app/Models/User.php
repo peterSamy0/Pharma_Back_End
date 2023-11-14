@@ -48,7 +48,7 @@ class User extends Authenticatable
     protected $tokenName = 'token';
     
     public function client(){
-        $this->hasOne(Client::class);
+        return $this->hasOne(Client::class);
     }
 
     public function pharmacy(){

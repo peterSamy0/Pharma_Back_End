@@ -72,9 +72,17 @@ class OrderController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show($id)
+    // public function show($id)
+    // {
+    //     $order = Order::where('pharmacy_id', $id)->first();
+    //     if ($order) {
+    //         return new OrderResource($order);
+    //     }
+    //     return abort(404);
+    // }
+    public function show(Request $request, Order $order)
     {
-        $order = Order::where('pharmacy_id', $id)->first();
+        // $order = Order::where('pharmacy_id', $id)->first();
         if ($order) {
             return new OrderResource($order);
         }
@@ -87,24 +95,38 @@ class OrderController extends Controller
      */
     public function update(Request $request, Order $order)
     {
+        $user = Auth::user();
+        // return response()->json([$request->delivered],200);
         // if(!$order || $order->client_id !== auth()->user()->id){
         //     return abort(404);
         // }
         
         // if the request is to update delivery
         // dd($request->setDelivery);
-        if($request->delivery){
+        if(Gate::allows('is_delivery', $user)){
             $order->update(
                 ["status"=>"withDelivery"]
             );
             return response()->json("order accepted successfully", 200);
         }
-        if($request->setDelivery){
+        if(Gate::allows('is_client', $user) && $request->delivered){
             // dd($order->delivery->user->name);
             try{
                 $order->update([
-                    "delivery_id" => $request->deliveryId,
-                    "status" => "withDelivery"
+                    "status" => 'delivered'
+                ]);
+                return response()->json(['order has been delivered successfully '],200);
+            }catch(Exception $e){
+                return response()->json([$e->getMessage()],500);
+
+            }
+
+        }
+        if(Gate::allows('is_pharmacy', $user)){
+            // dd($order->delivery->user->name);
+            try{
+                $order->update([
+                    "delivery_id" => $request->deliveryId
                 ]);
                 return response()->json(['order has been assigned to ' . $order->delivery->user->name],200);
             }catch(Exception $e){
@@ -148,7 +170,7 @@ class OrderController extends Controller
                     return response()->json($e,500);
                 }
                 // return response()->json([$order,$order->orderMedications ], 200);
-                return $this->show($order);
+                return $this->show($request,$order);
             }else{
                 return response()->json("sorry, the order has been prepared by the pharmacy",200);
             }
