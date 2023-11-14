@@ -107,7 +107,6 @@
 </li>
 <li class="nav-item menu-items">
 <a class="nav-link" href="{{ route('medications.index') }}">
-
 <span class="menu-icon">
 <i class="mdi mdi-laptop"></i>
 </span>

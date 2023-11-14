@@ -6,6 +6,7 @@ use App\Http\Controllers\WebPharmacyController;
 use App\Http\Controllers\WebClientController;
 use App\Http\Controllers\WebDeliveryController;
 use App\Http\Controllers\WebOrderController;
+use App\Http\Controllers\WebCategoriesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,6 +32,5 @@ Route::resource('clients', WebClientController::class)->middleware('auth');
 Route::resource('deliveries', WebDeliveryController::class)->middleware('auth');
 
 Route::resource('orders', WebOrderController::class)->middleware('auth');
-Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::resource('categories', WebCategoryController::class)->middleware('auth');

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Medication;
+use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Http\Resources\MedicationResource;
 use App\Http\Requests\MedicationRequest;
@@ -20,13 +21,36 @@ class WebMedicationController extends Controller
        return view('dashboard' , ['medications' => $medications]);
        
     }
+        // 
 
+        public function create()
+        {
+            $category=Category::all();
+            // @dump($category);
+            return view('Medication.create' , ['data' => $category]);
+        }
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
     {
-        //
+
+
+        request()->validate([
+            "name" => "required | unique:medications",
+            "price" => "required | integer",
+            "image" => "required",
+            'category_id' => "required",
+        ]);
+
+        $data = $request->all();
+        if($request->hasFile('image')){
+            $trackImage= $data["image"];
+            $path=$trackImage->store("uploadedIMages" , "Store_Images");
+            $data["image"]=$path;
+        }
+        Medication::create($data);
+        return to_route('medications.index');
     }
 
     /**
@@ -47,10 +71,6 @@ class WebMedicationController extends Controller
     {
         try {
             $medication = Medication::find($id);
-            // $medication->category->id;
-                // @dump($medication->category->id);
-            // $category= $medication->category->name;
-            // @dump($medication->category->name);
             if ($medication) {
                 return view('Medication.edit', ['medication' => $medication]);
             } else {
@@ -75,15 +95,6 @@ class WebMedicationController extends Controller
                 'name' => $request->input('name'),
                 'price' => $request->input('price'),
             ]);
-        
-            $category = $medication->category;
-            
-        //   @dump($category);
-            if ($category) {
-                $category->update([
-                    'name' => $request->input('name'),
-                ]);
-            }
         
             return back()->with('success', 'Medication updated successfully.');
         } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {

@@ -52,7 +52,7 @@
                         {{-- <th>Phone</th>  --}}
                         {{-- <th>Image</th> --}}
                         <th>Show</th>
-                        <th>Update</th>
+                        {{-- <th>Update</th> --}}
                         <th>Delete</th>
                     </tr>
                 </thead>
@@ -81,13 +81,13 @@
                                    {{-- @dump($delivery->id) --}}
                                 </a>
                             </td>
-                            <td>
+                            {{-- <td>
                                 <a class="btn btn-primary" href="javascript:void(0);" onclick="editDelivery({{ $delivery->id }})">
                                   Update 
-                                   {{-- <i class="fas fa-edit"></i>    --}}
-                                    {{-- @dump($pharmacy->id); --}}
+                                   <i class="fas fa-edit"></i>   
+                                    @dump($pharmacy->id);
                                 </a>
-                            </td>
+                            </td> --}}
                             <td>
                                 <button type="button" onclick="showSweetAlert('{{ route('deliveries.destroy', $delivery['id']) }}')" class="btn btn-danger">
                                     Delete
