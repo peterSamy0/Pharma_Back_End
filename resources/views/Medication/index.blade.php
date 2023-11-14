@@ -82,14 +82,14 @@
                                 </a>
                             </td>
                             <td>
-                                <a class="btn btn-primary" href="javascript:void(0);" onclick="editMedication({{ $medication->id }})">
+                                <a class="btn " style="background-color: #698589; color:#e7eaf0 " href="javascript:void(0);" onclick="editMedication({{ $medication->id }})">
                                   Update 
                                    {{-- <i class="fas fa-edit"></i>    --}}
                                     {{-- @dump($medication->id); --}}
                                 </a>
                             </td>
                             <td>
-                                <a class="btn btn-primary" href="{{route ('medications.create')}}">
+                                <a class="btn" style="background-color: #768081; color:#e7eaf0 " href="{{route ('medications.create')}}">
                                  Create
                                 </a>
                             </td>

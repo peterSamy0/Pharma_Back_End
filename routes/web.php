@@ -31,6 +31,13 @@ Route::resource('clients', WebClientController::class)->middleware('auth');
 
 Route::resource('deliveries', WebDeliveryController::class)->middleware('auth');
 
+// <<<<<<< HEAD
+// Route::resource('orders', WebOrderController::class)->middleware('auth');
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+// =======
 Route::resource('orders', WebOrderController::class)->middleware('auth');
 
 Route::resource('categories', WebCategoryController::class)->middleware('auth');
+// >>>>>>> eb763b7a72f9dfa79d04e33255b4f09bab350e3a

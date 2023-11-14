@@ -18,12 +18,14 @@
 </head>
 <body>
    <header class="bg-light text-dark">
-        <h1 class="display-4">Order Details</h1>
+        <h2 >Order Details</h2>  {{-- delivery_name --}}
+
     </header>
     <div class="container w-75">
         <div class="card p-3 shadow ">
             <div class="card-content ">
-                <h2>ID: {{ $order['id'] }}</h2>
+
+                <p>ID: {{ $order['id'] }}</p>
                 <p>Status: {{ $order['status'] }}</p>
                 {{-- <p>Amount: {{ $order->orderMedications['amount'] }}</p> --}}
                 </div>

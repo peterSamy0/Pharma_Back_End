@@ -60,7 +60,7 @@
                             <td>{{ $order['id'] }}</td>
                             <td>{{ $order->client->user['name'] }}</td>
                             <td>{{ $order->pharmacy->user['name'] }}</td>
-                            <td>{{ $order->delivery->user['name'] }}</td>
+                            {{-- <td>{{ $order->delivery->user['name'] }}</td> --}}
                             
                           
                             <td>
@@ -93,7 +93,7 @@
             </table>
             <nav aria-label="Page navigation example mt-5">
                 <ul class="pagination justify-content-center mt-5">
-{{$orders->links()}}
+{{-- {{$orders->links()}} --}}
                 </ul>
             </nav>
            </div>
