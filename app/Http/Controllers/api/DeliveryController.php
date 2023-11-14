@@ -37,46 +37,44 @@ class DeliveryController extends Controller
     {
         
         try {
+            if ($request->hasFile('userImage')) {
+                $imagePath = $request->file('userImage')->store('images/profile', 'public');
+            } else {
+                $imagePath = null;
+            }
             $user = User::create([
-                'name' => $request->user['name'],
-                'email' => $request->user['email'],
-                'password' => Hash::make($request->user['password']),
+                'name' => $request->name,
+                'email' => $request->email,
+                'password' => Hash::make($request->pass),
+                'image' => $imagePath,
                 'role' => 'delivery'
             ]);
             
             $delivery = Delivery::create([
-                // 'image' => $request->delivery['image'],
-                'national_ID' => $request->delivery['nationalID'],
-                'governorate_id' => $request->delivery['governorateID'],
-                'city_id' => $request->delivery['cityID'],
-                'available' => $request->delivery['available'],
+                'national_ID' => $request->national_ID,
+                'governorate_id' => $request->governorate,
+                'city_id' => $request->city,
+                'available' => true,
                 'user_id' => $user->id,
             ]);            	
             
             
-            if ($delivery) {
-                return response()->json([
-                    'status' => true,
-                    'message' => 'User Created Successfully',
-                    'user_id' => $user->id,
-                    'delivery_id' => $delivery->id,
-                    'role' => $user->role,
-                    'token' => $user->createToken("API TOKEN")->plainTextToken
-                ], 200);
-            } else {
-                throw new Exception('Failed to create delivery');
-            }
-
             $userPhones = $request->input('phone');
+            UserPhone::create([
+                'user_id' => $user->id,
+                'phone' => $userPhones
+            ]);
 
-            if (is_array($userPhones)) {
-                foreach ($userPhones as $phone) {
-                    UserPhone::create([
-                        'user_id' => $user->id,
-                        'phone' => $phone
-                    ]);
-                }
-            }
+            return response()->json([
+                'status' => true,
+                'message' => 'User Created Successfully',
+                'user_id' => $user->id,
+                'delivery_id' => $delivery->id,
+                'role' => $user->role,
+                'token' => $user->createToken("API TOKEN")->plainTextToken
+            ], 200);
+            
+
 
         } catch (Exception $e) {
             return response()->json([

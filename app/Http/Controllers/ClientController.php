@@ -43,12 +43,13 @@ class ClientController extends Controller
             //Validated
             $validateUser = Validator::make($request->all(), 
             [
-                'user.name' => 'required',
-                'user.email' => 'required|email|unique:users,email',
-                'user.password' => 'required',
-                'client.governorate_id' => 'required',
-                'client.city_id' => 'required',
-                'phone' => 'required'
+                'userFullName' => 'required',
+                'userEmail' => 'required|email|unique:users,email',
+                'userPass' => 'required',
+                'userImage' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+                'userGovern' => 'required',
+                'userCity' => 'required',
+                'userPhone' => 'required'
             ]);
 
             if($validateUser->fails()){
@@ -59,21 +60,28 @@ class ClientController extends Controller
                 ], 401);
             }
 
+            if ($request->hasFile('userImage')) {
+                $imagePath = $request->file('userImage')->store('images/profile', 'public');
+            } else {
+                $imagePath = null;
+            }
+        
             $user = User::create([
-                'name' => $request->user['name'],
-                'email' => $request->user['email'],
-                'password' => Hash::make($request->user['password'])
+                'name' => $request->userFullName,
+                'email' => $request->userEmail,
+                'password' => Hash::make($request->userPass),
+                'image' =>  $imagePath
             ]);
 
             $client = Client::create([
                 'user_id' => $user->id,
-                'governorate_id' => $request->client['governorate_id'],
-                'city_id' => $request->client['city_id'],
+                'governorate_id' => $request->userGovern,
+                'city_id' => $request->userCity,
                 'role' => 'client'
             ]);
 
-            $userPhones = $request->input('phone');
-            if (is_array($userPhones)) {
+            $userPhones = $request->input('userPhone');
+            if (is_array($userPhones) && count($userPhones) > 0) {
                 foreach ($userPhones as $phone) {
                     UserPhone::create([
                         'user_id' => $user->id,

@@ -46,18 +46,18 @@ class PharmacyController extends Controller
             //Validated
             $validateUser = Validator::make($request->all(), 
             [
-                'user.name' => 'required',
-                'user.email' => 'required|email|unique:users,email',
-                'user.password' => 'required',
-                'pharmacy.governorate_id' => 'required',
-                'pharmacy.city_id' => 'required',
-                'pharmacy.street' => 'required',
-                'pharmacy.licence_number' => 'required',
-                'pharmacy.opening' => 'required',
-                'pharmacy.closing' => 'required',
-                'pharmacy.bank_account' => 'required',
-                'pharmacy.image' => 'required',
-                'phone' => 'required'
+                'pharmaName' => 'required',
+                'pharmaEmail' => 'required|email|unique:users,email',
+                'pharmaPass' => 'required',
+                'pharmaGovern' => 'required',
+                'pharmaCity' => 'required',
+                'pharmaStreet' => 'required',
+                'pharmaLicense' => 'required',
+                'pharmaOpeningTime' => 'required',
+                'pharmaClosingTime' => 'required',
+                'pharmaBankAccount' => 'required',
+                'userImage' => 'required',
+                'pharmaPhone' => 'required',
             ]);
 
             if($validateUser->fails()){
@@ -68,40 +68,45 @@ class PharmacyController extends Controller
                 ], 401);
             }
 
+            if ($request->hasFile('userImage')) {
+                $imagePath = $request->file('userImage')->store('images/profile', 'public');
+            } else {
+                $imagePath = null;
+            }
             $user = User::create([
-                'name' => $request->user['name'],
-                'email' => $request->user['email'],
-                'password' => Hash::make($request->user['password']),
+                'name' => $request->pharmaName,
+                'email' => $request->pharmaEmail,
+                'password' => Hash::make($request->pharmaPass),
+                'image' => $imagePath,
                 'role' => 'pharmacy'
             ]);
             
             $pharmacy = Pharmacy::create([
-                'image' => $request->pharmacy['image'],
-                'licence_number' => $request->pharmacy['licence_number'],
-                'bank_account' => $request->pharmacy['bank_account'],
-                'governorate_id' => $request->pharmacy['governorate_id'],
-                'city_id' => $request->pharmacy['city_id'],
-                'street' => $request->pharmacy['street'],
-                'opening' => $request->pharmacy['opening'],
-                'closing' => $request->pharmacy['closing'],
+                'licence_number' => $request->pharmaLicense,
+                'bank_account' => $request->pharmaBankAccount,
+                'governorate_id' => $request->pharmaGovern,
+                'city_id' => $request->pharmaCity,
+                'street' => $request->pharmaStreet,
+                'opening' => $request->pharmaOpeningTime,
+                'closing' => $request->pharmaClosingTime,
                 'user_id' => $user->id,
             ]);            	
             
-            $daysOff = $request->input('daysOff');
-            if($daysOff){
-                foreach($daysOff as $dayOff){
-                    PharmacyDayOff::create([
-                        'day_id' => $dayOff,
-                        "pharmacy_id" => $pharmacy->id
-                    ]);
-                };
-            }else{
-                PharmacyDayOff::create([
-                        'day_id' => null,
-                        "pharmacy_id" => $pharmacy->id
-                    ]);
-            };
-            $userPhones = $request->input('phone');
+            // $daysOff = $request->input('pharmacyDayOff');
+            // if($daysOff){
+            //     foreach($daysOff as $dayOff){
+            //         PharmacyDayOff::create([
+            //             'day_id' => $dayOff,
+            //             "pharmacy_id" => $pharmacy->id
+            //         ]);
+            //     };
+            // }else{
+            //     PharmacyDayOff::create([
+            //             'day_id' => null,
+            //             "pharmacy_id" => $pharmacy->id
+            //         ]);
+            // };
+            $userPhones = $request->input('pharmaPhone');
             if (is_array($userPhones)) {
                 foreach ($userPhones as $phone) {
                     UserPhone::create([

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AddMedicationsByPharmacyModelController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\Logout;
 use App\Http\Controllers\ClientController;
@@ -43,6 +44,8 @@ Route::apiResource('days',DayController::class);
 Route::apiResource('users',UserController::class);
 Route::apiResource('orders',OrderController::class);
 Route::apiResource('governorates',GovernorateController::class);
+Route::apiResource('categories', CategoryController::class);
+Route::apiResource('addMedicatonsByPharmacy', AddMedicationsByPharmacyModelController::class);
 
 Route::middleware('auth:sanctum')->get('/user', [UserController::class, 'getuser']);
 Route::get('clientsOrders/{id}', [ClientController::class, 'getClientOrders']);
@@ -64,6 +67,7 @@ Route::resource('contactus', ContactusController::class);
 
 
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\CategoryController;
 
 
 // Route::post('/payment/process', 'PaymentController@processPayment');

@@ -62,6 +62,7 @@ class PharmacyResourse extends JsonResource
             "pharmacy_id" => $this->user->id,
             "pharmacy_name" => $this->user->name,
             "password" => $this->user->password,
+            "pharmacy_image" => $this->user->image,
             "pharmacy_phone" => $this->user->userPhone->map(function ($item) {
                 return [
                     'phone' => $item->phone
