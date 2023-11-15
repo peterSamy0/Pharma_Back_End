@@ -150,7 +150,6 @@ class PharmacyController extends Controller
                 $user->email = $request->user['email'];
                 $user->password = Hash::make($request->user['password']);
                 $user->save();
-                $pharmacy->image = $request->pharmacy['image'];
                 $pharmacy->licence_number = $request->pharmacy['licence_number'];
                 $pharmacy->bank_account = $request->pharmacy['bank_account'];
                 $pharmacy->governorate_id = $request->pharmacy['governorate_id'];
@@ -170,6 +169,12 @@ class PharmacyController extends Controller
                             ]);
                     }
                 }
+                $phone = $request->user['phone'];
+                $userPhone = UserPhone::where('user_id', $user->id)->first();
+                $userPhone->update([
+                    'phone' => $phone
+                ]);
+
                 return response()->json($user, 200);
             } catch(\Throwable $th){
                 return response()->json($th->getMessage(), 403);

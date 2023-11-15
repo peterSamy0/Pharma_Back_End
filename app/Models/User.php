@@ -49,15 +49,15 @@ class User extends Authenticatable
     protected $tokenName = 'token';
     
     public function client(){
-        $this->belongsTo(Client::class);
+        return $this->hasOne(Client::class);
     }
 
     public function pharmacy(){
-        return $this->belongsTo(Pharmacy::class);
+        return $this->hasOne(Pharmacy::class);
     }
 
     public function delivery(){
-        return $this->belongsTo(Delivery::class);
+        return $this->hasOne(Delivery::class);
     }
     public function userPhone(){
         return $this->hasMany(UserPHone::class);

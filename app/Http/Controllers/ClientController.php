@@ -137,6 +137,11 @@ class ClientController extends Controller
                 $client->city_id = $request->client['city_id'];
                 $client->update();
     
+                $phone = $request->user['phone'];
+                $userPhone = UserPhone::where('user_id', $user->id)->first();
+                $userPhone->update([
+                    'phone' => $phone
+                ]);
                 return response()->json($user,200);
     
             }catch(\Throwable $th){
