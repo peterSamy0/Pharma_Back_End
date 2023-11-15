@@ -44,7 +44,7 @@ class Pharmacy extends Model
     }
     
     public function userPhone(){
-        return $this->hasMany(UserPHone::class);
+        return $this->hasMany(UserPhone::class);
     }
 
 }
