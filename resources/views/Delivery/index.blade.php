@@ -41,7 +41,7 @@
         @if(isset($deliveries))
             <div id="displayTourguideDetails"></div>
             <div class="card"> 
-           <h1 class="text-center">Delivery</h1>
+           <h2 class="text-left ms-3 " style="color: #3c6167">Deliveries</h2>
            <div class="table-responsive">
             <table id="data-table" class="table  table-sm shadow border-0">
                 <thead class="thead-light" >

@@ -41,7 +41,7 @@
         @if(isset($clients))
             <div id="displayTourguideDetails"></div>
             <div class="card"> 
-           <h1 class="text-center">Clients</h1>
+           <h2 class="text-left ms-3 " style="color: #3c6167">Clients</h2>
            <div class="table-responsive">
             <table id="data-table" class="table  table-sm shadow border-0">
                 <thead class="thead-light" >

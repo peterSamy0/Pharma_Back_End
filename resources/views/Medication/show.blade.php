@@ -26,7 +26,7 @@
         <div class="card p-3 shadow ">
             <div class="card-content ">
                 <p>ID: {{ $medication['id'] }}</p>
-                {{-- <p>Name: {{ $medication['name'] }}</p> --}}
+                {{-- <p>Name: {{ $medication[''] }}</p> --}}
                 <p>Category: {{ $medication->category->name }}</p>
                 <p><strong>Price:</strong> {{ $medication['price'] }}</p>
                 </div>

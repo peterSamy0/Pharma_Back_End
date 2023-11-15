@@ -66,6 +66,17 @@
                         </select
                        >
                     </div>
+                    <div class="col-12">
+                    <label class="form-label"></label>
+                    <div>
+                      <label for="description" class="form-label text-dark">Description</label>
+                      <input type="text" id="description" name="description" class="form-control"
+                      value="{{old('description')}}">
+                    </div>
+                    @error('description')
+                    <small class="text-danger">the description feild is required</small>
+                     @enderror
+                  </div>
                     @error('category_id')
                     <small class="text-danger">the category feild is required</small>
                      @enderror
@@ -80,7 +91,6 @@
                       <small class="text-danger">the image feild is required</small>
                   @enderror
                     </div>
-  
                     <div class="col-12">
                       <button
                         type="submit"

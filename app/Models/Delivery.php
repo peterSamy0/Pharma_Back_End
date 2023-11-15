@@ -11,9 +11,6 @@ class Delivery extends Model
 
     protected $table= "deliveries";
     protected $fillable=[
-        'name',
-        "email",
-        "password",
         "governorate_id",
         "city_id",
         "national_ID",
@@ -21,9 +18,6 @@ class Delivery extends Model
         "user_id"
     ];
 
-    public function delivery_phone(){
-        return $this->hasMany(Delivery_Phone::class);
-    }
     public function orders(){
         return $this->hasMany(Order::class);
     }

@@ -41,7 +41,7 @@
         @if(isset($medications))
             <div id="displayTourguideDetails"></div>
             <div class="card"> 
-           <h1 class="text-center">Medications</h1>
+           <h2 class="text-left mb-2 mt-2 ms-3 " style="color: #3c6167">Medications</h2>
            <div class="table-responsive">
             <table id="data-table" class="table  table-sm shadow border-0">
                 <thead class="thead-light" >
@@ -50,6 +50,7 @@
                         <th>Name</th>
                         <th>Price</th>
                         <th>Category</th>
+                        {{-- <th>Description</th> --}}
                         <th>Image</th>
                         <th>Show</th>
                         <th>Update</th>
@@ -62,6 +63,7 @@
                         <tr>
                             <td>{{ $medication['id'] }}</td>
                             <td>{{ $medication['name'] }}</td>
+                            {{-- <td>{{ $medication['description'] }}</td> --}}
                             <td>{{ $medication['price'] }}</td>
                             <td> {{$medication->category->name}}</td>
                             <td>

@@ -13,7 +13,7 @@ class WebOrderController extends Controller
      */
     public function index()
     {
-        $order = Order::all();
+        $order = Order::paginate(10);
         // @dump( $order);
        $order = OrderResource::collection($order , 200 );
        return view('dashboard' , ['orders' => $order]);

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PaymentController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\WebMedicationController;
 use App\Http\Controllers\WebPharmacyController;
@@ -23,6 +24,7 @@ Route::get('/', function () {
     return view('dashboard');
 })->middleware('auth');
 
+
 Route::resource('medications', WebMedicationController::class)->middleware('auth');
 
 Route::resource('pharmacies', WebPharmacyController::class)->middleware('auth');
@@ -31,13 +33,18 @@ Route::resource('clients', WebClientController::class)->middleware('auth');
 
 Route::resource('deliveries', WebDeliveryController::class)->middleware('auth');
 
-// <<<<<<< HEAD
-// Route::resource('orders', WebOrderController::class)->middleware('auth');
+
+ Route::resource('orders', WebOrderController::class)->middleware('auth');
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-// =======
+
 Route::resource('orders', WebOrderController::class)->middleware('auth');
 
 Route::resource('categories', WebCategoryController::class)->middleware('auth');
-// >>>>>>> eb763b7a72f9dfa79d04e33255b4f09bab350e3a
+
+
+
+Route::get('stripe/{id}', [PaymentController::class , 'stripe']);
+Route::post('stripe', [PaymentController::class, 'stripePost'])->name('stripe.post');
+

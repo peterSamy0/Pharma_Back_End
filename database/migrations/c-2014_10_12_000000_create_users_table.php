@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();
+            $table->string('image');
             $table->enum('role', ['admin', 'pharmacy', 'client', 'delivery'])->default('client');
         });
     }

@@ -40,6 +40,7 @@ class WebMedicationController extends Controller
             "name" => "required | unique:medications",
             "price" => "required | integer",
             "image" => "required",
+            "description" => "required",
             'category_id' => "required",
         ]);
 

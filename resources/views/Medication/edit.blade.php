@@ -8,7 +8,7 @@
 
 <body class="p-4">
     <header class=" bg-light text-dark">
-        <h1 class="display-4 ">Edit Medication</h1>
+        <h1 class="text-left" style="color: #3c6167">Edit Medication</h1>
     </header>
     <div class="container w-50">
      
@@ -31,7 +31,7 @@
                 <input type="text" id="category" name="category" value="{{ $medication->category['name'] }}" class="form-control">
             </div> --}}
 
-            <button type="submit" class="btn btn-success w-100 mt-3">Update</button>
+            <button type="submit" class="btn btn-secondary w-100 mt-3">Update</button>
         </form>
     </div>
 

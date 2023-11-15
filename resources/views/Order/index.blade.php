@@ -41,7 +41,7 @@
         @if(isset($orders))
             <div id="displayTourguideDetails"></div>
             <div class="card"> 
-           <h1 class="text-center">Order</h1>
+           <h2 class="text-left ms-3 " style="color: #3c6167">Orders</h2>
            <div class="table-responsive">
             <table id="data-table" class="table  table-sm shadow border-0">
                 <thead class="thead-light" >
@@ -60,7 +60,7 @@
                             <td>{{ $order['id'] }}</td>
                             <td>{{ $order->client->user['name'] }}</td>
                             <td>{{ $order->pharmacy->user['name'] }}</td>
-                            {{-- <td>{{ $order->delivery->user['name'] }}</td> --}}
+                            <td>{{ $order->delivery->user['name'] }}</td>
                             
                           
                             <td>
@@ -93,7 +93,7 @@
             </table>
             <nav aria-label="Page navigation example mt-5">
                 <ul class="pagination justify-content-center mt-5">
-{{-- {{$orders->links()}} --}}
+{{$orders->links()}}
                 </ul>
             </nav>
            </div>

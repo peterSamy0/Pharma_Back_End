@@ -2,23 +2,38 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\OrderResource;
-use App\Models\Order;
 use Exception;
+use App\Models\Order;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
 use App\Http\Requests\OrderRequest;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
+use App\Http\Resources\OrderResource;
+use Illuminate\Support\Facades\Validator;
 
 class OrderController extends Controller
 {
+
+    function __construct(){
+        $this->middleware('auth:sanctum')->only(['index','show', 'destroy', 'update']);
+    }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-	// dd(Auth::user());
-        $orders = Order::all();
+        $user = Auth::user();
+
+        if (Gate::allows('is_pharmacy', $user)) {
+            $orders = $user->pharmacy->orders;
+        } elseif (Gate::allows('is_client', $user)) {
+            $orders = $user->client->orders;
+        } elseif (Gate::allows('is_delivery', $user)) {
+            $orders = $user->delivery->orders;
+        } else {
+            return response()->json(['error' => 'Unauthorized'], 403);
+        }
         $returnOrders = [];
         foreach($orders as $order){
             array_push($returnOrders,new OrderResource($order));
@@ -31,36 +46,47 @@ class OrderController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    {
-       
-        $savedOrder = Order::create([
-            'pharmacy_id' => $request->pharmacy_id,
-            'client_id' => $request->client_id, //auth()->id(); when making authentication
-            'delivery_id' => null
+{
+    Log::info('Received data:', ['data' => $request->all()]);
+
+    $savedOrder = Order::create([
+        'pharmacy_id' => $request->pharmacy_id,
+        'client_id' => $request->client_id,
+        'delivery_id' => null,
+        'totalprice' => $request->totalPrice,
+    ]);
+
+    // Insert ordered medications
+    $ordMedications = $request->input('ordMedications');
+
+    foreach ($ordMedications as $ordMedication) {
+        $medicineId = $ordMedication['key'];
+        $amount = $ordMedication['value'];
+        $savedOrder->orderMedications()->create([
+            'medicine_id' => $medicineId,
+            'amount' => $amount,
         ]);
-        // insert ordered medications
-        // data will come from frontend in an assoc. array, 'medication_id' => amount
-        $ordMedications = $request->input('ordMedications');
-        
-        foreach ($ordMedications as $ordMedication) {
-            $medicineId = $ordMedication['key'];
-            $amount = $ordMedication['value'];
-            $savedOrder->orderMedications()->create([
-                'medicine_id' => $medicineId,
-                'amount' => $amount,
-            ]);
-        }
-        return response()->json($savedOrder, 200);
-        
     }
+    // return view ("stripe", ["data"=> $savedOrder]);
+    // Return the order along with the order ID
+    return response()->json(['order' => new OrderResource($savedOrder), 'orderid' => $savedOrder->id], 200);
+}
     
 
     /**
      * Display the specified resource.
      */
-    public function show($id)
+    // public function show($id)
+    // {
+    //     $order = Order::where('pharmacy_id', $id)->first();
+    //     if ($order) {
+    //         return new OrderResource($order);
+    //     }
+    //     return abort(404);
+    // }
+    public function show(Request $request, Order $order)
     {
-        $order = Order::where('pharmacy_id', $id)->first();
+        // $order = Order::where('pharmacy_id', $id)->first();
         if ($order) {
             return new OrderResource($order);
         }
@@ -73,24 +99,38 @@ class OrderController extends Controller
      */
     public function update(Request $request, Order $order)
     {
+        $user = Auth::user();
+        // return response()->json([$request->delivered],200);
         // if(!$order || $order->client_id !== auth()->user()->id){
         //     return abort(404);
         // }
         
         // if the request is to update delivery
         // dd($request->setDelivery);
-        if($request->delivery){
+        if(Gate::allows('is_delivery', $user)){
             $order->update(
                 ["status"=>"withDelivery"]
             );
             return response()->json("order accepted successfully", 200);
         }
-        if($request->setDelivery){
+        if(Gate::allows('is_client', $user) && $request->delivered){
             // dd($order->delivery->user->name);
             try{
                 $order->update([
-                    "delivery_id" => $request->deliveryId,
-                    "status" => "withDelivery"
+                    "status" => 'delivered'
+                ]);
+                return response()->json(['order has been delivered successfully '],200);
+            }catch(Exception $e){
+                return response()->json([$e->getMessage()],500);
+
+            }
+
+        }
+        if(Gate::allows('is_pharmacy', $user)){
+            // dd($order->delivery->user->name);
+            try{
+                $order->update([
+                    "delivery_id" => $request->deliveryId
                 ]);
                 return response()->json(['order has been assigned to ' . $order->delivery->user->name],200);
             }catch(Exception $e){
@@ -134,7 +174,7 @@ class OrderController extends Controller
                     return response()->json($e,500);
                 }
                 // return response()->json([$order,$order->orderMedications ], 200);
-                return $this->show($order);
+                return $this->show($request,$order);
             }else{
                 return response()->json("sorry, the order has been prepared by the pharmacy",200);
             }

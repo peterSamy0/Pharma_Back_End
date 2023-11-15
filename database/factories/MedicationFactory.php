@@ -20,6 +20,7 @@ class MedicationFactory extends Factory
         return [
             'name' => fake()->name(),
             'price' => fake()->randomNumber(2),
+            'description'=> $this->faker->paragraph(5),
             'image' =>fake()->image(),  
             'category_id' => \App\Models\Category::inRandomOrder()->first()->id,
         ];

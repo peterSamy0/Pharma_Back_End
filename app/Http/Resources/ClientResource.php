@@ -25,11 +25,12 @@ class ClientResource extends JsonResource
                         "client_name" => $client->user->name,
                         "client_email" => $client->user->email,
                         "client_password" => $client->user->password,
+                        "image" => $this->user->image,
                         "client_phone" => $client->user->userPhone->map(function ($item) {
                             return [
                                 'phone' => $item->phone
                             ];
-                        }),
+                        })->toArray(),
                         "Governorate" => $client->governorate->governorate,
                         "city" => $client->city->city,
                         'orders' =>  OrderResource::collection($this->orders)
@@ -43,11 +44,8 @@ class ClientResource extends JsonResource
                 "client_name" => $this->user->name,
                 "client_email" => $this->user->email,
                 "client_password" => $this->user->password,
-                "client_phone" => $this->user->userPhone->map(function ($item) {
-                    return [
-                        'phone' => $item->phone
-                    ];
-                }),
+                "image" => $this->user->image,
+                "client_phone" => $this->user->userPhone,
                 "Governorate" => $this->governorate->governorate,
                 "city" => $this->city->city,
                 'orders' =>  OrderResource::collection($this->orders)
