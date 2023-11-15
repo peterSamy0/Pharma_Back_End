@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use App\Models\UserPhone;
 
 class User extends Authenticatable
 {
@@ -21,6 +22,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role',
+        "image"
     ];
 
     /**
@@ -42,4 +45,21 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    protected $tokenName = 'token';
+    
+    public function client(){
+        return $this->hasOne(Client::class);
+    }
+
+    public function pharmacy(){
+        return $this->hasOne(Pharmacy::class);
+    }
+
+    public function delivery(){
+        return $this->hasOne(Delivery::class);
+    }
+    public function userPhone(){
+        return $this->hasMany(UserPHone::class);
+    }
 }
