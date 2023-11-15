@@ -13,10 +13,15 @@ class MedicationController extends Controller
      * Display a listing of the resource.
      */
     public function index()
-    {
+    {   
         $medications = Medication::all();
-        return MedicationResource::collection($medications , 200 );
-    } 
+        // @dump( $medications);
+       return MedicationResource::collection($medications , 200 );
+       
+       
+    }
+       
+     
 
     /**
      * Store a newly created resource in storage.
@@ -47,6 +52,7 @@ class MedicationController extends Controller
         $validated = $request->validated();
         $medication->update($request->all());
         return new MedicationResource ($medication , 200);
+       
     }
 
     /**
@@ -57,4 +63,8 @@ class MedicationController extends Controller
         $medication->delete();
         return "deleted this item done";
     }
+
 }
+
+
+

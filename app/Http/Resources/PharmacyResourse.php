@@ -52,6 +52,7 @@ class PharmacyResourse extends JsonResource
                             'medicine_name' => $medicine->medication->name,
                             'medicine_price' => $medicine->medication->price,
                             'medicine_image' => $medicine->medication->image,
+                            'medicine_decription' => $medicine->medication->description,
                             'medicine_category' => $medicine->medication->category->name,
                         ];
                     }),
@@ -62,6 +63,7 @@ class PharmacyResourse extends JsonResource
             "pharmacy_id" => $this->user->id,
             "pharmacy_name" => $this->user->name,
             "password" => $this->user->password,
+            "pharmacy_image" => $this->user->image,
             "pharmacy_phone" => $this->user->userPhone->map(function ($item) {
                 return [
                     'phone' => $item->phone
@@ -92,6 +94,7 @@ class PharmacyResourse extends JsonResource
                     'medicine_name' => $medicine->medication->name,
                     'medicine_price' => $medicine->price ? $medicine->price : $medicine->medication->price,
                     'medicine_image' => $medicine->medication->image,
+                    'medicine_decription' => $medicine->medication->description,
                     'medicine_category' => $medicine->medication->category->name,
                     // 'orders' =>  OrderResource::collection($medicine->orders)
                 ];

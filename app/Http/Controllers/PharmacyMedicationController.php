@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Pharmacy;
-use App\Models\PharmacyMedication;
 use Illuminate\Http\Request;
+use App\Models\PharmacyMedication;
+use App\Http\Resources\PharmacyMedicationResource;
 
 class PharmacyMedicationController extends Controller
 {
@@ -20,34 +21,44 @@ class PharmacyMedicationController extends Controller
      * Store a newly created resource in storage.
      */
 
-        public function store(Request $request)
-{
-    $medications = $request->input('medicationsList');
-    if ($medications) {
-        foreach ($medications as $medicine) {
-            PharmacyMedication::create([
-                'pharmacy_id' => $medicine['pharmacy_id'],
-                'medication_id' => $medicine['medication_id'],
-                'price' => $medicine['price']
-            ]);
+    public function store(Request $request){
+        $medications = $request->input('medicationsList');
+        if ($medications) {
+            foreach ($medications as $medicine) {
+                PharmacyMedication::create([
+                    'pharmacy_id' => $medicine['pharmacy_id'],
+                    'medication_id' => $medicine['medication_id'],
+                    'price' => $medicine['price']
+                ]);
+            }
         }
+        return response()->json("add successfully", 200);
     }
-    return response()->json("add successfully", 200);
-}
     /**
      * Display the specified resource.
      */
     public function show(PharmacyMedication $pharmacyMedication)
     {
-        return response()->json($pharmacyMedication);
+        return response()->json(new PharmacyMedicationResource($pharmacyMedication));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $id)
     {
-        //
+        try {
+            $pharmacyMedication = PharmacyMedication::findOrFail($id);
+            // Perform the update operation
+            
+            $pharmacyMedication->update([
+                'price'=> $request->price
+            ]);
+            
+            return response()->json($pharmacyMedication, 200);
+        } catch (\Throwable $th) {
+            return response()->json($th->getMessage(), 400);
+        }
     }
 
     /**

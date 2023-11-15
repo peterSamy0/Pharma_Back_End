@@ -16,8 +16,8 @@ class PharmacyMedication extends Model
         'price'
     ];
 
-    function pharmacies(){
-        return $this->hasMany(Pharmacy::class);
+    function pharmacy(){
+        return $this->belongsTo(Pharmacy::class);
     }
     function medication(){
         return $this->belongsTo(Medication::class);

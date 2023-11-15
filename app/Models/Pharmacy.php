@@ -3,10 +3,7 @@
 namespace App\Models;
 use App\Models\User;
 use App\Models\Order;
-use App\Models\PharmacyPhone;
 use App\Models\PharmacyDayOff;
-
-
 use App\Models\PharmacyMedication;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -16,7 +13,6 @@ class Pharmacy extends Model
     use HasFactory;
 
     protected $fillable = [ 
-        'image',
         'licence_number',
         'bank_account',
         'governorate_id',
@@ -48,7 +44,7 @@ class Pharmacy extends Model
     }
     
     public function userPhone(){
-        return $this->hasMany(UserPHone::class);
+        return $this->hasMany(UserPhone::class);
     }
 
 }
