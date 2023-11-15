@@ -35,7 +35,7 @@
               
                 <div class="panel-body">
                      <h2>Please Enter Your Credit Details To Complete The Payment </h2>
-                     <img src="{{ asset('app/public/logo.png') }}" alt="job image" title="job image">
+                     <img src="{{ asset('logo.png') }}" alt="job image" title="job image">
 
                     @if (Session::has('success'))
                         <div class="alert alert-success text-center">

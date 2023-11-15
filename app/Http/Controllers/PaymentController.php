@@ -25,63 +25,70 @@ class PaymentController extends Controller
     }
 
     public function stripePost(Request $request)
-    {
-        // dd($request);
-        // Fetch the order from the database using the order ID
-        $order = Order::find($request->id);
-        // dd($order);
+{
+    // Fetch the order from the database using the order ID
+    $order = Order::find($request->id);
 
-        if (!$order) {
-            return back()->with('error', 'Order not found.');
-        }
-
-        // Get the total price from the order
-        $totalPrice = $order->totalprice;
-
-        // Set up the Stripe API key
-        Stripe\Stripe::setApiKey(env('STRIPE_SECRET_KEY'));
-
-        try {
-            // Charge the customer using the fetched total price
-            $charge=Stripe\Charge::create([
-                'amount' => $totalPrice * 100, // Convert total price to cents
-                'currency' => 'usd',
-                'source' => $request->stripeToken,
-                'description' => 'Payment for order ' . $order->id,
-            ]);
-
-            $balanceTransactionId = $charge->balance_transaction;
-            $balanceTransaction = Stripe\BalanceTransaction::retrieve($balanceTransactionId);
-    
-            // Log details about the balance transaction
-            \Log::info('Balance Transaction Details:', $balanceTransaction->toArray());
-    
-            // Payment successful
-            Session::flash('success', 'Payment has been successfully');
-        } catch (Stripe\Exception\CardException $e) {
-            // Handle card errors
-            Session::flash('error', $e->getError()->message);
-        } catch (Stripe\Exception\RateLimitException $e) {
-            // Handle rate limit errors
-            Session::flash('error', 'Rate limit exceeded. Please try again later.');
-        } catch (Stripe\Exception\InvalidRequestException $e) {
-            // Handle invalid request errors
-            Session::flash('error', $e->getError()->message);
-        } catch (Stripe\Exception\AuthenticationException $e) {
-            // Handle authentication errors
-            Session::flash('error', 'Authentication failed. Please check your Stripe API key.');
-        } catch (Stripe\Exception\ApiConnectionException $e) {
-            // Handle API connection errors
-            Session::flash('error', 'Unable to connect to the Stripe API. Please try again later.');
-        } catch (Stripe\Exception\Base $e) {
-            // Handle other Stripe exceptions
-            Session::flash('error', 'An error occurred while processing your payment.');
-        }
-
-        $order->update(['payment'=>'1']);
-// dd($order);
-        return redirect('http://localhost:4200/orders');
+    if (!$order) {
+        return back()->with('error', 'Order not found.');
     }
+
+    // Get the total price from the order
+    $totalPrice = $order->totalprice;
+
+    // Set up the Stripe API key
+    Stripe\Stripe::setApiKey(env('STRIPE_SECRET_KEY'));
+
+    try {
+        // Charge the customer using the fetched total price
+        $charge = Stripe\Charge::create([
+            'amount' => $totalPrice * 100, // Convert total price to cents
+            'currency' => 'usd',
+            'source' => $request->stripeToken,
+            'description' => 'Payment for order ' . $order->id,
+        ]);
+
+        $balanceTransactionId = $charge->balance_transaction;
+        $balanceTransaction = Stripe\BalanceTransaction::retrieve($balanceTransactionId);
+
+        // Log details about the balance transaction
+        \Log::info('Balance Transaction ID:', ['id' => $balanceTransaction->id]);
+        \Log::info('Balance Transaction Amount:', ['amount' => $balanceTransaction->amount]);
+        \Log::info('Balance Transaction Currency:', ['currency' => $balanceTransaction->currency]);
+        \Log::info('Balance Transaction Details:', $balanceTransaction->toArray());
+
+        // Update the order only if the payment is successful
+        $order->update(['payment' => 1, 'transaction' => $balanceTransaction->id]);
+
+        // Payment successful
+        Session::flash('success', 'Payment has been successfully');
+        
+        // Redirect to a success page or route
+        return redirect('http://localhost:4200/orders');
+    } catch (Stripe\Exception\CardException $e) {
+        // Handle card errors
+        Session::flash('error', $e->getError()->message);
+        return back()->with('error', 'Error processing payment. Please check your card details and try again.');
+    } catch (Stripe\Exception\RateLimitException $e) {
+        // Handle rate limit errors
+        Session::flash('error', 'Rate limit exceeded. Please try again later.');
+    } catch (Stripe\Exception\InvalidRequestException $e) {
+        // Handle invalid request errors
+        Session::flash('error', $e->getError()->message);
+    } catch (Stripe\Exception\AuthenticationException $e) {
+        // Handle authentication errors
+        Session::flash('error', 'Authentication failed. Please check your Stripe API key.');
+    } catch (Stripe\Exception\ApiConnectionException $e) {
+        // Handle API connection errors
+        Session::flash('error', 'Unable to connect to the Stripe API. Please try again later.');
+    } catch (Stripe\Exception\Base $e) {
+        // Handle other Stripe exceptions
+        Session::flash('error', 'An error occurred while processing your payment.');
+    }
+
+    // If an exception occurs or the transaction ID is not available, show an error message
+    return back()->with('error', 'Error processing payment. Please try again.');
+}
 
 
     // // forth try
