@@ -26,6 +26,7 @@ class OrderController extends Controller
         $user = Auth::user();
 
         if (Gate::allows('is_pharmacy', $user)) {
+            dd($user->pharmacy->orders);
             $orders = $user->pharmacy->orders;
         } elseif (Gate::allows('is_client', $user)) {
             $orders = $user->client->orders;

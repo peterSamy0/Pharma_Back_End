@@ -20,6 +20,7 @@ return new class extends Migration
             $table->rememberToken();
             $table->timestamps();
             $table->enum('role', ['admin', 'pharmacy', 'client', 'delivery'])->default('client');
+            $table->string('image');
         });
     }
 

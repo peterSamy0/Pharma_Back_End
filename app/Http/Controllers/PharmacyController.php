@@ -44,29 +44,29 @@ class PharmacyController extends Controller
     {
         try {
             //Validated
-            $validateUser = Validator::make($request->all(), 
-            [
-                'pharmaName' => 'required',
-                'pharmaEmail' => 'required|email|unique:users,email',
-                'pharmaPass' => 'required',
-                'pharmaGovern' => 'required',
-                'pharmaCity' => 'required',
-                'pharmaStreet' => 'required',
-                'pharmaLicense' => 'required',
-                'pharmaOpeningTime' => 'required',
-                'pharmaClosingTime' => 'required',
-                'pharmaBankAccount' => 'required',
-                'userImage' => 'required',
-                'pharmaPhone' => 'required',
-            ]);
+            // $validateUser = Validator::make($request->all(), 
+            // [
+            //     'pharmaName' => 'required',
+            //     'pharmaEmail' => 'required|email|unique:users,email',
+            //     'pharmaPass' => 'required',
+            //     'pharmaGovern' => 'required',
+            //     'pharmaCity' => 'required',
+            //     'pharmaStreet' => 'required',
+            //     'pharmaLicense' => 'required',
+            //     'pharmaOpeningTime' => 'required',
+            //     'pharmaClosingTime' => 'required',
+            //     'pharmaBankAccount' => 'required',
+            //     'userImage' => 'required',
+            //     'pharmaPhone' => 'required',
+            // ]);
 
-            if($validateUser->fails()){
-                return response()->json([
-                    'status' => false,
-                    'message' => 'validation error',
-                    'errors' => $validateUser->errors()
-                ], 401);
-            }
+            // if($validateUser->fails()){
+            //     return response()->json([
+            //         'status' => false,
+            //         'message' => 'validation error',
+            //         'errors' => $validateUser->errors()
+            //     ], 401);
+            // }
 
             if ($request->hasFile('userImage')) {
                 $imagePath = $request->file('userImage')->store('images/profile', 'public');
