@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('pharmacy_days_off', function (Blueprint $table) {
             $table->id();
             $table->foreignId('pharmacy_id')->constrained()->onUpdate("cascade")->onDelete("cascade")->references('id')->on('pharmacies');
-            $table->foreignId('day_id')->constrained()->onUpdate("cascade")->onDelete("cascade")->references('id')->on('days')->nullable();
+            $table->foreignId('day_id')->constrained()->onUpdate("cascade")->onDelete("cascade")->references('id')->on('days')->nullable()->default(null);
             $table->timestamps();
         });
     }

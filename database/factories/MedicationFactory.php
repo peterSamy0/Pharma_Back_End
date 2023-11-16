@@ -15,14 +15,14 @@ class MedicationFactory extends Factory
      *
      * @return array<string, mixed>
      */
-    public function definition(): array
+    public function definition()
     {
         return [
-            'name' => fake()->name(),
-            'price' => fake()->randomNumber(2),
-            'description'=> $this->faker->paragraph(5),
-            'image' =>fake()->image(),  
-            'category_id' => \App\Models\Category::inRandomOrder()->first()->id,
+            'name' => $this->faker->name(),
+            'price' => $this->faker->randomNumber(),
+            'image' => $this->faker->imageUrl(),
+            'description' => $this->faker->text(1000),
+            'category_id' => \App\Models\Category::factory(),
         ];
     }
 }

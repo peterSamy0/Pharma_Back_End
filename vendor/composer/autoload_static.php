@@ -621,16 +621,12 @@ class ComposerStaticInitad697d6656e21b19281012351c1aecbc
         'App\\Http\\Controllers\\PharmacyController' => __DIR__ . '/../..' . '/app/Http/Controllers/PharmacyController.php',
         'App\\Http\\Controllers\\PharmacyMedicationController' => __DIR__ . '/../..' . '/app/Http/Controllers/PharmacyMedicationController.php',
         'App\\Http\\Controllers\\UserController' => __DIR__ . '/../..' . '/app/Http/Controllers/UserController.php',
-<<<<<<< HEAD
-        'App\\Http\\Controllers\\api\\DeliveryController' => __DIR__ . '/../..' . '/app/Http/Controllers/api/DeliveryController.php',
-=======
         'App\\Http\\Controllers\\WebCategoryController' => __DIR__ . '/../..' . '/app/Http/Controllers/WebCategoryController.php',
         'App\\Http\\Controllers\\WebClientController' => __DIR__ . '/../..' . '/app/Http/Controllers/WebClientController.php',
         'App\\Http\\Controllers\\WebDeliveryController' => __DIR__ . '/../..' . '/app/Http/Controllers/WebDeliveryController.php',
         'App\\Http\\Controllers\\WebMedicationController' => __DIR__ . '/../..' . '/app/Http/Controllers/WebMedicationController.php',
         'App\\Http\\Controllers\\WebOrderController' => __DIR__ . '/../..' . '/app/Http/Controllers/WebOrderController.php',
         'App\\Http\\Controllers\\WebPharmacyController' => __DIR__ . '/../..' . '/app/Http/Controllers/WebPharmacyController.php',
->>>>>>> dd46395f7537bcc24aad088b3edcf5110f0fd344
         'App\\Http\\Kernel' => __DIR__ . '/../..' . '/app/Http/Kernel.php',
         'App\\Http\\Middleware\\Authenticate' => __DIR__ . '/../..' . '/app/Http/Middleware/Authenticate.php',
         'App\\Http\\Middleware\\EncryptCookies' => __DIR__ . '/../..' . '/app/Http/Middleware/EncryptCookies.php',
