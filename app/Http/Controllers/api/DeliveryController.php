@@ -20,7 +20,7 @@ class DeliveryController extends Controller
 {
 
     function __construct(){
-        $this->middleware('auth:sanctum')->only(['show', 'destroy', 'update']);
+        $this->middleware('auth:sanctum')->only(['show', 'destroy', 'update', 'approveAccount', 'rejectAccount']);
     }
     /**
      * Display a listing of the resource.
@@ -94,6 +94,25 @@ class DeliveryController extends Controller
         if($user->id == $delivery->user_id){
             return (new DeliveryResource($delivery))->response()->setStatusCode(200);
         }
+        $user = Auth::user();
+        if($user){
+            if ($user->id == $delivery->user_id && $user->role == "delivery") {
+                $deliveryData = Delivery::where('user_id', $user->id)->first();
+                if ($deliveryData) {
+                    if ($deliveryData->admin_approval == 'approved') {
+                        return new PharmacyResourse($deliveryData);
+                    } elseif ($deliveryData->admin_approval == 'pending') {
+                        return response()->json('pending', 200);
+                    } else {
+                        return response()->json('rejected', 200);
+                    }
+                } else {
+                    return response()->json('Pharmacy not found', 404);
+                }
+            }
+        } else if($user->role == 'client'){
+            return new PharmacyResourse($pharmacy);
+        }
         return abort(403);
     }
 
@@ -139,6 +158,36 @@ class DeliveryController extends Controller
             return (new DeliveryResource($delivery))->response()->setStatusCode(201);
         }
         return abort(403);
+    }
+
+
+    public function approveAccount($id){
+        $user = Auth::user();
+        $delivery = Delivery::where('id', $id)->first();
+        if ($user && $user->role == 'admin') {
+            $delivery->update([
+                'admin_approval' => 'approved'
+            ]);
+
+            return response()->json('Approved successfully', 200);
+        }
+        return abort(401, 'Unauthorized');
+    }
+
+
+
+    public function rejectAccount($id){
+        $user = Auth::user();
+        $delivery = Delivery::where('id', $id)->first();
+        if($user){
+            if($user->role == 'admin'){
+                $delivery->update([
+                    'admin_approval' => 'rejected'
+                ]);
+                return response()->json('rejected successfull', 200);
+            }
+            return abort(401, 'Unauthorized');
+        }
     }
 }
 
