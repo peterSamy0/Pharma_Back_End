@@ -147,9 +147,12 @@ class ClientController extends Controller
             }catch(\Throwable $th){
                 return response()->json(['error' => $th->getMessage()], 500);       
             }
+        }else{
+            return abort(403);
         }
-        return abort(403);
     }
+        
+    
 
     /**
      * Remove the specified resource from storage.
@@ -166,6 +169,7 @@ class ClientController extends Controller
         }
         return abort(403);
     }
+}
 
 
 
@@ -257,4 +261,3 @@ class ClientController extends Controller
 //         ]
 //     }
 // }
-}

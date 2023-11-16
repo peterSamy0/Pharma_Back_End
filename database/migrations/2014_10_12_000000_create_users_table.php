@@ -21,6 +21,8 @@ return new class extends Migration
             $table->timestamps();
             $table->string('image');
             $table->enum('role', ['admin', 'pharmacy', 'client', 'delivery'])->default('client');
+            $table->enum('admin_approval', ['pending', 'approved', 'rejected'])->defualt('pending');
+            $table->string('image');
         });
     }
 

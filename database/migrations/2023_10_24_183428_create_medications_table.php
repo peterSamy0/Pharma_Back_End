@@ -18,7 +18,8 @@ return new class extends Migration
             $table->string('image');
             $table->string('description',1000);
             $table->foreignId('category_id')->constrained()->onDelete('cascade')->onUpdate('cascade')->references('id')->on('categories');
-
+            // $table->enum('admin_approval', ['pending', 'approved', 'rejected'])->defualt('pending');
+            // $table->foreignId('user_id')->constrained()->onDelete('cascade')->onUpdate('cascade')->references('id')->on('users');
             $table->timestamps();
         });
     }

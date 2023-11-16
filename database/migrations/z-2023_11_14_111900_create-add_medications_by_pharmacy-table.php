@@ -17,6 +17,7 @@ return new class extends Migration
             $table->bigInteger('price');
             $table->foreignId('category_id')->constrained()->onDelete('cascade')->onUpdate('cascade')->references('id')->on('categories');
             $table->foreignId('user_id')->constrained()->onDelete('cascade')->onUpdate('cascade')->references('id')->on('users');
+            $table->string('image')->nullable()->default(null);
             $table->timestamps();
         });
     }
