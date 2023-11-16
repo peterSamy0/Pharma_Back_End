@@ -6,15 +6,25 @@ use App\Models\Pharmacy;
 use Illuminate\Http\Request;
 use App\Models\PharmacyMedication;
 use App\Http\Resources\PharmacyMedicationResource;
+use App\Http\Resources\CategoryMedicationsResource;
 
 class PharmacyMedicationController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         $pharmacyMedication = PharmacyMedication::all();
+        
+        // dd($request->category_name);
+        if($request->category){
+            $filteredMedications = CategoryMedicationsResource::collection($pharmacyMedication)->filter(function ($item) use ($request) {
+                
+                return ($request->category_name && $item->id == $request->pharmacy_id);
+            });
+            return response()->json( CategoryMedicationsResource::collection($filteredMedications), 200);
+        }
             return response()->json( PharmacyMedicationResource::collection($pharmacyMedication), 200);
     }
 
