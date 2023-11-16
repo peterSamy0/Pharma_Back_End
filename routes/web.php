@@ -8,6 +8,9 @@ use App\Http\Controllers\WebClientController;
 use App\Http\Controllers\WebDeliveryController;
 use App\Http\Controllers\WebOrderController;
 use App\Http\Controllers\WebCategoriesController;
+use Illuminate\Support\Facades\Auth;
+
+
 
 /*
 |--------------------------------------------------------------------------

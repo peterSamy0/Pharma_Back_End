@@ -28,6 +28,7 @@ class OrderResource extends JsonResource
                             'pharmacy_name' => $order->pharmacy->user->name,
                             'delivery_name' => $order->delivery->user->name,
                             'status' => $order->status,
+                            'pharmacy_id'=>$this->pharmacy->id,
                             'created_at' => $order->created_at,
                             'updated_at' => $order->updated_at,
                             'orderMedications' => $order->orderMedications->map(function ($ordMedication){
@@ -52,6 +53,8 @@ class OrderResource extends JsonResource
             'pharmacy_name' => $this->pharmacy->user->name,
             'delivery_name' => $this->delivery ? $this->delivery->user->name : "no delivery yet",
             'status' => $this->status,
+            'pharmacy_id'=>$this->pharmacy->id,
+            'payment'=> +$this->payment,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
             'orderMedications' => $this->orderMedications->map(function ($ordMedication){

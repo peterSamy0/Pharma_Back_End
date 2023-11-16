@@ -125,7 +125,7 @@ class ClientController extends Controller
     public function update(Request $request, Client $client)
     {
         $user = Auth::user();
-        if($user->id == $client->user_id || $user->role == "admin")
+        if($user->id == $client->user_id || $user->role == "admin"){
             try{
                 $user = User::find($client->user_id);
                 $user->name = $request->user['name'];
@@ -147,9 +147,12 @@ class ClientController extends Controller
             }catch(\Throwable $th){
                 return response()->json(['error' => $th->getMessage()], 500);       
             }
+        }else{
+            return abort(403);
         }
-        return abort(403);
     }
+        
+    
 
     /**
      * Remove the specified resource from storage.
@@ -165,7 +168,7 @@ class ClientController extends Controller
             }
         }
         return abort(403);
-    }
+    }}
 
 
 
