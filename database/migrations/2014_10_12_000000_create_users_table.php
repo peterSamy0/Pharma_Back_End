@@ -19,6 +19,11 @@ return new class extends Migration
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();
+<<<<<<< HEAD:database/migrations/2014_10_12_000000_create_users_table.php
+=======
+            $table->string('image')->nullable()->default(null);
+
+>>>>>>> main:database/migrations/c-2014_10_12_000000_create_users_table.php
             $table->enum('role', ['admin', 'pharmacy', 'client', 'delivery'])->default('client');
             $table->string('image')->nullable()->default(null);
         });

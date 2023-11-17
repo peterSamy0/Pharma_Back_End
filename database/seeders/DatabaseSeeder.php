@@ -24,7 +24,6 @@ class DatabaseSeeder extends Seeder
     {
         // $this->call(GovernorateSeeder::class); //has an insertion api request
         // $this->call(CitySeeder::class); //has an insertion api request
-        $this->call(DaySeeder::class);
         $this->call(UserSeeder::class);
         $this->call(ClientsTableSeeder::class);
         $this->call(PharmacySeeder::class);
