@@ -15,7 +15,8 @@ class Delivery extends Model
         "city_id",
         "national_ID",
         "available", 
-        "user_id"
+        "user_id",
+        'admin_approval'
     ];
 
     public function orders(){

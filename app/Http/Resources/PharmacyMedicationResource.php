@@ -21,6 +21,7 @@ class PharmacyMedicationResource extends JsonResource
             "id" => $this->medication->id,
             "name" => $this->medication->name,
             "pharmacyID" => $pharmacy->id,
+            "image"=>$this->medication->image,
             "category" => $this->medication->category->name,
             "price" => $this->price ? $this->price : $this->medication->price,
         ];

@@ -20,19 +20,31 @@ class PharmacyController extends Controller
      */
 
     function __construct(){
-        $this->middleware('auth:sanctum')->only([ 'destroy', 'update']);
+        $this->middleware('auth:sanctum')->only(['destroy', 'update', 'approveAccount', 'rejectAccount']);
     }
 
     public function index(Request $request)
     {   
-        try{
-            $pharmacy = Pharmacy::all();
-            return PharmacyResourse::collection($pharmacy);
+        try {
+            if(Auth::user()){
+                $userRole = Auth::user()->role; // Assuming the user role is stored in the "role" attribute of the user model.
+                if ($userRole == 'admin') {
+                    $pharmacies = Pharmacy::all();
+                } else {
+                    $pharmacies = Pharmacy::where('admin_approval', 'approved')->get();
+                }
+            }else{
+                $pharmacies = Pharmacy::where('admin_approval', 'approved')->get();
+            }
+    
+            
+    
+            return PharmacyResourse::collection($pharmacies);
            
-        }catch(\Throwable $th){
+        } catch (\Throwable $th) {
             return response()->json([
                 'status'=> false,
-                "message" => $th->getMessage()
+                'message' => $th->getMessage()
             ]);
         }
     }
@@ -66,56 +78,58 @@ class PharmacyController extends Controller
                     'message' => 'validation error',
                     'errors' => $validateUser->errors()
                 ], 401);
+            }else{
+                if ($request->hasFile('userImage')) {
+                    $imagePath = $request->file('userImage')->store('images/profile', 'public');
+                } else {
+                    $imagePath = null;
+                }
+                $user = User::create([
+                    'name' => $request->pharmaName,
+                    'email' => $request->pharmaEmail,
+                    'password' => Hash::make($request->pharmaPass),
+                    'image' => $imagePath,
+                    'role' => 'pharmacy'
+                ]);
+                
+                $pharmacy = Pharmacy::create([
+                    'licence_number' => $request->pharmaLicense,
+                    'bank_account' => $request->pharmaBankAccount,
+                    'governorate_id' => $request->pharmaGovern,
+                    'city_id' => $request->pharmaCity,
+                    'street' => $request->pharmaStreet,
+                    'opening' => $request->pharmaOpeningTime,
+                    'closing' => $request->pharmaClosingTime,
+                    'user_id' => $user->id,
+                ]);            	
+                
+                $daysOff = $request->input('pharmacyDayOff');
+                if(is_array($daysOff)){
+                    foreach($daysOff as $dayOff){
+                        PharmacyDayOff::create([
+                            'day_id' => $dayOff,
+                            "pharmacy_id" => $pharmacy->id
+                        ]);
+                    };
+                }
+    
+                $userPhones = $request->input('pharmaPhone');
+                UserPhone::create([
+                    'user_id' => $user->id,
+                    'phone' => $userPhones
+                ]);
+                return response()->json([
+                    'status' => true,
+                    'message' => 'User Created Successfully',
+                    'user_id' => $user->id,
+                    'role' => $user->role,
+                    'image' => $user->image,
+                    'pharmacy_id' => $pharmacy->id,
+                    'token' => $user->createToken("API TOKEN")->plainTextToken
+                ], 200);
             }
 
-            if ($request->hasFile('userImage')) {
-                $imagePath = $request->file('userImage')->store('images/profile', 'public');
-            } else {
-                $imagePath = null;
-            }
-            $user = User::create([
-                'name' => $request->pharmaName,
-                'email' => $request->pharmaEmail,
-                'password' => Hash::make($request->pharmaPass),
-                'image' => $imagePath,
-                'role' => 'pharmacy'
-            ]);
-            
-            $pharmacy = Pharmacy::create([
-                'licence_number' => $request->pharmaLicense,
-                'bank_account' => $request->pharmaBankAccount,
-                'governorate_id' => $request->pharmaGovern,
-                'city_id' => $request->pharmaCity,
-                'street' => $request->pharmaStreet,
-                'opening' => $request->pharmaOpeningTime,
-                'closing' => $request->pharmaClosingTime,
-                'user_id' => $user->id,
-            ]);            	
-            
-            $daysOff = $request->input('pharmacyDayOff');
-            if(is_array($daysOff)){
-                foreach($daysOff as $dayOff){
-                    PharmacyDayOff::create([
-                        'day_id' => $dayOff,
-                        "pharmacy_id" => $pharmacy->id
-                    ]);
-                };
-            }
-
-            $userPhones = $request->input('pharmaPhone');
-            UserPhone::create([
-                'user_id' => $user->id,
-                'phone' => $userPhones
-            ]);
-            return response()->json([
-                'status' => true,
-                'message' => 'User Created Successfully',
-                'user_id' => $user->id,
-                'role' => $user->role,
-                'image' => $user->image,
-                'pharmacy_id' => $pharmacy->id,
-                'token' => $user->createToken("API TOKEN")->plainTextToken
-            ], 200);
+           
 
         } catch (\Throwable $th) {
             return response()->json([
@@ -130,11 +144,24 @@ class PharmacyController extends Controller
      * Display the specified resource.
      */
     public function show(Pharmacy $pharmacy){   
-        // $user = Auth::user();
-        // if($user->id == $pharmacy->user_id){
-            return new PharmacyResourse($pharmacy);  
-        // }
-        // return abort(403);
+        $user = Auth::user();
+        if($user){
+            if ($user->id == $pharmacy->user_id && $user->role == "pharmacy") {
+                $pharmacyData = Pharmacy::where('user_id', $user->id)->first();
+                if ($pharmacyData) {
+                    if ($pharmacyData->admin_approval == 'approved') {
+                        return new PharmacyResourse($pharmacyData);
+                    } elseif ($pharmacyData->admin_approval == 'pending') {
+                        return response()->json('pending', 200);
+                    } else {
+                        return response()->json('rejected', 200);
+                    }
+                } else {
+                    return response()->json('Pharmacy not found', 404);
+                }
+            }
+        } 
+        return  response()->json(new PharmacyResourse($pharmacy), 200);
     }
 
     /**
@@ -180,7 +207,7 @@ class PharmacyController extends Controller
                 return response()->json($th->getMessage(), 403);
             }
         }
-        return abort(403);
+        return abort(401);
     }
 
     /**
@@ -193,7 +220,7 @@ class PharmacyController extends Controller
             $pharmacy->delete();
             return " Delete the pharmacy is Done";
         }
-        return abort(403);
+        return abort(401);
     }
 
     public function getPharmacyOrders(Pharmacy $pharmacy)
@@ -203,7 +230,39 @@ class PharmacyController extends Controller
             
             return " Delete the pharmacy is Done";
         }
-        return abort(403);
+        return abort(401);
+    }
+
+    public function approveAccount($id){
+        $user = Auth::user();
+        $pharmacy = Pharmacy::where('id', $id)->first();
+        if ($user && $user->role === 'admin') {
+            try {
+                $pharmacy->update([
+                    'admin_approval' => 'approved'
+                ]);
+
+                return response()->json($pharmacy, 200);
+            } catch (\Exception $e) {
+                // Log any errors that occur during the update process
+                \Log::error('Error updating admin_approval: ' . $e->getMessage());
+                return response()->json('Failed to update admin_approval', 500);
+            }
+        }
+        return abort(401, 'Unauthorized');  
+    }
+
+
+    public function rejectAccount($id){
+        $user = Auth::user();
+        $pharmacy = Pharmacy::where('id', $id)->first();
+        if($user->role == 'admin'){
+            $pharmacy->update([
+                'admin_approval' => 'rejected'
+            ]);
+            return response()->json($pharmacy, 200);
+        }
+        return abort(401, 'Unauthorized');
     }
 
 }

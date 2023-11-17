@@ -22,6 +22,7 @@ class OrderFactory extends Factory
             'client_id' => Client::inRandomOrder()->first()->id ,
             "pharmacy_id" => Pharmacy::inRandomOrder()->first()->id,
             "delivery_id" => Delivery::inRandomOrder()->first()->id,
+            "totalPrice" => $this->faker->randomNumber(6),
             "status"=> $this->faker->randomElement(['pending','accepted','withDelivery','delivered'])
         ];
     }

@@ -15,17 +15,19 @@ class UserFactory extends Factory
      *
      * @return array<string, mixed>
      */
-    public function definition(): array
+    public function definition()
     {
         return [
-            'name' => fake()->name(),
-            'email' => fake()->unique()->safeEmail(),
+            'name' => $this->faker->name(),
+            'email' => $this->faker->unique()->safeEmail(),
             'email_verified_at' => now(),
-            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+            'password' => bcrypt('password'), // You can set a default password here
             'remember_token' => Str::random(10),
-            'role' => fake()->randomElement(['delivery', 'client', 'pharmacy'])
+            'role' => $this->faker->randomElement(['admin', 'pharmacy', 'client', 'delivery']),
+            'image' => null, // Default value
         ];
     }
+
 
     /**
      * Indicate that the model's email address should be unverified.
