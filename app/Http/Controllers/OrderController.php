@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Exception;
 use App\Models\Order;
+use App\Models\Client;
 use Illuminate\Http\Request;
 use App\Http\Requests\OrderRequest;
 use Illuminate\Support\Facades\Log;
@@ -16,7 +17,7 @@ class OrderController extends Controller
 {
 
     function __construct(){
-        $this->middleware('auth:sanctum')->only(['index','show', 'destroy', 'update']);
+        $this->middleware('auth:sanctum')->only(['store','show', 'destroy', 'update']);
     }
     /**
      * Display a listing of the resource.
@@ -24,7 +25,7 @@ class OrderController extends Controller
     public function index()
     {
         $user = Auth::user();
-
+        $orders = Order::all();
         if (Gate::allows('is_pharmacy', $user)) {
             // dd($user->pharmacy->orders);
             $orders = $user->pharmacy->orders;
@@ -33,7 +34,7 @@ class OrderController extends Controller
         } elseif (Gate::allows('is_delivery', $user)) {
             $orders = $user->delivery->orders;
         } else {
-            return response()->json(['error' => 'Unauthorized'], 403);
+            return response()->json($orders, 200);
         }
         $returnOrders = [];
         foreach($orders as $order){
@@ -48,26 +49,24 @@ class OrderController extends Controller
      */
     public function store(Request $request)
 {
-    Log::info('Received data:', ['data' => $request->all()]);
-
-    $savedOrder = Order::create([
-        'pharmacy_id' => $request->pharmacy_id,
-        'client_id' => $request->client_id,
-        'delivery_id' => null,
-        'totalprice' => $request->totalPrice,
-    ]);
-
-    // Insert ordered medications
-    $ordMedications = $request->input('ordMedications');
-
-    foreach ($ordMedications as $ordMedication) {
-        $medicineId = $ordMedication['key'];
-        $amount = $ordMedication['value'];
-        $savedOrder->orderMedications()->create([
-            'medicine_id' => $medicineId,
-            'amount' => $amount,
+   
+        $savedOrder = Order::create([
+            'pharmacy_id' => $request->pharmacy_id,
+            'client_id' => $request->client_id,
+            'delivery_id' => null,
+            'totalprice' => $request->totalPrice,
         ]);
-    }
+        // Insert ordered medications
+        $ordMedications = $request->input('ordMedications');
+    
+        foreach ($ordMedications as $ordMedication) {
+            $medicineId = $ordMedication['key'];
+            $amount = $ordMedication['value'];
+            $savedOrder->orderMedications()->create([
+                'medicine_id' => $medicineId,
+                'amount' => $amount,
+            ]);
+        }
     // return view ("stripe", ["data"=> $savedOrder]);
     // Return the order along with the order ID
     return response()->json(['order' => new OrderResource($savedOrder), 'orderid' => $savedOrder->id], 200);
