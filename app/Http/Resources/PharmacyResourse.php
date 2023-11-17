@@ -20,7 +20,7 @@ class PharmacyResourse extends JsonResource
         if($this instanceof Collection){
             $this->map(function ($pharmacy){
                 return[
-                    "pharmacy_id" => $pharmacy->user->id,
+                    "pharmacy_id" => $pharmacy->id,
                     "pharmacy_name" => $pharmacy->user->name,
                     "pharmacy_email" => $pharmacy->user->email,
                     "pharmacy_phone" => $pharmacy->user->userPhone->map(function ($item) {
@@ -60,7 +60,7 @@ class PharmacyResourse extends JsonResource
             });
         }
         return [
-            "pharmacy_id" => $this->user->id,
+            "pharmacy_id" => $this->id,
             "pharmacy_name" => $this->user->name,
             "password" => $this->user->password,
             "pharmacy_image" => $this->user->image,

@@ -20,7 +20,7 @@ class PharmacyController extends Controller
      */
 
     function __construct(){
-        $this->middleware('auth:sanctum')->only(['show', 'destroy', 'update', 'approveAccount', 'rejectAccount']);
+        $this->middleware('auth:sanctum')->only(['destroy', 'update', 'approveAccount', 'rejectAccount']);
     }
 
     public function index(Request $request)
@@ -160,9 +160,8 @@ class PharmacyController extends Controller
                     return response()->json('Pharmacy not found', 404);
                 }
             }
-        } else if($user->role == 'client'){
-            return new PharmacyResourse($pharmacy);
-        }
+        } 
+        return  response()->json(new PharmacyResourse($pharmacy), 200);
     }
 
     /**
