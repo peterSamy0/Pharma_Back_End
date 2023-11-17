@@ -18,6 +18,7 @@ return new class extends Migration
             $table->bigInteger('bank_account')->unique();
             $table->foreignId('governorate_id')->constrained()->onDelete('cascade')->onUpdate('cascade')->references('id')->on('governorates');
             $table->foreignId('city_id')->constrained()->onDelete('cascade')->onUpdate('cascade')->references('id')->on('cities');
+            $table->enum('admin_approval', ['pending', 'approved', 'rejected'])->defualt('pending');
             $table->string('street');
             $table->time('opening');
             $table->time('closing');

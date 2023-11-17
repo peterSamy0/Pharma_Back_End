@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained()->onDelete('cascade')->onUpdate('cascade')->references('id')->on('users');
             $table->foreignId('governorate_id')->constrained()->onDelete('cascade')->onUpdate('cascade')->references('id')->on('governorates');
             $table->foreignId('city_id')->constrained()->onDelete('cascade')->onUpdate('cascade')->references('id')->on('cities');
+            $table->enum('admin_approval', ['pending', 'approved', 'rejected'])->defualt('pending');
             $table->bigInteger('national_ID')->unique();
             $table->boolean('available')->default(true);
             $table->timestamps();

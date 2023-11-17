@@ -21,6 +21,7 @@ class Pharmacy extends Model
         'opening',
         'closing',
         'user_id',
+        'admin_approval'
     ];
 
     function pharmacyMedications(){

@@ -24,7 +24,6 @@ class UserFactory extends Factory
             'password' => bcrypt('password'), // You can set a default password here
             'remember_token' => Str::random(10),
             'role' => $this->faker->randomElement(['admin', 'pharmacy', 'client', 'delivery']),
-            'admin_approval' => 'pending', // Default value
             'image' => null, // Default value
         ];
     }

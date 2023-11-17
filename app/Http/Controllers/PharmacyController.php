@@ -20,19 +20,31 @@ class PharmacyController extends Controller
      */
 
     function __construct(){
-        $this->middleware('auth:sanctum')->only([ 'destroy', 'update']);
+        $this->middleware('auth:sanctum')->only(['show', 'destroy', 'update', 'approveAccount', 'rejectAccount']);
     }
 
     public function index(Request $request)
     {   
-        try{
-            $pharmacy = Pharmacy::all();
-            return PharmacyResourse::collection($pharmacy);
+        try {
+            if(Auth::user()){
+                $userRole = Auth::user()->role; // Assuming the user role is stored in the "role" attribute of the user model.
+                if ($userRole == 'admin') {
+                    $pharmacies = Pharmacy::all();
+                } else {
+                    $pharmacies = Pharmacy::where('admin_approval', 'approved')->get();
+                }
+            }else{
+                $pharmacies = Pharmacy::where('admin_approval', 'approved')->get();
+            }
+    
+            
+    
+            return PharmacyResourse::collection($pharmacies);
            
-        }catch(\Throwable $th){
+        } catch (\Throwable $th) {
             return response()->json([
                 'status'=> false,
-                "message" => $th->getMessage()
+                'message' => $th->getMessage()
             ]);
         }
     }
@@ -132,11 +144,25 @@ class PharmacyController extends Controller
      * Display the specified resource.
      */
     public function show(Pharmacy $pharmacy){   
-        // $user = Auth::user();
-        // if($user->id == $pharmacy->user_id){
-            return new PharmacyResourse($pharmacy);  
-        // }
-        // return abort(403);
+        $user = Auth::user();
+        if($user){
+            if ($user->id == $pharmacy->user_id && $user->role == "pharmacy") {
+                $pharmacyData = Pharmacy::where('user_id', $user->id)->first();
+                if ($pharmacyData) {
+                    if ($pharmacyData->admin_approval == 'approved') {
+                        return new PharmacyResourse($pharmacyData);
+                    } elseif ($pharmacyData->admin_approval == 'pending') {
+                        return response()->json('pending', 200);
+                    } else {
+                        return response()->json('rejected', 200);
+                    }
+                } else {
+                    return response()->json('Pharmacy not found', 404);
+                }
+            }
+        } else if($user->role == 'client'){
+            return new PharmacyResourse($pharmacy);
+        }
     }
 
     /**
@@ -182,7 +208,7 @@ class PharmacyController extends Controller
                 return response()->json($th->getMessage(), 403);
             }
         }
-        return abort(403);
+        return abort(401);
     }
 
     /**
@@ -195,7 +221,7 @@ class PharmacyController extends Controller
             $pharmacy->delete();
             return " Delete the pharmacy is Done";
         }
-        return abort(403);
+        return abort(401);
     }
 
     public function getPharmacyOrders(Pharmacy $pharmacy)
@@ -205,7 +231,39 @@ class PharmacyController extends Controller
             
             return " Delete the pharmacy is Done";
         }
-        return abort(403);
+        return abort(401);
+    }
+
+    public function approveAccount($id){
+        $user = Auth::user();
+        $pharmacy = Pharmacy::where('id', $id)->first();
+        if ($user && $user->role === 'admin') {
+            try {
+                $pharmacy->update([
+                    'admin_approval' => 'approved'
+                ]);
+
+                return response()->json($pharmacy, 200);
+            } catch (\Exception $e) {
+                // Log any errors that occur during the update process
+                \Log::error('Error updating admin_approval: ' . $e->getMessage());
+                return response()->json('Failed to update admin_approval', 500);
+            }
+        }
+        return abort(401, 'Unauthorized');  
+    }
+
+
+    public function rejectAccount($id){
+        $user = Auth::user();
+        $pharmacy = Pharmacy::where('id', $id)->first();
+        if($user->role == 'admin'){
+            $pharmacy->update([
+                'admin_approval' => 'rejected'
+            ]);
+            return response()->json($pharmacy, 200);
+        }
+        return abort(401, 'Unauthorized');
     }
 
 }

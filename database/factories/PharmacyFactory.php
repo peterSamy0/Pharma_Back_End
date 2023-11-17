@@ -54,6 +54,7 @@ class PharmacyFactory extends Factory
             'street' => $this->faker->streetAddress,
             'opening' => $this->faker->time('H:i:s', '08:00:00'),
             'closing' => $this->faker->time('H:i:s', '20:00:00'),
+            'admin_approval' => $this->faker->randomElement(['pending', 'rejected', 'approved']), // Default value
         ];
     }
 

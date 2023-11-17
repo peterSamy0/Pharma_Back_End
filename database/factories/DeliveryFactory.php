@@ -25,7 +25,8 @@ class DeliveryFactory extends Factory
             'governorate_id' => Governorate::inRandomOrder()->first('id'),
             'city_id' => City::inRandomOrder()->first('id'),
             "national_ID"=>fake()->unique()->randomNumber(5),
-            "available" => fake()->boolean()
+            "available" => fake()->boolean(),
+            'admin_approval' => $this->faker->randomElement(['pending', 'rejected', 'approved']), // Default value
         ];
     }
 }
