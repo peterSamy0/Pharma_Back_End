@@ -29,6 +29,19 @@
                 <p>NationalID: {{ $delivery['national_ID'] }}</p>
                 <p>Governorate: {{ $delivery->governorate['governorate'] }}</p>
                 <p>City: {{ $delivery->city['city'] }}</p>
+                <!-- Approve Form -->
+                <form id="approveForm" action="{{ route('delivery.approveAccount', $delivery['id']) }}" method="POST">
+                    @method('PUT')
+                    @csrf
+                    <button type="submit" class="btn btn-success p-2 m-2">Approve</button>
+                </form>
+
+                <!-- Reject Form -->
+                <form id="rejectForm" action="{{ route('delivery.rejectAccount', $delivery['id']) }}" method="POST">
+                    @method('PUT')
+                    @csrf
+                    <button type="submit" class="btn btn-danger p-2 m-2">Reject</button>
+                </form>
                 </div>
             </div>
         </div>

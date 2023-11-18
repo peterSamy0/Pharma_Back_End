@@ -46,7 +46,14 @@ Route::resource('orders', WebOrderController::class)->middleware('auth');
 
 Route::resource('categories', WebCategoryController::class)->middleware('auth');
 
+// pharmacy approval
+Route ::put('pharmacyApprove/{id}' ,[ WebPharmacyController::class, 'approveAccount'])->name('pharmacy.approveAccount')->middleware('auth');
+Route ::put('pharmacyReject/{id}' ,[ WebPharmacyController::class, 'rejectAccount'])->name('pharmacy.rejectAccount')->middleware('auth');
 
+
+//delivery approval
+Route ::put('deliveryApprove/{id}' ,[ WebDeliveryController::class, 'approveAccount'])->name('delivery.approveAccount')->middleware('auth');
+Route ::put('deliveryReject/{id}' ,[ WebDeliveryController::class, 'rejectAccount'])->name('delivery.rejectAccount')->middleware('auth'); 
 
 Route::get('stripe/{id}', [PaymentController::class , 'stripe']);
 Route::post('stripe', [PaymentController::class, 'stripePost'])->name('stripe.post');

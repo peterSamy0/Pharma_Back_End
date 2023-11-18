@@ -233,37 +233,7 @@ class PharmacyController extends Controller
         return abort(401);
     }
 
-    public function approveAccount($id){
-        $user = Auth::user();
-        $pharmacy = Pharmacy::where('id', $id)->first();
-        if ($user && $user->role === 'admin') {
-            try {
-                $pharmacy->update([
-                    'admin_approval' => 'approved'
-                ]);
-
-                return response()->json($pharmacy, 200);
-            } catch (\Exception $e) {
-                // Log any errors that occur during the update process
-                \Log::error('Error updating admin_approval: ' . $e->getMessage());
-                return response()->json('Failed to update admin_approval', 500);
-            }
-        }
-        return abort(401, 'Unauthorized');  
-    }
-
-
-    public function rejectAccount($id){
-        $user = Auth::user();
-        $pharmacy = Pharmacy::where('id', $id)->first();
-        if($user->role == 'admin'){
-            $pharmacy->update([
-                'admin_approval' => 'rejected'
-            ]);
-            return response()->json($pharmacy, 200);
-        }
-        return abort(401, 'Unauthorized');
-    }
+    
 
 }
 
