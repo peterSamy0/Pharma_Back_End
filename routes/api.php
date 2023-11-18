@@ -37,6 +37,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::apiResource('clients', ClientController::class);
 Route ::apiResource('medications' , MedicationController::class);
 Route ::apiResource('pharmacies' , PharmacyController::class);
+Route ::get('showPharmacy/{id}' , [PharmacyController::class, 'unauthenticatedResponse']);
 Route ::apiResource('pharmacyMedications' , PharmacyMedicationController::class);
 Route::apiResource('deliveries',DeliveryController::class);
 Route::apiResource('days',DayController::class);
