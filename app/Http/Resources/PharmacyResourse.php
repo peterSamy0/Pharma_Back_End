@@ -37,7 +37,8 @@ class PharmacyResourse extends JsonResource
                     "city_id" => $pharmacy->city->id,
                     "street" => $pharmacy->street, 
                     "opening" => $pharmacy->opening,
-                    "closing" => $pharmacy->closing,  
+                    "closing" => $pharmacy->closing,
+                    "status"=>$pharmacy->admin_approval,    
                     "daysOff" => $pharmacy->daysOff->map(function ($day) {
                         return [
                             "day_id" => $day->day_id,
@@ -79,7 +80,8 @@ class PharmacyResourse extends JsonResource
             "city_id" => $this->city->id,
             "street" => $this->street, 
             "opening" => $this->opening,
-            "closing" => $this->closing,  
+            "closing" => $this->closing,
+            "status"=>$this->admin_approval,  
             "daysOff" => $this->daysOff->map(function ($day) {
                 return [
                     "day_id" => $day->day_id,

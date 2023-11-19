@@ -17,7 +17,7 @@ class OrderController extends Controller
 {
 
     function __construct(){
-        $this->middleware('auth:sanctum')->only(['store','show', 'destroy', 'update']);
+        $this->middleware('auth:sanctum')->only(['store','show', 'destroy', 'update','index']);
     }
     /**
      * Display a listing of the resource.
@@ -27,7 +27,7 @@ class OrderController extends Controller
         $user = Auth::user();
         $orders = Order::all();
         if (Gate::allows('is_pharmacy', $user)) {
-            // dd($user->pharmacy->orders);
+             //dd($user->pharmacy->orders);
             $orders = $user->pharmacy->orders;
         } elseif (Gate::allows('is_client', $user)) {
             $orders = $user->client->orders;

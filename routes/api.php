@@ -49,8 +49,7 @@ Route::apiResource('addMedicatonsByPharmacy', AddMedicationsByPharmacyModelContr
 
 Route::middleware('auth:sanctum')->get('/user', [UserController::class, 'getuser']);
 Route::get('clientsOrders/{id}', [ClientController::class, 'getClientOrders']);
-Route ::put('pharmacyApprove/{id}' ,[ PharmacyController::class, 'approveAccount']);
-Route ::put('pharmacyReject/{id}' ,[ PharmacyController::class, 'rejectAccount']);
+
 Route ::put('deliveryApprove/{id}' ,[ DeliveryController::class, 'approveAccount']);
 Route ::put('deliveryReject/{id}' ,[ DeliveryController::class, 'rejectAccount']);
 
