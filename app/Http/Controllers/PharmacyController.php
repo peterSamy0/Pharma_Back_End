@@ -36,9 +36,6 @@ class PharmacyController extends Controller
             }else{
                 $pharmacies = Pharmacy::where('admin_approval', 'approved')->get();
             }
-    
-            
-    
             return PharmacyResourse::collection($pharmacies);
            
         } catch (\Throwable $th) {

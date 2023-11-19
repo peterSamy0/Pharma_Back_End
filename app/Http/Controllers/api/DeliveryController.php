@@ -28,6 +28,19 @@ class DeliveryController extends Controller
     public function index()
     {
         //
+        // if(Auth::user()){
+        //     $userRole = Auth::user()->role; // Assuming the user role is stored in the "role" attribute of the user model.
+        //     if ($userRole == 'admin') {
+        //         $delivery = Delivery::all();
+        //     } else {
+        //         $delivery = Delivery::where('admin_approval', 'approved')->get();
+        //     }
+        // }else{
+        //     $delivery = Delivery::where('admin_approval', 'approved')->get();
+        // }
+        // return DeliveryResource::collection($delivery); 
+
+
         $delivery = Delivery::all();
         return DeliveryResource::collection($delivery); 
        }
@@ -91,10 +104,6 @@ class DeliveryController extends Controller
     public function show(Delivery $delivery)
     {
         $user = Auth::user();
-        if($user->id == $delivery->user_id){
-            return (new DeliveryResource($delivery))->response()->setStatusCode(200);
-        }
-        $user = Auth::user();
         if($user){
             if ($user->id == $delivery->user_id && $user->role == "delivery") {
                 $deliveryData = Delivery::where('user_id', $user->id)->first();
@@ -107,7 +116,7 @@ class DeliveryController extends Controller
                         return response()->json('rejected', 200);
                     }
                 } else {
-                    return response()->json('Pharmacy not found', 404);
+                    return response()->json('Pharmacy not found', 200);
                 }
             }
         } else if($user->role == 'client'){
