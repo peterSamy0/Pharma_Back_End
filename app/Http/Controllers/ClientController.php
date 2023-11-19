@@ -130,7 +130,7 @@ class ClientController extends Controller
                 $user = User::find($client->user_id);
                 $user->name = $request->user['name'];
                 $user->email = $request->user['email'];
-                $user->password = Hash::make($request->user['password']);
+                $user->password = $request->user['password'];
                 $user->update();
                 
                 $client->governorate_id = $request->client['governorate_id'];

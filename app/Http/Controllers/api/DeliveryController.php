@@ -28,21 +28,21 @@ class DeliveryController extends Controller
     public function index()
     {
         //
-        // if(Auth::user()){
-        //     $userRole = Auth::user()->role; // Assuming the user role is stored in the "role" attribute of the user model.
-        //     if ($userRole == 'admin') {
-        //         $delivery = Delivery::all();
-        //     } else {
-        //         $delivery = Delivery::where('admin_approval', 'approved')->get();
-        //     }
-        // }else{
-        //     $delivery = Delivery::where('admin_approval', 'approved')->get();
-        // }
-        // return DeliveryResource::collection($delivery); 
-
-
-        $delivery = Delivery::all();
+        if(Auth::user()){
+            $userRole = Auth::user()->role; // Assuming the user role is stored in the "role" attribute of the user model.
+            if ($userRole == 'admin') {
+                $delivery = Delivery::all();
+            } else {
+                $delivery = Delivery::where('admin_approval', 'approved')->get();
+            }
+        }else{
+            $delivery = Delivery::where('admin_approval', 'approved')->get();
+        }
         return DeliveryResource::collection($delivery); 
+
+
+        // $delivery = Delivery::all();
+        // return DeliveryResource::collection($delivery); 
        }
 
     
@@ -109,18 +109,18 @@ class DeliveryController extends Controller
                 $deliveryData = Delivery::where('user_id', $user->id)->first();
                 if ($deliveryData) {
                     if ($deliveryData->admin_approval == 'approved') {
-                        return new PharmacyResourse($deliveryData);
+                        return new DeliveryResource($deliveryData);
                     } elseif ($deliveryData->admin_approval == 'pending') {
                         return response()->json('pending', 200);
                     } else {
                         return response()->json('rejected', 200);
                     }
                 } else {
-                    return response()->json('Pharmacy not found', 200);
+                    return response()->json('delivery not found', 404);
                 }
             }
         } else if($user->role == 'client'){
-            return new PharmacyResourse($pharmacy);
+            return new DeliveryResource($deliveryData);
         }
         return abort(403);
     }
@@ -137,7 +137,7 @@ class DeliveryController extends Controller
                 $user = User::find($delivery->user_id);
                 $user->name = $request->user['name'];
                 $user->email = $request->user['email'];
-                $user->password = Hash::make($request->user['password']);
+                $user->password = $request->user['password'];
                 $user->update();
                 // $delivery->image = $request->delivery['image'];
                 $delivery->national_ID = $request->delivery['nationalID'];
