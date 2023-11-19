@@ -57,9 +57,9 @@ class OrderController extends Controller
             'delivery_id' => null,
             'totalprice' => $request->totalPrice,
         ]);
+
         // Insert ordered medications
         $ordMedications = $request->input('ordMedications');
-    
         foreach ($ordMedications as $ordMedication) {
             $medicineId = $ordMedication['key'];
             $amount = $ordMedication['value'];
@@ -68,6 +68,7 @@ class OrderController extends Controller
                 'amount' => $amount,
             ]);
         }
+
     // return view ("stripe", ["data"=> $savedOrder]);
     // Return the order along with the order ID
     return response()->json(['order' => new OrderResource($savedOrder), 'orderid' => $savedOrder->id], 200);

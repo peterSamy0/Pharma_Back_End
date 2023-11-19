@@ -179,7 +179,7 @@ class PharmacyController extends Controller
                 $user = User::find($pharmacy->user_id);
                 $user->name = $request->user['name'];
                 $user->email = $request->user['email'];
-                $user->password = Hash::make($request->user['password']);
+                $user->password = $request->user['password'];
                 $user->save();
                 $pharmacy->licence_number = $request->pharmacy['licence_number'];
                 $pharmacy->bank_account = $request->pharmacy['bank_account'];

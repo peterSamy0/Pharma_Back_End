@@ -9,6 +9,9 @@ use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
+    function __construct(){
+        $this->middleware('auth:sanctum')->only('destroy');
+    }
     /**
      * Display a listing of the resource.
      */
@@ -46,9 +49,14 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(User $user)
     {
-        //
+        $userAuth = Auth::user();
+        if($user->id == $userAuth->id || $userAuth->role == "admin"){
+                $user->delete();
+                return "user deleted successfully";
+        }
+        return abort(403);
     }
     public function getuser()
     {
