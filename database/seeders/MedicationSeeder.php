@@ -13,6 +13,12 @@ class MedicationSeeder extends Seeder
      */
     public function run(): void
     {
-        Medication::factory()->count(200)->create();
+        $jsonFilePath = public_path('images/medications.json');
+        $json = file_get_contents($jsonFilePath);
+        $medications = json_decode($json, true);
+        foreach ($medications as $medication) {
+            Medication::create($medication);
+        }
+        // Medication::factory()->count(200)->create();
     }
 }

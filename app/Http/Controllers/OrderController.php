@@ -49,10 +49,11 @@ class OrderController extends Controller
      */
     public function store(Request $request)
 {
-   
+        $user = Auth::user();
+        $client = Client::where('user_id', $user->id)->first();
         $savedOrder = Order::create([
             'pharmacy_id' => $request->pharmacy_id,
-            'client_id' => $request->client_id,
+            'client_id' => $client->id,
             'delivery_id' => null,
             'totalprice' => $request->totalPrice,
         ]);

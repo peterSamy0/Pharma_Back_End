@@ -8,7 +8,7 @@
 
 <body class="p-4">
     <header class=" bg-light text-dark">
-        <h1 class="text-left" style="color: #3c6167">Edit Medication</h1>
+        <h5 class="text-left" style="color: #3c6167">Edit Medication</h5>
     </header>
     <div class="container w-50">
      

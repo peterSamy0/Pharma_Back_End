@@ -36,12 +36,17 @@
     <div class=" content-wrapper ">
         
         <div class="text-center mb-3">
+            
             <input type="text" id="search-input" class="form-control" placeholder="Search by name">
+            
            </div>
+           <h2 class="text-left mb-3 mt-2 ms-3 " style="color: #3c6167">Medications</h2>
+           <a class="btn" style="background-color: #768081; color:#e7eaf0 ; margin-left:220px; margin-top:-95px " href="{{route ('medications.create')}}">
+            Create
+           </a>
         @if(isset($medications))
             <div id="displayTourguideDetails"></div>
             <div class="card"> 
-           <h2 class="text-left mb-2 mt-2 ms-3 " style="color: #3c6167">Medications</h2>
            <div class="table-responsive">
             <table id="data-table" class="table  table-sm shadow border-0">
                 <thead class="thead-light" >
@@ -54,11 +59,11 @@
                         <th>Image</th>
                         <th>Show</th>
                         <th>Update</th>
-                        <th>Create</th>
                         <th>Delete</th>
                     </tr>
                 </thead>
                 <tbody>
+                    
                     @foreach ($medications as $medication)
                         <tr>
                             <td>{{ $medication['id'] }}</td>
@@ -88,11 +93,6 @@
                                   Update 
                                    {{-- <i class="fas fa-edit"></i>    --}}
                                     {{-- @dump($medication->id); --}}
-                                </a>
-                            </td>
-                            <td>
-                                <a class="btn" style="background-color: #768081; color:#e7eaf0 " href="{{route ('medications.create')}}">
-                                 Create
                                 </a>
                             </td>
                             <td>
@@ -146,7 +146,7 @@
                 showCancelButton: true,
                 confirmButtonColor: '#d33',
                 cancelButtonColor: '#3085d6',
-                confirmButtonText: 'Yes, delete it!',
+                confirmButtonText: 'Confirm',
                 preConfirm: () => {
                   
                     const deleteForm = document.getElementById('deleteForm');
