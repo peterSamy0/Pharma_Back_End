@@ -17,7 +17,7 @@ class OrderController extends Controller
 {
 
     function __construct(){
-        $this->middleware('auth:sanctum')->only(['store','show', 'destroy', 'update']);
+        $this->middleware('auth:sanctum')->only(['store','show', 'destroy', 'update','index']);
     }
     /**
      * Display a listing of the resource.
@@ -27,7 +27,7 @@ class OrderController extends Controller
         $user = Auth::user();
         $orders = Order::all();
         if (Gate::allows('is_pharmacy', $user)) {
-            // dd($user->pharmacy->orders);
+             //dd($user->pharmacy->orders);
             $orders = $user->pharmacy->orders;
         } elseif (Gate::allows('is_client', $user)) {
             $orders = $user->client->orders;
@@ -49,10 +49,11 @@ class OrderController extends Controller
      */
     public function store(Request $request)
 {
-   
+        $user = Auth::user();
+        $client = Client::where('user_id', $user->id)->first();
         $savedOrder = Order::create([
             'pharmacy_id' => $request->pharmacy_id,
-            'client_id' => $request->client_id,
+            'client_id' => $client->id,
             'delivery_id' => null,
             'totalprice' => $request->totalPrice,
         ]);

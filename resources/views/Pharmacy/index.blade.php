@@ -30,6 +30,23 @@
     tr.showData {
         border-bottom: 1px solid #e7eaf0;
     }
+    .status-approved{
+        color:#198754;
+        font:larger;
+        font-weight: bold;
+    }
+    .status-pending{
+        color:#ffc107;
+        font:larger;
+        font-weight: bold;
+
+    }
+    .status-rejected{
+        color:#dc3545;
+        font:larger;
+        font-weight: bold;
+
+    }
     </style>
 </head>
 <body>
@@ -54,6 +71,7 @@
                         <th>Show</th>
                         {{-- <th>Update</th> --}}
                         <th>Delete</th>
+                        <th>Status</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -98,6 +116,9 @@
                                     @csrf
                                     <button type="submit" class="btn btn-primary">Delete</button>
                                 </form>
+                            </td>
+                            <td>
+                                <span class="status-{{$pharmacy['admin_approval']}}">{{$pharmacy['admin_approval']}}</span>
                             </td>
                             <tr class="showData ">
                                 <td colspan="12">

@@ -20,7 +20,7 @@ class PharmacyController extends Controller
      */
 
     function __construct(){
-        $this->middleware('auth:sanctum')->only(['destroy', 'update', 'approveAccount', 'rejectAccount']);
+        $this->middleware('auth:sanctum')->only(['show', 'destroy', 'update', 'approveAccount', 'rejectAccount']);
     }
 
     public function index(Request $request)
@@ -161,9 +161,13 @@ class PharmacyController extends Controller
                 }
             }
         } 
-        return  response()->json(new PharmacyResourse($pharmacy), 200);
+        return  response()->json('Pharmacy not found', 404);
     }
 
+    public function unauthenticatedResponse($id){
+        $pharmacy = Pharmacy::where('id', $id)->first();
+        return response()->json(new PharmacyResourse($pharmacy), 200);
+    }
     /**
      * Update the specified resource in storage.
      */
@@ -233,37 +237,7 @@ class PharmacyController extends Controller
         return abort(401);
     }
 
-    public function approveAccount($id){
-        $user = Auth::user();
-        $pharmacy = Pharmacy::where('id', $id)->first();
-        if ($user && $user->role === 'admin') {
-            try {
-                $pharmacy->update([
-                    'admin_approval' => 'approved'
-                ]);
-
-                return response()->json($pharmacy, 200);
-            } catch (\Exception $e) {
-                // Log any errors that occur during the update process
-                \Log::error('Error updating admin_approval: ' . $e->getMessage());
-                return response()->json('Failed to update admin_approval', 500);
-            }
-        }
-        return abort(401, 'Unauthorized');  
-    }
-
-
-    public function rejectAccount($id){
-        $user = Auth::user();
-        $pharmacy = Pharmacy::where('id', $id)->first();
-        if($user->role == 'admin'){
-            $pharmacy->update([
-                'admin_approval' => 'rejected'
-            ]);
-            return response()->json($pharmacy, 200);
-        }
-        return abort(401, 'Unauthorized');
-    }
+    
 
 }
 

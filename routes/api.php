@@ -37,6 +37,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::apiResource('clients', ClientController::class);
 Route ::apiResource('medications' , MedicationController::class);
 Route ::apiResource('pharmacies' , PharmacyController::class);
+Route ::get('showPharmacy/{id}' , [PharmacyController::class, 'unauthenticatedResponse']);
 Route ::apiResource('pharmacyMedications' , PharmacyMedicationController::class);
 Route::apiResource('deliveries',DeliveryController::class);
 Route::apiResource('days',DayController::class);
@@ -48,8 +49,7 @@ Route::apiResource('addMedicatonsByPharmacy', AddMedicationsByPharmacyModelContr
 
 Route::middleware('auth:sanctum')->get('/user', [UserController::class, 'getuser']);
 Route::get('clientsOrders/{id}', [ClientController::class, 'getClientOrders']);
-Route ::put('pharmacyApprove/{id}' ,[ PharmacyController::class, 'approveAccount']);
-Route ::put('pharmacyReject/{id}' ,[ PharmacyController::class, 'rejectAccount']);
+
 Route ::put('deliveryApprove/{id}' ,[ DeliveryController::class, 'approveAccount']);
 Route ::put('deliveryReject/{id}' ,[ DeliveryController::class, 'rejectAccount']);
 
