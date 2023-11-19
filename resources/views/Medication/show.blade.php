@@ -18,17 +18,15 @@
 </head>
 <body>
    <header class="bg-light text-dark">
-        {{-- <h1 class="display-4">Tourguide Details</h1> --}}
-        <h2>{{ $medication['name'] }}</h2>
+        <h5> Medication name : {{ $medication['name'] }}</h5>
 
     </header>
     <div class="container w-75">
         <div class="card p-3 shadow ">
             <div class="card-content ">
                 <p>ID: {{ $medication['id'] }}</p>
-                {{-- <p>Name: {{ $medication[''] }}</p> --}}
                 <p>Category: {{ $medication->category->name }}</p>
-                <p><strong>Price:</strong> {{ $medication['price'] }}</p>
+                <p>Price: {{ $medication['price'] }}</p>
                 </div>
             </div>
         </div>

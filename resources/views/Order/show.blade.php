@@ -18,7 +18,7 @@
 </head>
 <body>
    <header class="bg-light text-dark">
-        <h2 >Order Details</h2>  {{-- delivery_name --}}
+        <h5 >Order Details</h5>  {{-- delivery_name --}}
 
     </header>
     <div class="container w-75">
