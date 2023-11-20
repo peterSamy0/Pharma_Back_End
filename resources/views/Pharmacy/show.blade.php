@@ -18,7 +18,7 @@
 </head>
 <body>
    <header class="bg-light text-dark">
-    <h2>Pharmacy Name: {{  $pharmacy->user['name'] }}</h2>
+    <h5>Pharmacy Name : {{  $pharmacy->user['name'] }}</h5>
 </header>
     <div class="container w-75">
         <div class="card p-3 shadow ">
@@ -32,16 +32,18 @@
                 <p>Opening: {{ $pharmacy['opening'] }}</p>
                 <p>Closing: {{ $pharmacy['closing'] }}</p>
                 <!-- Approve Form -->
-                <form id="approveForm" action="{{ route('pharmacy.approveAccount', $pharmacy['id']) }}" method="POST">
-                    @method('PUT')
+                <form id="approveForm" action="{{ route('pharmacy.approveAccount', $pharmacy->id) }}" method="POST">
                     @csrf
+                    @method('PUT')
+                   
                     <button type="submit" class="btn btn-success p-2 m-2">Approve</button>
                 </form>
 
                 <!-- Reject Form -->
-                <form id="rejectForm" action="{{ route('pharmacy.rejectAccount', $pharmacy['id']) }}" method="POST">
-                    @method('PUT')
+                <form id="rejectForm" action="{{ route('pharmacy.rejectAccount', $pharmacy->id) }}" method="POST">
                     @csrf
+                    @method('PUT')
+                   
                     <button type="submit" class="btn btn-danger p-2 m-2">Reject</button>
                 </form>
                 </div>

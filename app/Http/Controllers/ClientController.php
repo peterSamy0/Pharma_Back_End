@@ -39,71 +39,67 @@ class ClientController extends Controller
     public function store(Request $request)
     {
         try {
-            //Validated
-            $validateUser = Validator::make($request->all(), 
-            [
+            // Validated
+            $validateUser = Validator::make($request->all(), [
                 'userFullName' => 'required',
                 'userEmail' => 'required|email|unique:users,email',
                 'userPass' => 'required',
                 'userImage' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
                 'userGovern' => 'required',
                 'userCity' => 'required',
-                'userPhone' => 'required'
+                'userPhone' => 'required|unique:user_phones,phone'
             ]);
-
-            if($validateUser->fails()){
+    
+            if ($validateUser->fails()) {
                 return response()->json([
                     'status' => false,
                     'message' => 'validation error',
                     'errors' => $validateUser->errors()
                 ], 401);
-            }
-
-            if ($request->hasFile('userImage')) {
-                $imagePath = $request->file('userImage')->store('images/profile', 'public');
             } else {
-                $imagePath = null;
+                if ($request->hasFile('userImage')) {
+                    $imagePath = $request->file('userImage')->store('images/profile', 'public');
+                } else {
+                    $imagePath = null;
+                }
+    
+                $user = User::create([
+                    'name' => $request->userFullName,
+                    'email' => $request->userEmail,
+                    'password' => Hash::make($request->userPass),
+                    'image' => $imagePath
+                ]);
+    
+                $client = Client::create([
+                    'user_id' => $user->id,
+                    'governorate_id' => $request->userGovern,
+                    'city_id' => $request->userCity,
+                    'role' => 'client'
+                ]);
+    
+                $userPhones = $request->input('userPhone');
+                UserPhone::create([
+                    'user_id' => $user->id,
+                    'phone' => $userPhones
+                ]);
+    
+                return response()->json([
+                    'status' => true,
+                    'message' => 'User Created Successfully',
+                    'user_id' => $user->id,
+                    '_id' => $client->id,
+                    'image' => $user->image,
+                    'role' => ($user->role) ? $user->role : 'client',
+                    'token' => $user->createToken("API TOKEN")->plainTextToken,
+                ], 200);
             }
-        
-            $user = User::create([
-                'name' => $request->userFullName,
-                'email' => $request->userEmail,
-                'password' => Hash::make($request->userPass),
-                'image' =>  $imagePath
-            ]);
-
-            $client = Client::create([
-                'user_id' => $user->id,
-                'governorate_id' => $request->userGovern,
-                'city_id' => $request->userCity,
-                'role' => 'client'
-            ]);
-
-            $userPhones = $request->input('userPhone');
-            UserPhone::create([
-                'user_id' => $user->id,
-                'phone' => $userPhones
-            ]);
-
-            return response()->json([
-                'status' => true,
-                'message' => 'User Created Successfully',
-                'user_id' => $user->id,
-                '_id' => $client->id,
-                'image' => $user->image,
-                'role' => ($user->role) ? $user->role : 'client',
-                'token' => $user->createToken("API TOKEN")->plainTextToken,
-            ], 200);
-
         } catch (\Throwable $th) {
             return response()->json([
                 'status' => false,
                 'message' => $th->getMessage()
             ], 500);
         }
-
     }
-
 
     /**
      * Display the specified resource.
@@ -130,7 +126,7 @@ class ClientController extends Controller
                 $user = User::find($client->user_id);
                 $user->name = $request->user['name'];
                 $user->email = $request->user['email'];
-                $user->password = Hash::make($request->user['password']);
+                $user->password = $request->user['password'];
                 $user->update();
                 
                 $client->governorate_id = $request->client['governorate_id'];

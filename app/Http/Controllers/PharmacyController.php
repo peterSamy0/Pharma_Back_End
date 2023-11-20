@@ -36,9 +36,6 @@ class PharmacyController extends Controller
             }else{
                 $pharmacies = Pharmacy::where('admin_approval', 'approved')->get();
             }
-    
-            
-    
             return PharmacyResourse::collection($pharmacies);
            
         } catch (\Throwable $th) {
@@ -53,92 +50,92 @@ class PharmacyController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    {
-        try {
-            //Validated
-            $validateUser = Validator::make($request->all(), 
-            [
-                'pharmaName' => 'required',
-                'pharmaEmail' => 'required|email|unique:users,email',
-                'pharmaPass' => 'required',
-                'pharmaGovern' => 'required',
-                'pharmaCity' => 'required',
-                'pharmaStreet' => 'required',
-                'pharmaLicense' => 'required',
-                'pharmaOpeningTime' => 'required',
-                'pharmaClosingTime' => 'required',
-                'pharmaBankAccount' => 'required',
-                'userImage' => 'required',
-                'pharmaPhone' => 'required',
-            ]);
+{
+    try {
+        // Validated
+        $validateUser = Validator::make($request->all(), [
+            'pharmaName' => 'required',
+            'pharmaEmail' => 'required|email|unique:users,email',
+            'pharmaPass' => 'required',
+            'pharmaGovern' => 'required',
+            'pharmaCity' => 'required',
+            'pharmaStreet' => 'required',
+            'pharmaLicense' => 'required',
+            'pharmaOpeningTime' => 'required',
+            'pharmaClosingTime' => 'required',
+            'pharmaBankAccount' => 'required',
+            'userImage' => 'required',
+            'pharmaPhone' => 'required|unique:user_phones,phone',
+        ]);
 
-            if($validateUser->fails()){
-                return response()->json([
-                    'status' => false,
-                    'message' => 'validation error',
-                    'errors' => $validateUser->errors()
-                ], 401);
-            }else{
-                if ($request->hasFile('userImage')) {
-                    $imagePath = $request->file('userImage')->store('images/profile', 'public');
-                } else {
-                    $imagePath = null;
-                }
-                $user = User::create([
-                    'name' => $request->pharmaName,
-                    'email' => $request->pharmaEmail,
-                    'password' => Hash::make($request->pharmaPass),
-                    'image' => $imagePath,
-                    'role' => 'pharmacy'
-                ]);
-                
-                $pharmacy = Pharmacy::create([
-                    'licence_number' => $request->pharmaLicense,
-                    'bank_account' => $request->pharmaBankAccount,
-                    'governorate_id' => $request->pharmaGovern,
-                    'city_id' => $request->pharmaCity,
-                    'street' => $request->pharmaStreet,
-                    'opening' => $request->pharmaOpeningTime,
-                    'closing' => $request->pharmaClosingTime,
-                    'user_id' => $user->id,
-                ]);            	
-                
-                $daysOff = $request->input('pharmacyDayOff');
-                if(is_array($daysOff)){
-                    foreach($daysOff as $dayOff){
-                        PharmacyDayOff::create([
-                            'day_id' => $dayOff,
-                            "pharmacy_id" => $pharmacy->id
-                        ]);
-                    };
-                }
-    
-                $userPhones = $request->input('pharmaPhone');
-                UserPhone::create([
-                    'user_id' => $user->id,
-                    'phone' => $userPhones
-                ]);
-                return response()->json([
-                    'status' => true,
-                    'message' => 'User Created Successfully',
-                    'user_id' => $user->id,
-                    'role' => $user->role,
-                    'image' => $user->image,
-                    'pharmacy_id' => $pharmacy->id,
-                    'token' => $user->createToken("API TOKEN")->plainTextToken
-                ], 200);
-            }
-
-           
-
-        } catch (\Throwable $th) {
+        if ($validateUser->fails()) {
             return response()->json([
                 'status' => false,
-                'message' => $th->getMessage()
-            ], 500);
-        }
-    }
+                'message' => 'validation error',
+                'errors' => $validateUser->errors()
+            ], 401);
+        } else {
+            if ($request->hasFile('userImage')) {
+                $imagePath = $request->file('userImage')->store('images/profile', 'public');
+            } else {
+                $imagePath = null;
+            }
 
+            $user = User::create([
+                'name' => $request->pharmaName,
+                'email' => $request->pharmaEmail,
+                'password' => Hash::make($request->pharmaPass),
+                'image' => $imagePath,
+                'role' => 'pharmacy'
+            ]);
+
+            $pharmacy = Pharmacy::create([
+                'licence_number' => $request->pharmaLicense,
+                'bank_account' => $request->pharmaBankAccount,
+                'governorate_id' => $request->pharmaGovern,
+                'city_id' => $request->pharmaCity,
+                'street' => $request->pharmaStreet,
+                'opening' => $request->pharmaOpeningTime,
+                'closing' => $request->pharmaClosingTime,
+                'user_id' => $user->id,
+            ]);
+
+            // Validation and saving for other tables
+            // ...
+
+            $daysOff = $request->input('pharmacyDayOff');
+            if (is_array($daysOff)) {
+                foreach ($daysOff as $dayOff) {
+                    PharmacyDayOff::create([
+                        'day_id' => $dayOff,
+                        "pharmacy_id" => $pharmacy->id
+                    ]);
+                }
+            }
+
+            $userPhones = $request->input('pharmaPhone');
+            UserPhone::create([
+                'user_id' => $user->id,
+                'phone' => $userPhones
+            ]);
+
+            return response()->json([
+                'status' => true,
+                'message' => 'User Created Successfully',
+                'user_id' => $user->id,
+                'role' => $user->role,
+                'image' => $user->image,
+                'pharmacy_id' => $pharmacy->id,
+                'token' => $user->createToken("API TOKEN")->plainTextToken
+            ], 200);
+        }
+    } catch (\Throwable $th) {
+        return response()->json([
+            'status' => false,
+            'message' => $th->getMessage()
+        ], 500);
+    }
+}
 
     /**
      * Display the specified resource.

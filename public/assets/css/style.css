@@ -20835,4 +20835,9 @@ div.tagsinput {
   -webkit-flex-grow: 1;
   flex-grow: 1; }
 
+  .pagination /deep/ .ngx-pagination .current {
+    background: #419197;
+    margin-top: 5px;
+  }
+
 /*# sourceMappingURL=maps/style.css.map */

@@ -28,62 +28,90 @@ class DeliveryController extends Controller
     public function index()
     {
         //
-        $delivery = Delivery::all();
+        if(Auth::user()){
+            $userRole = Auth::user()->role; // Assuming the user role is stored in the "role" attribute of the user model.
+            if ($userRole == 'admin') {
+                $delivery = Delivery::all();
+            } else {
+                $delivery = Delivery::where('admin_approval', 'approved')->get();
+            }
+        }else{
+            $delivery = Delivery::where('admin_approval', 'approved')->get();
+        }
         return DeliveryResource::collection($delivery); 
+
+
+        // $delivery = Delivery::all();
+        // return DeliveryResource::collection($delivery); 
        }
 
     
-    public function store(Request $request)
-    {
-        
-        try {
-            if ($request->hasFile('userImage')) {
-                $imagePath = $request->file('userImage')->store('images/profile', 'public');
-            } else {
-                $imagePath = null;
-            }
-            $user = User::create([
-                'name' => $request->name,
-                'email' => $request->email,
-                'password' => Hash::make($request->pass),
-                'image' => $imagePath,
-                'role' => 'delivery'
-            ]);
-            
-            $delivery = Delivery::create([
-                'national_ID' => $request->national_ID,
-                'governorate_id' => $request->governorate,
-                'city_id' => $request->city,
-                'available' => true,
-                'user_id' => $user->id,
-            ]);            	
-            
-            
-            $userPhones = $request->input('phone');
-            UserPhone::create([
-                'user_id' => $user->id,
-                'phone' => $userPhones
-            ]);
-
-            return response()->json([
-                'status' => true,
-                'message' => 'User Created Successfully',
-                'user_id' => $user->id,
-                'delivery_id' => $delivery->id,
-                'role' => $user->role,
-                'image' => $user->image,
-                'token' => $user->createToken("API TOKEN")->plainTextToken
-            ], 200);
-            
-
-
-        } catch (Exception $e) {
-            return response()->json([
-                'status' => false,
-                'message' => $e->getMessage()
-            ], 400);
-        }
-    }
+       public function store(Request $request)
+       {
+           try {
+               $validator = Validator::make($request->all(), [
+                   'name' => 'required',
+                   'email' => 'required|email|unique:users,email',
+                   'pass' => 'required',
+                   'userImage' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+                   'national_ID' => 'required',
+                   'governorate' => 'required',
+                   'city' => 'required',
+                   'phone' => 'required|unique:user_phones,phone',
+               ]);
+       
+               if ($validator->fails()) {
+                   return response()->json([
+                       'status' => false,
+                       'message' => 'Validation error',
+                       'errors' => $validator->errors()
+                   ], 400);
+               }
+       
+               if ($request->hasFile('userImage')) {
+                   $imagePath = $request->file('userImage')->store('images/profile', 'public');
+               } else {
+                   $imagePath = null;
+               }
+       
+               $user = User::create([
+                   'name' => $request->name,
+                   'email' => $request->email,
+                   'password' => Hash::make($request->pass),
+                   'image' => $imagePath,
+                   'role' => 'delivery'
+               ]);
+       
+               $delivery = Delivery::create([
+                   'national_ID' => $request->national_ID,
+                   'governorate_id' => $request->governorate,
+                   'city_id' => $request->city,
+                   'available' => true,
+                   'user_id' => $user->id,
+               ]);
+       
+               $userPhones = $request->input('phone');
+               UserPhone::create([
+                   'user_id' => $user->id,
+                   'phone' => $userPhones
+               ]);
+       
+               return response()->json([
+                   'status' => true,
+                   'message' => 'User Created Successfully',
+                   'user_id' => $user->id,
+                   'delivery_id' => $delivery->id,
+                   'role' => $user->role,
+                   'image' => $user->image,
+                   'token' => $user->createToken("API TOKEN")->plainTextToken
+               ], 200);
+           } catch (Exception $e) {
+               return response()->json([
+                   'status' => false,
+                   'message' => $e->getMessage()
+               ], 400);
+           }
+       }
 
     /**
      * Display the specified resource.
@@ -91,27 +119,23 @@ class DeliveryController extends Controller
     public function show(Delivery $delivery)
     {
         $user = Auth::user();
-        if($user->id == $delivery->user_id){
-            return (new DeliveryResource($delivery))->response()->setStatusCode(200);
-        }
-        $user = Auth::user();
         if($user){
             if ($user->id == $delivery->user_id && $user->role == "delivery") {
                 $deliveryData = Delivery::where('user_id', $user->id)->first();
                 if ($deliveryData) {
                     if ($deliveryData->admin_approval == 'approved') {
-                        return new PharmacyResourse($deliveryData);
+                        return new DeliveryResource($deliveryData);
                     } elseif ($deliveryData->admin_approval == 'pending') {
                         return response()->json('pending', 200);
                     } else {
                         return response()->json('rejected', 200);
                     }
                 } else {
-                    return response()->json('Pharmacy not found', 404);
+                    return response()->json('delivery not found', 404);
                 }
             }
         } else if($user->role == 'client'){
-            return new PharmacyResourse($pharmacy);
+            return new DeliveryResource($deliveryData);
         }
         return abort(403);
     }
@@ -128,7 +152,7 @@ class DeliveryController extends Controller
                 $user = User::find($delivery->user_id);
                 $user->name = $request->user['name'];
                 $user->email = $request->user['email'];
-                $user->password = Hash::make($request->user['password']);
+                $user->password = $request->user['password'];
                 $user->update();
                 // $delivery->image = $request->delivery['image'];
                 $delivery->national_ID = $request->delivery['nationalID'];
