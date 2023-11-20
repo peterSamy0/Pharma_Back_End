@@ -24,6 +24,7 @@ class ClientFactory extends Factory
             'user_id' => $clientUser->id,
             'governorate_id' => Governorate::inRandomOrder()->first('id'),
             'city_id' => City::inRandomOrder()->first('id'),
+            "address" => $this->faker->address()
         ];
     }
 }

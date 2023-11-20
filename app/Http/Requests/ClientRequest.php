@@ -26,7 +26,8 @@ class ClientRequest extends FormRequest
             'user.email' => 'required|email|unique:users,email',
             'user.password' => 'required',
             'client.Governorate' => 'required',
-            'client.city' => 'required'
+            'client.city' => 'required',
+            'client.address' => 'nullable' 
         ];
     }
 
