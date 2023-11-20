@@ -49,16 +49,17 @@ class OrderController extends Controller
      */
     public function store(Request $request)
 {
-   
+        $user = Auth::user();
+        $client = Client::where('user_id', $user->id)->first();
         $savedOrder = Order::create([
             'pharmacy_id' => $request->pharmacy_id,
-            'client_id' => $request->client_id,
+            'client_id' => $client->id,
             'delivery_id' => null,
             'totalprice' => $request->totalPrice,
         ]);
+
         // Insert ordered medications
         $ordMedications = $request->input('ordMedications');
-    
         foreach ($ordMedications as $ordMedication) {
             $medicineId = $ordMedication['key'];
             $amount = $ordMedication['value'];
@@ -67,6 +68,7 @@ class OrderController extends Controller
                 'amount' => $amount,
             ]);
         }
+
     // return view ("stripe", ["data"=> $savedOrder]);
     // Return the order along with the order ID
     return response()->json(['order' => new OrderResource($savedOrder), 'orderid' => $savedOrder->id], 200);

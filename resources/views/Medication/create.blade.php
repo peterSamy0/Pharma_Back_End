@@ -26,10 +26,9 @@
                     enctype="multipart/form-data"
                   >
                   @csrf
-                    <h2 class="mb-2 text-capitalize">Add your Medication</h2>
+                    <h2 class="mb-2 text-capitalize" style="color:  #3c6167">Add your Medication</h2>
   
                     <div class="col-12">
-                      <label class="form-label"></label>
                       <div>
                         <label for="name" class="form-label text-dark">Name</label>
                 <input type="text" id="name" name="name" class="form-control"
@@ -43,7 +42,6 @@
                     </div>
   
                     <div class="col-12">
-                      <label class="form-label"></label>
                       <div>
                         <label for="price" class="form-label text-dark">Price</label>
                 <input type="number" id="name" name="price" class="form-control" 
@@ -55,7 +53,6 @@
                     </div>
   
                     <div class="col-12">
-                        <label class="form-label"></label>
                         <label for="exampleInputPassword1" class="form-label">Category</label>
                         <select class="form-select" aria-label="Default select example" name="category_id">
                         <option selected>Select Category</option>
@@ -67,7 +64,6 @@
                        >
                     </div>
                     <div class="col-12">
-                    <label class="form-label"></label>
                     <div>
                       <label for="description" class="form-label text-dark">Description</label>
                       <input type="text" id="description" name="description" class="form-control"
@@ -81,7 +77,6 @@
                     <small class="text-danger">the category feild is required</small>
                      @enderror
                     <div class="col-12">
-                      <label class="form-label"></label>
                       <div>
                         <label for="image" class="form-label text-dark">Image</label>
                         <input type="file" id="image" name="image" class="form-control"
@@ -106,7 +101,7 @@
               <div class="col-md-5 ps-0 d-none d-md-block">
                 <img
                   style="width: 100%; height: 100%"
-                  src="https://i.pinimg.com/236x/95/b4/75/95b4750ba1598129969ba24d08d5b659.jpg"
+                  src="https://i.pinimg.com/236x/6a/b3/ab/6ab3ab2d6905a57e8398532679f9abd1.jpg"
                   alt=""
                 />
               </div>

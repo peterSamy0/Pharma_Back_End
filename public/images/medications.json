@@ -1,0 +1,802 @@
+[
+  {
+    "id": 1,
+    "name": "Panadol | Extra Tablets",
+    "price": 34,
+    "image": "images/image1.webp",
+    "description": "Extra Effective Relief for Pain and Fever | 24 Tabs",
+    "category_id": 1
+  },
+  {
+    "id": 2,
+    "name": "Alphintern",
+    "price": 54,
+    "image": "images/image2.webp",
+    "description": "Anti Inflammatory | 30 Tabs",
+    "category_id": 2
+  },
+  {
+    "id": 3,
+    "name": "SleepEase Elixir",
+    "price": 30.75,
+    "image": "images/image3.png",
+    "description": "Natural sleep aid with herbal extracts. Promotes restful and rejuvenating sleep.",
+    "category_id": 4
+  },
+  {
+    "id": 4,
+    "name": "ImmunoBoost Capsules",
+    "price": 15.99,
+    "image": "images/image4.webp",
+    "description": "Immune system support capsules with essential vitamins and minerals. Enhances overall health.",
+    "category_id": 1
+  },
+  {
+    "id": 5,
+    "name": "MoodLift Tablets",
+    "price": 22.49,
+    "image": "images/image5.webp",
+    "description": "Mood-enhancing tablets designed to uplift spirits and reduce stress. A natural mood booster.",
+    "category_id": 3
+  },
+  {
+    "id": 6,
+    "name": "EnergyMax Tonic",
+    "price": 28.99,
+    "image": "images/image6.jpg",
+    "description": "Revitalizing energy tonic infused with natural ingredients. Combats fatigue and boosts vitality.",
+    "category_id": 2
+  },
+  {
+    "id": 7,
+    "name": "DigestWell Probiotics",
+    "price": 20.25,
+    "image": "images/image7.jpeg",
+    "description": "Advanced probiotic supplement for digestive health. Supports a balanced gut microbiome.",
+    "category_id": 4
+  },
+  {
+    "id": 8,
+    "name": "JointFlex Cream",
+    "price": 12.75,
+    "image": "images/image8.webp",
+    "description": "Topical cream for joint and muscle pain relief. Fast-acting and soothing formula.",
+    "category_id": 1
+  },
+  {
+    "id": 9,
+    "name": "FocusSharp Tablets",
+    "price": 32.5,
+    "image": "images/image9jpg",
+    "description": "Cognitive enhancement tablets for improved focus and mental clarity. Ideal for work and study.",
+    "category_id": 3
+  },
+  {
+    "id": 10,
+    "name": "HairRevive Shampoo",
+    "price": 17.95,
+    "image": "images/image10.jpg",
+    "description": "Nourishing shampoo for hair growth and scalp health. Fortifies and revitalizes hair.",
+    "category_id": 2
+  },
+  {
+    "id": 11,
+    "name": "SlimFit Tea",
+    "price": 26.99,
+    "image": "images/image11.jpg",
+    "description": "Detoxifying herbal tea for weight management. Supports metabolism and aids in slimming.",
+    "category_id": 4
+  },
+  {
+    "id": 12,
+    "name": "SkinGlow Serum",
+    "price": 19.5,
+    "image": "images/image12.png",
+    "description": "Anti-aging serum for radiant and youthful skin. Reduces wrinkles and promotes skin elasticity.",
+    "category_id": 1
+  },
+  {
+    "id": 13,
+    "name": "StressRelief Drops",
+    "price": 23.25,
+    "image": "images/image13.jpg",
+    "description": "Natural stress relief drops with calming botanical extracts. Eases tension and promotes relaxation.",
+    "category_id": 3
+  },
+  {
+    "id": 14,
+    "name": "VitalityPlus Multivitamins",
+    "price": 16.75,
+    "image": "images/image14.webp",
+    "description": "Comprehensive multivitamin supplements for overall health and vitality. Essential nutrients for daily well-being.",
+    "category_id": 2
+  },
+  {
+    "id": 15,
+    "name": "DetoxCleanse Kit",
+    "price": 27.49,
+    "image": "images/image15.jpg",
+    "description": "Complete detoxification kit for a thorough body cleanse. Supports the removal of toxins and impurities.",
+    "category_id": 4
+  },
+  {
+    "id": 16,
+    "name": "EyeBright Vision Drops",
+    "price": 21.99,
+    "image": "images/image16.webp",
+    "description": "Vision-enhancing drops for eye health. Reduces eye strain and supports clear vision.",
+    "category_id": 1
+  },
+  {
+    "id": 17,
+    "name": "BoneHealth Calcium Tablets",
+    "price": 14.95,
+    "image": "images/image17.jpg",
+    "description": "Calcium supplements for strong and healthy bones. Supports bone density and skeletal strength.",
+    "category_id": 3
+  },
+  {
+    "id": 18,
+    "name": "RelaxZen Aromatherapy Oil",
+    "price": 29.5,
+    "image": "images/image18.jpg",
+    "description": "Calming aromatherapy oil for relaxation and stress relief. Infused with soothing scents.",
+    "category_id": 2
+  },
+  {
+    "id": 19,
+    "name": "BlissfulSleep Gummies",
+    "price": 18.99,
+    "image": "images/image19.webp",
+    "description": "Delicious gummies for promoting a peaceful and blissful sleep. Natural sleep aid with a great taste.",
+    "category_id": 4
+  },
+  {
+    "id": 20,
+    "name": "GutHealth Prebiotic Fiber",
+    "price": 24.25,
+    "image": "images/image20.jpg",
+    "description": "Prebiotic fiber supplement for a healthy gut microbiome. Supports digestive wellness and regularity.",
+    "category_id": 1
+  },
+  {
+    "id": 21,
+    "name": "Reliefex",
+    "price": 29.99,
+    "image": "images/image21.jpg",
+    "description": "Powerful relief for common aches and pains. Fast-acting and long-lasting formula.",
+    "category_id": 3
+  },
+  {
+    "id": 22,
+    "name": "CardioGuard",
+    "price": 39.5,
+    "image": "images/image22.jpg",
+    "description": "Heart health support for a strong cardiovascular system. Essential for overall well-being.",
+    "category_id": 2
+  },
+  {
+    "id": 23,
+    "name": "DreamCalm Capsules",
+    "price": 19.75,
+    "image": "images/image23.png",
+    "description": "Capsules for promoting calmness and peaceful sleep. Natural sleep aid for a restful night.",
+    "category_id": 4
+  },
+  {
+    "id": 24,
+    "name": "VitaBoost Immunity",
+    "price": 14.99,
+    "image": "images/image24.webp",
+    "description": "Boosts immune system function with essential vitamins and antioxidants. Supports health defense.",
+    "category_id": 1
+  },
+  {
+    "id": 25,
+    "name": "SereniTea Blend",
+    "price": 18.49,
+    "image": "images/image25.webp",
+    "description": "Herbal tea blend for relaxation and stress relief. Calming and soothing for a serene moment.",
+    "category_id": 3
+  },
+  {
+    "id": 26,
+    "name": "EnergizeMe Tablets",
+    "price": 25.99,
+    "image": "images/image26.webp",
+    "description": "Tablets for a natural energy boost. Enhances vitality and combats fatigue.",
+    "category_id": 2
+  },
+  {
+    "id": 27,
+    "name": "Digestive Harmony Probiotics",
+    "price": 22.25,
+    "image": "images/image27.jpeg",
+    "description": "Probiotic supplement for digestive harmony. Supports gut health and balance.",
+    "category_id": 4
+  },
+  {
+    "id": 28,
+    "name": "FlexiRelief Cream",
+    "price": 15.75,
+    "image": "images/image28.png",
+    "description": "Topical cream for joint flexibility and pain relief. Non-greasy and fast-absorbing.",
+    "category_id": 1
+  },
+  {
+    "id": 29,
+    "name": "CogniSmart Focus Capsules",
+    "price": 34.5,
+    "image": "images/image29.jpg",
+    "description": "Capsules for enhanced cognitive function. Improves focus, memory, and mental clarity.",
+    "category_id": 3
+  },
+  {
+    "id": 30,
+    "name": "Revitalize Hair Serum",
+    "price": 21.95,
+    "image": "images/image30.webp",
+    "description": "Serum for healthy hair growth and shine. Nourishes and revitalizes the scalp.",
+    "category_id": 2
+  },
+  {
+    "id": 31,
+    "name": "SlimShape Detox Tea",
+    "price": 29.99,
+    "image": "images/image31.jpeg",
+    "description": "Detox tea for weight management and cleansing. Supports a healthy metabolism.",
+    "category_id": 4
+  },
+  {
+    "id": 32,
+    "name": "Youthful Glow Cream",
+    "price": 24.5,
+    "image": "images/image32.jpeg",
+    "description": "Anti-aging cream for a youthful complexion. Reduces wrinkles and promotes skin radiance.",
+    "category_id": 1
+  },
+  {
+    "id": 33,
+    "name": "TranquilEase Drops",
+    "price": 28.25,
+    "image": "images/image33.jpeg",
+    "description": "Calming drops for stress relief and relaxation. Ideal for a tranquil and peaceful mind.",
+    "category_id": 3
+  },
+  {
+    "id": 34,
+    "name": "VitaEssentials Multivitamins",
+    "price": 19.75,
+    "image": "images/image34.webp",
+    "description": "Essential multivitamins for overall health support. Provides daily nutritional requirements.",
+    "category_id": 2
+  },
+  {
+    "id": 35,
+    "name": "DetoxRevive Kit",
+    "price": 32.49,
+    "image": "images/image35.jpeg",
+    "description": "Complete detox kit for a rejuvenated and revitalized body. Eliminates toxins and impurities.",
+    "category_id": 4
+  },
+  {
+    "id": 36,
+    "name": "ClearView Eye Drops",
+    "price": 26.99,
+    "image": "images/image36.jpeg",
+    "description": "Vision-enhancing drops for clear and sharp eyesight. Reduces eye fatigue and strain.",
+    "category_id": 1
+  },
+  {
+    "id": 37,
+    "name": "OsteoHealth Calcium Tablets",
+    "price": 17.95,
+    "image": "images/image37.jpeg",
+    "description": "Calcium tablets for strong and healthy bones. Supports bone density and skeletal strength.",
+    "category_id": 3
+  },
+  {
+    "id": 38,
+    "name": "SootheZen Aromatherapy Oil",
+    "price": 32.5,
+    "image": "images/image39.jpeg",
+    "description": "Soothing aromatherapy oil for relaxation and stress relief. Calms the mind and senses.",
+    "category_id": 2
+  },
+  {
+    "id": 39,
+    "name": "Dreamland Gummies",
+    "price": 21.99,
+    "image": "images/image38.jpeg",
+    "description": "Delicious gummies for a restful and dreamy sleep. Sweet and relaxing bedtime treat.",
+    "category_id": 4
+  },
+  {
+    "id": 40,
+    "name": "GutBalance Probiotic Fiber",
+    "price": 27.25,
+    "image": "images/image40.jpeg",
+    "description": "Probiotic fiber supplement for a balanced gut microbiome. Supports digestive wellness.",
+    "category_id": 1
+  },
+  {
+    "id": 41,
+    "name": "PainEase Plus Tablets",
+    "price": 23.99,
+    "image": "images/image41.jpeg",
+    "description": "Tablets for effective pain relief. Fast-acting formula for various types of pain.",
+    "category_id": 3
+  },
+  {
+    "id": 42,
+    "name": "HeartWell Omega-3 Capsules",
+    "price": 29.5,
+    "image": "images/image42.jpeg",
+    "description": "Omega-3 capsules for heart health and cardiovascular support. Essential fatty acids for overall well-being.",
+    "category_id": 2
+  },
+  {
+    "id": 43,
+    "name": "Serenity Sleep Aid",
+    "price": 18.75,
+    "image": "images/image43.jpeg",
+    "description": "Sleep aid for a calm and restful night. Promotes deep and rejuvenating sleep.",
+    "category_id": 4
+  },
+  {
+    "id": 44,
+    "name": "ImmuneGuard Syrup",
+    "price": 16.99,
+    "image": "images/image44.jpeg",
+    "description": "Immune system support syrup with natural ingredients. Enhances immune response.",
+    "category_id": 1
+  },
+  {
+    "id": 45,
+    "name": "StressLess Relaxation Tea",
+    "price": 22.49,
+    "image": "images/image45.jpeg",
+    "description": "Herbal tea blend for stress relief and relaxation. Calms the mind and soothes the senses.",
+    "category_id": 3
+  },
+  {
+    "id": 46,
+    "name": "VitalityMax Energy Drink",
+    "price": 28.99,
+    "image": "images/image46.jpeg",
+    "description": "Energizing drink for maximum vitality. Boosts energy levels and enhances alertness.",
+    "category_id": 2
+  },
+  {
+    "id": 47,
+    "name": "DigestiveEase Enzymes",
+    "price": 19.25,
+    "image": "images/image47.jpeg",
+    "description": "Enzyme supplement for digestive ease. Supports the breakdown of food for optimal digestion.",
+    "category_id": 4
+  },
+  {
+    "id": 48,
+    "name": "FlexiRelax Balm",
+    "price": 14.75,
+    "image": "images/image48.jpeg",
+    "description": "Balm for muscle relaxation and tension relief. Ideal for soothing tired and sore muscles.",
+    "category_id": 1
+  },
+  {
+    "id": 49,
+    "name": "MindSharp Cognitive Capsules",
+    "price": 32.99,
+    "image": "images/image49.jpeg",
+    "description": "Cognitive capsules for sharp and focused thinking. Improves memory and mental acuity.",
+    "category_id": 3
+  },
+  {
+    "id": 50,
+    "name": "ReviveHair Scalp Treatment",
+    "price": 17.45,
+    "image": "images/image50.jpeg",
+    "description": "Scalp treatment for hair revival and nourishment. Promotes healthy and vibrant hair.",
+    "category_id": 2
+  },
+  {
+    "id": 51,
+    "name": "SlimTrim Detox Tea",
+    "price": 26.49,
+    "image": "images/image51.jpeg",
+    "description": "Detox tea for slimming and cleansing. Supports weight management and digestion.",
+    "category_id": 4
+  },
+  {
+    "id": 52,
+    "name": "YouthfulSkin Anti-Aging Serum",
+    "price": 19.99,
+    "image": "images/image52.jpeg",
+    "description": "Anti-aging serum for youthful and radiant skin. Reduces fine lines and wrinkles.",
+    "category_id": 1
+  },
+  {
+    "id": 53,
+    "name": "CalmCraze Stress Relief Drops",
+    "price": 23.75,
+    "image": "images/image53.jpeg",
+    "description": "Stress relief drops with calming botanical extracts. Eases tension and promotes tranquility.",
+    "category_id": 3
+  },
+  {
+    "id": 54,
+    "name": "EssentialWell Multivitamins",
+    "price": 16.5,
+    "image": "images/image54.jpeg",
+    "description": "Essential multivitamins for overall health and well-being. Provides a balanced nutritional foundation.",
+    "category_id": 2
+  },
+  {
+    "id": 55,
+    "name": "TotalCleanse Detox Kit",
+    "price": 27.99,
+    "image": "images/image55.jpeg",
+    "description": "Complete detox kit for a total body cleanse. Eliminates toxins and supports organ health.",
+    "category_id": 4
+  },
+  {
+    "id": 56,
+    "name": "ClearSight Eye Drops",
+    "price": 21.49,
+    "image": "images/image56.jpeg",
+    "description": "Eye drops for clear and focused vision. Reduces eye strain and supports visual clarity.",
+    "category_id": 1
+  },
+  {
+    "id": 57,
+    "name": "BoneFortify Calcium Tablets",
+    "price": 14.25,
+    "image": "images/image57.jpeg",
+    "description": "Calcium tablets for strong and fortified bones. Supports bone density and skeletal strength.",
+    "category_id": 3
+  },
+  {
+    "id": 58,
+    "name": "TranquilBlend Aromatherapy Oil",
+    "price": 28.5,
+    "image": "images/image58.jpeg",
+    "description": "Aromatherapy oil blend for tranquility and relaxation. Uplifts the mood and calms the senses.",
+    "category_id": 2
+  },
+  {
+    "id": 59,
+    "name": "DreamyDelight Gummies",
+    "price": 18.49,
+    "image": "images/image59.jpeg",
+    "description": "Delicious gummies for a dreamy and sweet sleep. Natural sleep aid with a delightful taste.",
+    "category_id": 4
+  },
+  {
+    "id": 60,
+    "name": "GutEase Probiotic Fiber",
+    "price": 24.99,
+    "image": "images/image60.jpeg",
+    "description": "Probiotic fiber supplement for digestive ease. Supports gut health and regularity.",
+    "category_id": 1
+  },
+  {
+    "id": 61,
+    "name": "PainRelief Pro Tablets",
+    "price": 20.99,
+    "image": "images/image61.jpeg",
+    "description": "Pro tablets for effective pain relief. Targets pain at the source for fast and lasting relief.",
+    "category_id": 3
+  },
+  {
+    "id": 62,
+    "name": "HeartGuard Omega-3 Capsules",
+    "price": 26.5,
+    "image": "images/image62.jpeg",
+    "description": "Omega-3 capsules for heart health and cardiovascular support. Essential for a healthy heart.",
+    "category_id": 2
+  },
+  {
+    "id": 63,
+    "name": "TranquilSleep Elixir",
+    "price": 31.75,
+    "image": "images/image63.jpeg",
+    "description": "Sleep elixir for a tranquil and restful night. Calms the mind and promotes deep sleep.",
+    "category_id": 4
+  },
+  {
+    "id": 64,
+    "name": "VitalShield Immunity Capsules",
+    "price": 14.99,
+    "image": "images/image64.jpeg",
+    "description": "Immunity capsules for year-round protection. Boosts the immune system and enhances resistance.",
+    "category_id": 1
+  },
+  {
+    "id": 65,
+    "name": "CalmHarbor Relaxation Tea",
+    "price": 23.49,
+    "image": "images/image65.jpeg",
+    "description": "Herbal tea blend for a calm harbor of relaxation. Soothes the nerves and promotes calmness.",
+    "category_id": 3
+  },
+  {
+    "id": 66,
+    "name": "EnergeticVibes Energy Drink",
+    "price": 29.75,
+    "image": "images/image66.jpeg",
+    "description": "Energy drink for vibrant and energetic vibes. Boosts stamina and increases alertness.",
+    "category_id": 2
+  },
+  {
+    "id": 67,
+    "name": "DigestiveHarmony Probiotics",
+    "price": 21.25,
+    "image": "images/image67.jpeg",
+    "description": "Probiotic supplement for digestive harmony. Balances gut microbiome for optimal digestion.",
+    "category_id": 4
+  },
+  {
+    "id": 68,
+    "name": "FlexiEase Balm",
+    "price": 13.75,
+    "image": "images/image68.jpeg",
+    "description": "Balm for flexible ease and joint comfort. Soothes joint stiffness and promotes flexibility.",
+    "category_id": 1
+  },
+  {
+    "id": 69,
+    "name": "MindRevive Cognitive Capsules",
+    "price": 32.25,
+    "image": "images/image69.jpeg",
+    "description": "Cognitive capsules for mind revival and mental sharpness. Enhances memory and cognitive function.",
+    "category_id": 3
+  },
+  {
+    "id": 70,
+    "name": "RevitalizeHair Scalp Treatment",
+    "price": 16.95,
+    "image": "images/image70.jpeg",
+    "description": "Scalp treatment for hair revitalization and nourishment. Strengthens and revitalizes hair.",
+    "category_id": 2
+  },
+  {
+    "id": 71,
+    "name": "SlimDetox Herbal Tea",
+    "price": 27.99,
+    "image": "images/image71.jpeg",
+    "description": "Herbal tea blend for slimming and detoxification. Supports weight management and cleansing.",
+    "category_id": 4
+  },
+  {
+    "id": 72,
+    "name": "YouthfulRadiance Anti-Aging Serum",
+    "price": 20.49,
+    "image": "images/image72.jpeg",
+    "description": "Anti-aging serum for youthful radiance. Reduces signs of aging for a glowing complexion.",
+    "category_id": 1
+  },
+  {
+    "id": 73,
+    "name": "StressFree Drops",
+    "price": 24.25,
+    "image": "images/image73.jpeg",
+    "description": "Drops for stress-free living. Calms the mind and promotes emotional well-being.",
+    "category_id": 3
+  },
+  {
+    "id": 74,
+    "name": "EssentialVital Multivitamins",
+    "price": 17.5,
+    "image": "images/image74.jpeg",
+    "description": "Essential multivitamins for vital health. Provides key nutrients for daily well-being.",
+    "category_id": 2
+  },
+  {
+    "id": 75,
+    "name": "CompleteCleanse Detox Kit",
+    "price": 28.49,
+    "image": "images/image75.jpeg",
+    "description": "Complete detox kit for a thorough body cleanse. Supports the elimination of toxins and impurities.",
+    "category_id": 4
+  },
+  {
+    "id": 76,
+    "name": "ClarityView Eye Drops",
+    "price": 20.99,
+    "image": "images/image76.jpeg",
+    "description": "Eye drops for clarity and clear vision. Reduces eye fatigue and supports visual acuity.",
+    "category_id": 1
+  },
+  {
+    "id": 77,
+    "name": "BoneSupport Calcium Tablets",
+    "price": 13.95,
+    "image": "images/image77.jpeg",
+    "description": "Calcium tablets for strong bone support. Promotes bone density and skeletal health.",
+    "category_id": 3
+  },
+  {
+    "id": 78,
+    "name": "TranquilEssence Aromatherapy Oil",
+    "price": 29.75,
+    "image": "images/image78.jpeg",
+    "description": "Aromatherapy oil for tranquil essence. Creates a peaceful atmosphere and soothes the mind.",
+    "category_id": 2
+  },
+  {
+    "id": 79,
+    "name": "DreamyNights Gummies",
+    "price": 19.49,
+    "image": "images/image79.jpeg",
+    "description": "Gummies for dreamy nights and restful sleep. Delicious sleep aid with a delightful taste.",
+    "category_id": 4
+  },
+  {
+    "id": 80,
+    "name": "GutBalance Probiotic Fiber",
+    "price": 25.25,
+    "image": "images/image80.jpeg",
+    "description": "Probiotic fiber supplement for gut balance. Supports digestive wellness and regularity.",
+    "category_id": 1
+  },
+  {
+    "id": 81,
+    "name": "FlexiJoint Capsules",
+    "price": 23.5,
+    "image": "images/image81.jpeg",
+    "description": "Capsules for joint flexibility and comfort. Supports overall joint health and mobility.",
+    "category_id": 2
+  },
+  {
+    "id": 82,
+    "name": "ZenMind Relaxation Drops",
+    "price": 17.75,
+    "image": "images/image82.jpeg",
+    "description": "Calming drops for stress relief and relaxation. Promotes a sense of tranquility and peace.",
+    "category_id": 4
+  },
+  {
+    "id": 83,
+    "name": "VitaBloom Hair Vitamins",
+    "price": 29.99,
+    "image": "images/image83.jpeg",
+    "description": "Vitamins for healthy hair growth and shine. Nourishes and revitalizes the scalp.",
+    "category_id": 1
+  },
+  {
+    "id": 84,
+    "name": "SlimShape Protein Shake",
+    "price": 26.49,
+    "image": "images/image84.jpeg",
+    "description": "Protein shake for weight management and muscle support. A delicious and nutritious option.",
+    "category_id": 3
+  },
+  {
+    "id": 85,
+    "name": "YouthfulEyes Cream",
+    "price": 22.95,
+    "image": "images/image85.jpeg",
+    "description": "Anti-aging eye cream for youthful and bright eyes. Reduces wrinkles and puffiness.",
+    "category_id": 2
+  },
+  {
+    "id": 86,
+    "name": "GutRevitalize Probiotics",
+    "price": 28.99,
+    "image": "images/image86.jpeg",
+    "description": "Probiotic supplement for gut health and balance. Supports digestion and nutrient absorption.",
+    "category_id": 4
+  },
+  {
+    "id": 87,
+    "name": "ReliefPatch Pain Patches",
+    "price": 21.25,
+    "image": "images/image87.jpeg",
+    "description": "Pain relief patches for targeted and soothing relief. Convenient and easy to use.",
+    "category_id": 1
+  },
+  {
+    "id": 88,
+    "name": "MindFocus Cognitive Capsules",
+    "price": 32.5,
+    "image": "images/image88.jpeg",
+    "description": "Capsules for enhanced cognitive function. Boosts focus, memory, and mental clarity.",
+    "category_id": 3
+  },
+  {
+    "id": 89,
+    "name": "HairNourish Conditioner",
+    "price": 19.95,
+    "image": "images/image89.jpeg",
+    "description": "Conditioner for nourishing and strengthening hair. Leaves hair soft, smooth, and manageable.",
+    "category_id": 2
+  },
+  {
+    "id": 90,
+    "name": "DetoxTea Cleanse Kit",
+    "price": 27.99,
+    "image": "images/image90.jpeg",
+    "description": "Complete detoxification kit with a cleansing herbal tea blend. Supports a healthy metabolism.",
+    "category_id": 4
+  },
+  {
+    "id": 91,
+    "name": "SkinRadiance Serum",
+    "price": 24.5,
+    "image": "images/image91.jpeg",
+    "description": "Serum for radiant and youthful skin. Reduces dark spots and promotes skin elasticity.",
+    "category_id": 1
+  },
+  {
+    "id": 92,
+    "name": "StressLess Relaxation Drops",
+    "price": 26.75,
+    "image": "images/image92.jpeg",
+    "description": "Natural drops for stress relief and relaxation. Calms the mind and promotes a sense of calmness.",
+    "category_id": 3
+  },
+  {
+    "id": 93,
+    "name": "VitaGlow Multivitamins",
+    "price": 18.75,
+    "image": "images/image93.jpeg",
+    "description": "Multivitamin supplements for overall health and vitality. Essential nutrients for daily well-being.",
+    "category_id": 2
+  },
+  {
+    "id": 94,
+    "name": "GutCleanse Detox Kit",
+    "price": 29.49,
+    "image": "images/image94.jpeg",
+    "description": "Detox kit for a thorough cleanse and digestive wellness. Removes toxins and supports gut health.",
+    "category_id": 4
+  },
+  {
+    "id": 95,
+    "name": "EyeRelief Vision Drops",
+    "price": 23.99,
+    "image": "images/image95.jpeg",
+    "description": "Vision drops for soothing and refreshing eyes. Relieves eye strain and dryness.",
+    "category_id": 1
+  },
+  {
+    "id": 96,
+    "name": "BoneFortify Calcium Tablets",
+    "price": 16.95,
+    "image": "images/image96.jpeg",
+    "description": "Calcium tablets for strong and healthy bones. Supports bone density and skeletal strength.",
+    "category_id": 3
+  },
+  {
+    "id": 97,
+    "name": "CalmEssence Aromatherapy Oil",
+    "price": 31.5,
+    "image": "images/image97.jpeg",
+    "description": "Aromatherapy oil for relaxation and stress relief. Creates a calming and soothing atmosphere.",
+    "category_id": 2
+  },
+  {
+    "id": 98,
+    "name": "SleepBliss Gummies",
+    "price": 20.99,
+    "image": "images/image98.jpeg",
+    "description": "Delicious gummies for promoting a restful and blissful sleep. Natural sleep aid with a delightful taste.",
+    "category_id": 4
+  },
+  {
+    "id": 99,
+    "name": "GutBalance Probiotic Fiber",
+    "price": 27.25,
+    "image": "images/image99.jpeg",
+    "description": "Probiotic fiber supplement for a balanced gut microbiome. Supports digestive wellness.",
+    "category_id": 1
+  },
+  {
+    "id": 100,
+    "name": "PainEase Plus Tablets",
+    "price": 24.99,
+    "image": "images/image100.jpeg",
+    "description": "Effective tablets for relieving various types of pain. Fast-acting and long-lasting formula.",
+    "category_id": 3
+  }
+]

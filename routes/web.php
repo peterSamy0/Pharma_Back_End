@@ -44,8 +44,6 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Route::resource('orders', WebOrderController::class)->middleware('auth');
 
-Route::resource('categories', WebCategoryController::class)->middleware('auth');
-
 // pharmacy approval
 Route ::put('pharmacyApprove/{id}' ,[ WebPharmacyController::class, 'approveAccount'])->name('pharmacy.approveAccount')->middleware('auth');
 Route ::put('pharmacyReject/{id}' ,[ WebPharmacyController::class, 'rejectAccount'])->name('pharmacy.rejectAccount')->middleware('auth');

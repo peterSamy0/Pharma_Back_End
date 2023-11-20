@@ -19,13 +19,13 @@
 <body>
    <header class="bg-light text-dark">
         {{-- <h1 class="display-4">Delivery Details</h1> --}}
-        <h2>Delivery Name: {{ $delivery->user['name'] }}</h2>
+        <h5>Delivery Name : {{ $delivery->user['name'] }}</h5>
     </header>
     <div class="container w-75">
         <div class="card p-3 shadow ">
             <div class="card-content ">
                 <p>ID: {{ $delivery['id'] }}</p>
-                <p>Name: {{ $delivery->user['name'] }}</p>
+                {{-- <p>Name: {{ $delivery->user['name'] }}</p> --}}
                 <p>NationalID: {{ $delivery['national_ID'] }}</p>
                 <p>Governorate: {{ $delivery->governorate['governorate'] }}</p>
                 <p>City: {{ $delivery->city['city'] }}</p>

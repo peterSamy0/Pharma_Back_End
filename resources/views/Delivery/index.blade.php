@@ -55,10 +55,10 @@
         <div class="text-center mb-3">
             <input type="text" id="search-input" class="form-control" placeholder="Search by name">
            </div>
+           <h2 class="text-left mb-3 mt-2 ms-3  " style="color: #3c6167">Deliveries</h2>
         @if(isset($deliveries))
             <div id="displayTourguideDetails"></div>
-            <div class="card"> 
-           <h2 class="text-left ms-3 " style="color: #3c6167">Deliveries</h2>
+            <div class="card">
            <div class="table-responsive">
             <table id="data-table" class="table  table-sm shadow border-0">
                 <thead class="thead-light" >
@@ -158,7 +158,7 @@
                 showCancelButton: true,
                 confirmButtonColor: '#d33',
                 cancelButtonColor: '#3085d6',
-                confirmButtonText: 'Yes, delete it!',
+                confirmButtonText: 'Confirm',
                 preConfirm: () => {
                   
                     const deleteForm = document.getElementById('deleteForm');
