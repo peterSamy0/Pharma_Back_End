@@ -13,6 +13,6 @@ class PharmacySeeder extends Seeder
      */
     public function run(): void
     {
-        Pharmacy::factory()->count(100)->create();
+        Pharmacy::factory()->count(5)->create();
     }
 }

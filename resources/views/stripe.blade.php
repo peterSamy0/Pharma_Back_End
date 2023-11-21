@@ -37,13 +37,13 @@
                 <div class="panel-body">
                      <h2>Please Enter Your Credit Details To Complete The Payment </h2>
                      <img src="{{ asset('logo.png') }}" alt="job image" title="job image">
-
+{{-- 
                     @if (Session::has('success'))
                         <div class="alert alert-success text-center">
                             <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
                             <p>{{ Session::get('success') }}</p>
                         </div>
-                    @endif
+                    @endif --}}
                     {{-- @if(session('order_id') && session('totalprice'))
                     <div>
                         Order ID: {{ $data["id"]}}

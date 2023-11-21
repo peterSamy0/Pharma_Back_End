@@ -13,6 +13,6 @@ class UserPhonesSeeder extends Seeder
      */
     public function run(): void
     {
-        UserPhone::factory()->count(200)->create();
+        UserPhone::factory()->count(20)->create();
     }
 }

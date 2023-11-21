@@ -15,7 +15,7 @@ class DeliverySeeder extends Seeder
     {
         //
 
-        Delivery::factory()->count(400)->create();
+        Delivery::factory()->count(10)->create();
 
 
     }

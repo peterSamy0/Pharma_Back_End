@@ -15,6 +15,6 @@ class OrderMedicationSeeder extends Seeder
      */
     public function run(): void
     {
-        OrderMedication::factory()->count(600)->create();
+        OrderMedication::factory()->count(100)->create();
     }
 }
