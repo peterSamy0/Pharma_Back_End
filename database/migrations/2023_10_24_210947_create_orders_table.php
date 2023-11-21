@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('client_id')->constrained()->onDelete('cascade')->onUpdate('cascade')->references('id')->on('clients');
             $table->foreignId('pharmacy_id')->constrained()->onDelete('cascade')->onUpdate('cascade')->references('id')->on('pharmacies');
-            $table->foreignId('delivery_id')->constrained()->onDelete('cascade')->onUpdate('cascade')->references('id')->on('deliveries')->nullable();
+            $table->foreignId('delivery_id')->constrained()->onDelete('cascade')->onUpdate('cascade')->references('id')->on('deliveries')->default("null");
             $table->enum('status',['pending','accepted','withDelivery','delivered'])->default("pending");
             $table->enum('payment',[1,0])->default(0);
             $table->decimal('totalprice', 10, 2)->default(0)->nullable();
