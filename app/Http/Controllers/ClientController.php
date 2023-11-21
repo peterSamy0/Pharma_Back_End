@@ -47,7 +47,8 @@ class ClientController extends Controller
                 'userImage' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
                 'userGovern' => 'required',
                 'userCity' => 'required',
-                'userPhone' => 'required|unique:user_phones,phone'
+                'userPhone' => 'required|unique:user_phones,phone',
+                "address"=> "",
             ]);
     
             if ($validateUser->fails()) {
@@ -74,7 +75,8 @@ class ClientController extends Controller
                     'user_id' => $user->id,
                     'governorate_id' => $request->userGovern,
                     'city_id' => $request->userCity,
-                    'role' => 'client'
+                    'role' => 'client',
+                    'address' => $request->address
                 ]);
     
                 $userPhones = $request->input('userPhone');

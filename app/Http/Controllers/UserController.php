@@ -54,7 +54,7 @@ class UserController extends Controller
         $userAuth = Auth::user();
         if($user->id == $userAuth->id || $userAuth->role == "admin"){
                 $user->delete();
-                return "user deleted successfully";
+                return response()->json("user deleted successfully", 200);
         }
         return abort(403);
     }
